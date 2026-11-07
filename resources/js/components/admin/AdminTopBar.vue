@@ -70,3 +70,4 @@ const activeTabLabel = computed(() => {
   return map[props.activeTab] || props.activeTab;
 });
 </script>
+

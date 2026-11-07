@@ -361,3 +361,4 @@ const confirmDelete = async (skill) => {
   }
 };
 </script>
+
