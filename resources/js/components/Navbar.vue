@@ -7,6 +7,7 @@
       <!-- Brand Logo / Monogram -->
       <a
         href="#hero"
+        @click.prevent="scrollTo('#hero')"
         class="w-10 h-10 rounded-full bg-forest-800 border border-sage-400/30 flex items-center justify-center text-sage-400 font-bold text-sm hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_12px_rgba(142,182,155,0.2)]"
         title="Home"
       >
@@ -23,7 +24,7 @@
           :href="item.href"
           @click.prevent="scrollTo(item.href)"
           :title="item.label"
-          class="group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 active:scale-95"
+          class="group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 active:scale-95 cursor-pointer"
           :class="activeSection === item.id ? 'bg-forest-800 text-mint-100 shadow-[0_0_16px_rgba(142,182,155,0.4)] border border-sage-400 ring-1 ring-sage-400/30' : 'text-sage-400/70 hover:text-mint-100 hover:bg-forest-800/60 border border-transparent'"
         >
           <!-- Active Glow Indicator Dot with pulsing aura -->
@@ -88,12 +89,14 @@ const IconAbout = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: '
   h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' })
 ]);
 
-const IconSkills = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
-  h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' })
+// 4-squares grid icon for Featured Showcase / Projects
+const IconFeatured = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
+  h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' })
 ]);
 
-const IconPortfolio = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
-  h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' })
+// Code </> icon for Skills & Technical Portfolio
+const IconSkills = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
+  h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' })
 ]);
 
 const IconEducation = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
@@ -107,7 +110,7 @@ const IconContact = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke:
 const navItems = [
   { id: 'hero', label: 'Home', href: '#hero', icon: IconHome },
   { id: 'about', label: 'About & Skills', href: '#about', icon: IconAbout },
-  { id: 'featured', label: 'Featured & Services', href: '#featured', icon: IconPortfolio },
+  { id: 'featured', label: 'Featured & Services', href: '#featured', icon: IconFeatured },
   { id: 'portfolio', label: 'Portfolio & Skills', href: '#portfolio', icon: IconSkills },
   { id: 'education', label: 'Education & Certs', href: '#education', icon: IconEducation },
   { id: 'contact', label: 'Contact Me', href: '#contact', icon: IconContact },
@@ -116,7 +119,14 @@ const navItems = [
 const scrollTo = (href) => {
   const target = document.querySelector(href);
   if (target) {
-    target.scrollIntoView({ behavior: 'smooth' });
+    const sectionId = href.replace('#', '');
+    emit('section-change', sectionId);
+
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - 30;
+    window.scrollTo({
+      top: targetTop,
+      behavior: 'smooth'
+    });
   }
 };
 </script>

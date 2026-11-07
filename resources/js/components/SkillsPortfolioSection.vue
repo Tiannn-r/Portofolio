@@ -1,8 +1,8 @@
 <template>
-  <div class="relative py-12 z-10 space-y-24">
+  <div id="portfolio" class="relative py-12 z-10 space-y-24">
     <!-- Part 1: My Skills (Progress Bars) -->
     <SectionContainer
-      id="skills"
+      id="skills-overview"
       badge="Core Competencies"
       title="My Skills & <span class='text-sage-400'>Proficiency</span>"
       description="Quantitative assessment of my engineering and interface development proficiencies."
@@ -83,7 +83,7 @@
 
     <!-- Part 2: My Portfolio Grid (3x2) -->
     <SectionContainer
-      id="portfolio"
+      id="portfolio-grid"
       badge="Selected Works"
       title="My <span class='text-sage-400'>Portfolio</span>"
       description="Explore a curation of web applications, platforms, and interactive interfaces built with passion."

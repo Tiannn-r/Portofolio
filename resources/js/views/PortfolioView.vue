@@ -4,7 +4,10 @@
     <BackgroundOrnaments />
 
     <!-- Left Floating Vertical Pill Sidebar -->
-    <Navbar :activeSection="activeSection" />
+    <Navbar
+      :activeSection="activeSection"
+      @section-change="(id) => activeSection = id"
+    />
 
     <!-- Skeleton Loading Screen when initial fetch is active and data is empty -->
     <div
@@ -74,26 +77,43 @@ import SkeletonLoader from '../components/ui/SkeletonLoader.vue';
 const { portfolio, loading, error } = usePublicPortfolio();
 const activeSection = ref('hero');
 
-// Scroll Spy to track active section
+// Bulletproof Scroll Spy using getBoundingClientRect
 const handleScroll = () => {
-  const sections = ['hero', 'about', 'featured', 'portfolio', 'education', 'contact'];
-  const scrollPosition = window.scrollY + 220;
+  // 1. If at the very top of page, activate hero
+  if (window.scrollY < 120) {
+    activeSection.value = 'hero';
+    return;
+  }
 
-  for (const sectionId of sections) {
-    const el = document.getElementById(sectionId);
+  // 2. If at the bottom of the page (footer / contact area), activate contact
+  const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 120;
+  if (isBottom) {
+    activeSection.value = 'contact';
+    return;
+  }
+
+  // 3. Find the lowest section whose top has crossed the viewport trigger point (35% from top)
+  const sections = ['hero', 'about', 'featured', 'portfolio', 'education', 'contact'];
+  const triggerPoint = window.innerHeight * 0.38;
+
+  let current = 'hero';
+  for (const id of sections) {
+    const el = document.getElementById(id);
     if (el) {
-      const top = el.offsetTop;
-      const height = el.offsetHeight;
-      if (scrollPosition >= top && scrollPosition < top + height) {
-        activeSection.value = sectionId;
-        break;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= triggerPoint) {
+        current = id;
       }
     }
   }
+
+  activeSection.value = current;
 };
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true });
+  // Initial check
+  handleScroll();
 });
 
 onUnmounted(() => {
