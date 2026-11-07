@@ -13,6 +13,13 @@
 
       <!-- Section 2: About Me & Technical Skills -->
       <AboutSection :profile="portfolio.profile" :skills="portfolio.skills" />
+
+      <!-- Section 3: Featured Projects & Services -->
+      <FeaturedServicesSection
+        :featuredProjects="portfolio.featured_projects"
+        :projects="portfolio.projects"
+        :services="portfolio.services"
+      />
     </main>
   </div>
 </template>
@@ -24,6 +31,7 @@ import BackgroundOrnaments from './components/BackgroundOrnaments.vue';
 import Navbar from './components/Navbar.vue';
 import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
+import FeaturedServicesSection from './components/FeaturedServicesSection.vue';
 
 const { portfolio, loading, error } = usePortfolio();
 const activeSection = ref('hero');
