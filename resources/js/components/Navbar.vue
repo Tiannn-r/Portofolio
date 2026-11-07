@@ -1,36 +1,44 @@
 <template>
   <div>
     <!-- Desktop Left Floating Vertical Pill Sidebar -->
-    <aside class="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-6 py-6 px-3.5 rounded-full bg-forest-900/80 backdrop-blur-md border border-forest-700 shadow-[0_10px_35px_rgba(5,31,32,0.8)] transition-all duration-300">
+    <aside
+      class="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-6 py-6 px-3.5 rounded-full bg-forest-900/85 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/20 shadow-[0_10px_35px_rgba(5,31,32,0.8)] transition-all duration-300"
+    >
       <!-- Brand Logo / Monogram -->
-      <a href="#hero" class="w-10 h-10 rounded-full bg-forest-800 border border-sage-400/30 flex items-center justify-center text-sage-400 font-bold text-sm hover:scale-110 hover:border-sage-400 transition-all duration-300 shadow-[0_0_12px_rgba(142,182,155,0.2)]">
+      <a
+        href="#hero"
+        class="w-10 h-10 rounded-full bg-forest-800 border border-sage-400/30 flex items-center justify-center text-sage-400 font-bold text-sm hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_12px_rgba(142,182,155,0.2)]"
+        title="Home"
+      >
         MI
       </a>
 
       <div class="w-6 h-[1px] bg-forest-700/60 my-1"></div>
 
       <!-- Navigation Icons -->
-      <nav class="flex flex-col items-center gap-5">
+      <nav class="flex flex-col items-center gap-4">
         <a
           v-for="item in navItems"
           :key="item.id"
           :href="item.href"
           @click.prevent="scrollTo(item.href)"
           :title="item.label"
-          class="group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300"
-          :class="activeSection === item.id ? 'bg-forest-800 text-mint-100 shadow-[0_0_15px_rgba(142,182,155,0.35)] border border-sage-400/50' : 'text-sage-400/70 hover:text-mint-100 hover:bg-forest-800/50'"
+          class="group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 active:scale-95"
+          :class="activeSection === item.id ? 'bg-forest-800 text-mint-100 shadow-[0_0_16px_rgba(142,182,155,0.4)] border border-sage-400 ring-1 ring-sage-400/30' : 'text-sage-400/70 hover:text-mint-100 hover:bg-forest-800/60 border border-transparent'"
         >
-          <!-- Active Glow Indicator Dot -->
+          <!-- Active Glow Indicator Dot with pulsing aura -->
           <span
             v-if="activeSection === item.id"
-            class="absolute -left-1 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_8px_#8EB69B]"
+            class="absolute -left-1 w-2 h-2 rounded-full bg-sage-400 shadow-[0_0_10px_#8EB69B] animate-pulse"
           ></span>
 
-          <!-- Icon Component -->
+          <!-- Icon Component with hover lift -->
           <component :is="item.icon" class="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
 
           <!-- Tooltip on hover -->
-          <span class="absolute left-16 px-3 py-1 rounded-md text-xs font-medium tracking-wide bg-forest-800 text-mint-100 border border-forest-700 shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200 whitespace-nowrap">
+          <span
+            class="absolute left-16 px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide bg-forest-900/95 text-mint-100 border border-forest-700 ring-1 ring-sage-400/25 shadow-xl opacity-0 -translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto transition-all duration-200 whitespace-nowrap"
+          >
             {{ item.label }}
           </span>
         </a>
@@ -38,19 +46,21 @@
     </aside>
 
     <!-- Mobile Floating Bottom Pill Navigation -->
-    <nav class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 py-2.5 px-4 rounded-full bg-forest-900/95 backdrop-blur-md border border-forest-700 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] overflow-x-auto">
+    <nav
+      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3.5 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/25 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] overflow-x-auto"
+    >
       <a
         v-for="item in navItems"
         :key="'mobile-' + item.id"
         :href="item.href"
         @click.prevent="scrollTo(item.href)"
-        class="relative flex flex-col items-center justify-center p-2 rounded-full transition-colors duration-200"
-        :class="activeSection === item.id ? 'text-mint-100 bg-forest-800 border border-sage-400/40 shadow-[0_0_10px_rgba(142,182,155,0.3)]' : 'text-sage-400/70 hover:text-mint-100'"
+        class="relative flex flex-col items-center justify-center p-2.5 rounded-full transition-all duration-200 active:scale-90"
+        :class="activeSection === item.id ? 'text-mint-100 bg-forest-800 border border-sage-400/50 shadow-[0_0_12px_rgba(142,182,155,0.35)]' : 'text-sage-400/70 hover:text-mint-100'"
       >
         <component :is="item.icon" class="w-5 h-5" />
         <span
           v-if="activeSection === item.id"
-          class="absolute -bottom-1 w-1 h-1 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
+          class="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
         ></span>
       </a>
     </nav>
@@ -58,7 +68,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, h } from 'vue';
+import { h } from 'vue';
 
 const props = defineProps({
   activeSection: {
@@ -110,4 +120,3 @@ const scrollTo = (href) => {
   }
 };
 </script>
-

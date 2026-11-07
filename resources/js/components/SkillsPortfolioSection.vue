@@ -1,25 +1,21 @@
 <template>
-  <section id="portfolio" class="relative py-20 z-10">
+  <div class="relative py-12 z-10 space-y-24">
     <!-- Part 1: My Skills (Progress Bars) -->
-    <div id="skills" class="mb-24">
-      <div class="text-center mb-12">
-        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-sage-400 uppercase bg-forest-900 border border-forest-700 rounded-full mb-3 shadow-[0_0_10px_rgba(142,182,155,0.15)]">
-          Core Competencies
-        </span>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-mint-100">
-          My Skills & <span class="text-sage-400">Proficiency</span>
-        </h2>
-        <p class="mt-3 text-sage-400/80 max-w-xl mx-auto text-sm sm:text-base">
-          Quantitative assessment of my engineering and interface development proficiencies.
-        </p>
-      </div>
-
+    <SectionContainer
+      id="skills"
+      badge="Core Competencies"
+      title="My Skills & <span class='text-sage-400'>Proficiency</span>"
+      description="Quantitative assessment of my engineering and interface development proficiencies."
+    >
       <!-- Glassmorphism Card with Illustration on Left & Progress Bars on Right -->
-      <div class="bg-forest-800/60 backdrop-blur-md border border-sage-400/25 rounded-2xl p-6 sm:p-10 shadow-[0_10px_35px_rgba(5,31,32,0.6)] relative overflow-hidden">
+      <GlassCard
+        variant="primary"
+        class="relative overflow-hidden"
+      >
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <!-- Left: Futuristic Illustration / Code Visualizer -->
           <div class="lg:col-span-5 flex flex-col items-center justify-center">
-            <div class="w-full max-w-sm bg-forest-950/90 border border-forest-700 rounded-2xl p-5 shadow-[0_0_25px_rgba(142,182,155,0.15)] relative">
+            <div class="w-full max-w-sm bg-forest-950/95 border border-forest-700 ring-1 ring-sage-400/20 rounded-2xl p-5 shadow-[0_0_25px_rgba(142,182,155,0.15)] relative">
               <!-- Window dots -->
               <div class="flex items-center gap-1.5 mb-4 pb-3 border-b border-forest-700/60">
                 <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
@@ -42,7 +38,7 @@
 
               <!-- Floating Accent Badge -->
               <div class="mt-5 p-3 rounded-xl bg-forest-900 border border-sage-400/30 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 shrink-0">
+                <div class="w-9 h-9 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 shrink-0 shadow-[0_0_8px_rgba(142,182,155,0.2)]">
                   <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -72,8 +68,8 @@
                 </span>
               </div>
 
-              <!-- Track & Bar -->
-              <div class="w-full h-3 rounded-full bg-forest-900 border border-forest-700/80 overflow-hidden p-0.5">
+              <!-- Track & Bar with Glow -->
+              <div class="w-full h-3 rounded-full bg-forest-900 border border-forest-700/80 overflow-hidden p-0.5 ring-1 ring-sage-400/10">
                 <div
                   class="h-full rounded-full bg-gradient-to-r from-forest-700 to-sage-400 shadow-[0_0_12px_rgba(142,182,155,0.5)] transition-all duration-1000 ease-out"
                   :style="{ width: `${skill.percentage}%` }"
@@ -82,32 +78,25 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </GlassCard>
+    </SectionContainer>
 
     <!-- Part 2: My Portfolio Grid (3x2) -->
-    <div>
-      <div class="text-center mb-10">
-        <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-sage-400 uppercase bg-forest-900 border border-forest-700 rounded-full mb-3 shadow-[0_0_10px_rgba(142,182,155,0.15)]">
-          Selected Works
-        </span>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-mint-100">
-          My <span class="text-sage-400">Portfolio</span>
-        </h2>
-        <p class="mt-3 text-sage-400/80 max-w-xl mx-auto text-sm sm:text-base">
-          Explore a curation of web applications, platforms, and interactive interfaces built with passion.
-        </p>
-      </div>
-
-      <!-- Category Filter Tabs -->
+    <SectionContainer
+      id="portfolio"
+      badge="Selected Works"
+      title="My <span class='text-sage-400'>Portfolio</span>"
+      description="Explore a curation of web applications, platforms, and interactive interfaces built with passion."
+    >
+      <!-- Category Filter Tabs with Micro-interactions -->
       <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
         <button
           v-for="cat in categories"
           :key="cat"
           @click="selectedCategory = cat"
           type="button"
-          class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300"
-          :class="selectedCategory === cat ? 'bg-forest-700 text-mint-100 border border-sage-400 shadow-[0_0_15px_rgba(142,182,155,0.3)]' : 'bg-forest-900/80 text-sage-400/70 border border-forest-700 hover:text-mint-100 hover:bg-forest-800'"
+          class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 active:scale-95"
+          :class="selectedCategory === cat ? 'bg-forest-700 text-mint-100 border border-sage-400 ring-1 ring-sage-400/30 shadow-[0_0_15px_rgba(142,182,155,0.3)]' : 'bg-forest-900/80 text-sage-400/70 border border-forest-700 hover:text-mint-100 hover:bg-forest-800'"
         >
           {{ cat }}
         </button>
@@ -115,19 +104,21 @@
 
       <!-- 3x2 Grid Display (6 Projects) -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
+        <GlassCard
           v-for="project in filteredProjects"
           :key="project.id || project.slug || project.title"
-          class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400 rounded-2xl overflow-hidden hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(142,182,155,0.25)] transition-all duration-300 flex flex-col justify-between"
+          variant="secondary"
+          hoverable
+          class="flex flex-col justify-between group overflow-hidden !p-0 transition-all duration-300 hover:-translate-y-1 hover:border-sage-400/80 ring-1 ring-transparent hover:ring-sage-400/30"
         >
           <!-- Thumbnail Image -->
           <div class="relative h-48 overflow-hidden border-b border-forest-700/80">
             <img
               :src="project.thumbnail_url || project.thumbnail || 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80'"
               :alt="project.title"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-forest-950 via-transparent to-transparent opacity-80"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-transparent to-transparent"></div>
             <!-- Category Tag -->
             <span class="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase bg-forest-950/80 text-sage-400 border border-forest-700 rounded-md backdrop-blur-md">
               {{ project.category }}
@@ -137,7 +128,7 @@
           <!-- Project Body -->
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="text-lg font-bold text-mint-100 group-hover:text-sage-400 transition-colors mb-2 line-clamp-1">
+              <h3 class="text-lg font-bold text-mint-100 group-hover:text-sage-400 transition-colors mb-2 line-clamp-1 tracking-tight">
                 {{ project.title }}
               </h3>
               <p class="text-xs text-mint-100/75 leading-relaxed line-clamp-2 mb-4">
@@ -149,7 +140,7 @@
                 <span
                   v-for="(tag, idx) in project.tech_stack"
                   :key="idx"
-                  class="bg-forest-700 text-mint-100 text-[11px] px-2.5 py-0.5 rounded-md font-medium border border-forest-700"
+                  class="bg-forest-700 text-mint-100 text-[11px] px-2.5 py-0.5 rounded-md font-medium border border-forest-700/60"
                 >
                   {{ tag }}
                 </span>
@@ -161,7 +152,7 @@
               <button
                 @click="openModal(project)"
                 type="button"
-                class="text-xs text-sage-400 font-semibold hover:text-mint-100 inline-flex items-center gap-1 group/btn"
+                class="text-xs text-sage-400 font-semibold hover:text-mint-100 inline-flex items-center gap-1 group/btn transition-colors"
               >
                 <span>Details</span>
                 <svg class="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -175,7 +166,7 @@
                   :href="project.url_repo"
                   target="_blank"
                   title="Source Code"
-                  class="w-8 h-8 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 hover:bg-forest-700 flex items-center justify-center transition-colors border border-forest-700"
+                  class="w-8 h-8 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 hover:bg-forest-700 flex items-center justify-center transition-all active:scale-90 border border-forest-700 hover:border-sage-400/50"
                 >
                   <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
@@ -186,7 +177,7 @@
                   :href="project.url_demo"
                   target="_blank"
                   title="Live Demo"
-                  class="w-8 h-8 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 hover:bg-forest-700 flex items-center justify-center transition-colors border border-forest-700"
+                  class="w-8 h-8 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 hover:bg-forest-700 flex items-center justify-center transition-all active:scale-90 border border-forest-700 hover:border-sage-400/50"
                 >
                   <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -195,35 +186,23 @@
               </div>
             </div>
           </div>
-        </div>
+        </GlassCard>
       </div>
-    </div>
+    </SectionContainer>
 
-    <!-- Detail Modal -->
-    <div
-      v-if="activeModalProject"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-950/80 backdrop-blur-md animate-fade-in"
-      @click.self="activeModalProject = null"
+    <!-- Detail Modal using AdminModal -->
+    <AdminModal
+      :show="!!activeModalProject"
+      :title="activeModalProject?.title || 'Project Detail'"
+      max-width="2xl"
+      @close="activeModalProject = null"
     >
-      <div class="relative w-full max-w-2xl bg-forest-900 border border-sage-400/40 rounded-2xl p-6 sm:p-8 shadow-[0_0_40px_rgba(142,182,155,0.3)] max-h-[90vh] overflow-y-auto">
-        <button
-          @click="activeModalProject = null"
-          type="button"
-          class="absolute top-5 right-5 w-8 h-8 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 hover:bg-forest-700 flex items-center justify-center transition-colors border border-forest-700"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <span class="text-xs uppercase tracking-wider text-sage-400 font-semibold font-mono">
+      <div v-if="activeModalProject" class="space-y-4">
+        <span class="inline-block px-2.5 py-0.5 text-xs uppercase tracking-wider text-sage-400 font-semibold font-mono bg-forest-800 rounded border border-forest-700">
           {{ activeModalProject.category }}
         </span>
-        <h3 class="text-2xl font-bold text-mint-100 mb-3 mt-1">
-          {{ activeModalProject.title }}
-        </h3>
 
-        <div class="rounded-xl overflow-hidden mb-5 border border-forest-700 max-h-72">
+        <div class="rounded-xl overflow-hidden border border-forest-700 max-h-72 ring-1 ring-sage-400/20">
           <img
             :src="activeModalProject.thumbnail_url || activeModalProject.thumbnail"
             :alt="activeModalProject.title"
@@ -231,12 +210,12 @@
           />
         </div>
 
-        <p class="text-sm text-mint-100/90 leading-relaxed mb-6 whitespace-pre-line">
+        <p class="text-sm text-mint-100/90 leading-relaxed whitespace-pre-line">
           {{ activeModalProject.description }}
         </p>
 
-        <div class="mb-6">
-          <span class="text-xs uppercase text-sage-400 font-semibold block mb-2">Technologies Used:</span>
+        <div>
+          <span class="text-xs uppercase text-sage-400 font-semibold block mb-2 font-mono">Technologies Used:</span>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="(tech, i) in activeModalProject.tech_stack"
@@ -247,38 +226,58 @@
             </span>
           </div>
         </div>
-
-        <div class="flex items-center gap-3 pt-4 border-t border-forest-700">
-          <a
-            v-if="activeModalProject.url_demo"
-            :href="activeModalProject.url_demo"
-            target="_blank"
-            class="px-5 py-2.5 rounded-full bg-forest-700 text-mint-100 font-semibold text-xs border border-sage-400 shadow-[0_0_15px_rgba(142,182,155,0.3)] hover:bg-forest-700/80 transition-all inline-flex items-center gap-2"
-          >
-            <span>Visit Live Demo</span>
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-          <a
-            v-if="activeModalProject.url_repo"
-            :href="activeModalProject.url_repo"
-            target="_blank"
-            class="px-5 py-2.5 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 font-medium text-xs border border-forest-700 hover:border-sage-400 transition-colors inline-flex items-center gap-2"
-          >
-            <span>Repository</span>
-            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-            </svg>
-          </a>
-        </div>
       </div>
-    </div>
-  </section>
+
+      <template #footer>
+        <div v-if="activeModalProject" class="w-full flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <BaseButton
+              v-if="activeModalProject.url_demo"
+              variant="primary"
+              size="sm"
+              as="a"
+              :href="activeModalProject.url_demo"
+              target="_blank"
+            >
+              <span>Visit Demo</span>
+              <template #icon-right>
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </template>
+            </BaseButton>
+
+            <BaseButton
+              v-if="activeModalProject.url_repo"
+              variant="glass"
+              size="sm"
+              as="a"
+              :href="activeModalProject.url_repo"
+              target="_blank"
+            >
+              <span>Repository</span>
+            </BaseButton>
+          </div>
+
+          <BaseButton
+            variant="ghost"
+            size="sm"
+            @click="activeModalProject = null"
+          >
+            <span>Close</span>
+          </BaseButton>
+        </div>
+      </template>
+    </AdminModal>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
+import SectionContainer from './ui/SectionContainer.vue';
+import GlassCard from './ui/GlassCard.vue';
+import BaseButton from './ui/BaseButton.vue';
+import AdminModal from './ui/AdminModal.vue';
 
 const props = defineProps({
   skills: {
@@ -376,7 +375,6 @@ const defaultProjects = [
 
 const allProjects = computed(() => {
   if (props.projects && props.projects.length > 0) {
-    // If fewer than 6, blend with defaults to maintain clean 3x2 grid
     if (props.projects.length >= 6) return props.projects;
     const combined = [...props.projects];
     for (const dp of defaultProjects) {
@@ -409,4 +407,3 @@ const openModal = (project) => {
   activeModalProject.value = project;
 };
 </script>
-

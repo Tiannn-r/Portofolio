@@ -1,30 +1,25 @@
 <template>
-  <section id="contact" class="relative py-20 z-10">
-    <!-- Section Heading -->
-    <div class="text-center mb-12">
-      <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-sage-400 uppercase bg-forest-900 border border-forest-700 rounded-full mb-3 shadow-[0_0_10px_rgba(142,182,155,0.15)]">
-        Get In Touch
-      </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-mint-100">
-        Let's Connect & <span class="text-sage-400">Collaborate</span>
-      </h2>
-      <p class="mt-3 text-sage-400/80 max-w-xl mx-auto text-sm sm:text-base">
-        Have an upcoming project, freelance inquiry, or architectural challenge to discuss? Leave a message below!
-      </p>
-    </div>
-
+  <SectionContainer
+    id="contact"
+    badge="Get In Touch"
+    title="Let's Connect & <span class='text-sage-400'>Collaborate</span>"
+    description="Have an upcoming project, freelance inquiry, or architectural challenge to discuss? Leave a message below!"
+  >
     <!-- Center Glassmorphism Contact Card -->
-    <div class="max-w-3xl mx-auto bg-forest-800/60 backdrop-blur-md border border-sage-400/25 rounded-2xl p-6 sm:p-10 shadow-[0_10px_35px_rgba(5,31,32,0.6)] relative overflow-hidden">
-      <!-- Background Ambient Glow -->
+    <GlassCard
+      variant="primary"
+      class="max-w-3xl mx-auto relative overflow-hidden"
+    >
+      <!-- Background Ambient Radial Glow -->
       <div class="absolute -top-20 -left-20 w-64 h-64 bg-sage-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Quick Contact Badges Row -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 relative z-10">
         <a
           :href="'mailto:' + (profile?.email || 'ibnhu.work@gmail.com')"
-          class="flex items-center gap-3 p-3 rounded-xl bg-forest-900/90 border border-forest-700 hover:border-sage-400 transition-colors group"
+          class="flex items-center gap-3 p-3 rounded-xl bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 transition-all duration-300 group hover:-translate-y-0.5"
         >
-          <div class="w-8 h-8 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 group-hover:scale-110 transition-transform">
+          <div class="w-8 h-8 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(142,182,155,0.2)]">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
@@ -36,7 +31,7 @@
         </a>
 
         <div class="flex items-center gap-3 p-3 rounded-xl bg-forest-900/90 border border-forest-700">
-          <div class="w-8 h-8 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400">
+          <div class="w-8 h-8 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 shadow-[0_0_8px_rgba(142,182,155,0.2)]">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
@@ -48,7 +43,7 @@
         </div>
 
         <div class="flex items-center gap-3 p-3 rounded-xl bg-forest-900/90 border border-forest-700">
-          <div class="w-8 h-8 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400">
+          <div class="w-8 h-8 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 shadow-[0_0_8px_rgba(142,182,155,0.2)]">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -64,15 +59,15 @@
       <!-- Feedback Alert Notification -->
       <div
         v-if="feedback.message"
-        class="mb-6 p-4 rounded-xl flex items-center gap-3 transition-all"
-        :class="feedback.success ? 'bg-forest-900 border border-sage-400 text-mint-100 shadow-[0_0_15px_rgba(142,182,155,0.3)]' : 'bg-red-950/80 border border-red-500/50 text-red-200'"
+        class="mb-6 p-4 rounded-xl flex items-center gap-3 transition-all relative z-10"
+        :class="feedback.success ? 'bg-forest-900 border border-sage-400 text-mint-100 shadow-[0_0_15px_rgba(142,182,155,0.3)] ring-1 ring-sage-400/30' : 'bg-red-950/80 border border-red-500/50 text-red-200'"
       >
         <span class="w-2.5 h-2.5 rounded-full shrink-0" :class="feedback.success ? 'bg-sage-400 shadow-[0_0_8px_#8EB69B]' : 'bg-red-400'"></span>
         <span class="text-sm font-medium">{{ feedback.message }}</span>
       </div>
 
       <!-- Contact Form -->
-      <form @submit.prevent="handleSubmit" class="space-y-6">
+      <form @submit.prevent="submit" class="space-y-6 relative z-10">
         <!-- 2 Column Inputs for Name & Email -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
@@ -121,47 +116,47 @@
 
         <!-- 2 Parallel Buttons at Bottom: SEND MESSAGE & DOWNLOAD CV -->
         <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
-          <!-- Button 1: SEND MESSAGE -->
-          <button
+          <!-- Button 1: SEND MESSAGE using BaseButton -->
+          <BaseButton
             type="submit"
-            :disabled="isSubmitting"
-            class="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-forest-700 text-mint-100 font-semibold border-2 border-sage-400 shadow-[0_0_20px_rgba(142,182,155,0.3)] hover:shadow-[0_0_30px_rgba(142,182,155,0.5)] hover:bg-forest-700/80 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group"
+            variant="primary"
+            size="lg"
+            :loading="isSubmitting"
+            class="w-full sm:flex-1"
           >
-            <svg
-              v-if="isSubmitting"
-              class="animate-spin -ml-1 mr-2 h-4 w-4 text-mint-100"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-            </svg>
             <span>{{ isSubmitting ? 'SENDING...' : 'SEND MESSAGE' }}</span>
-            <svg
-              v-if="!isSubmitting"
-              class="w-4 h-4 text-sage-400 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+            <template #icon-right>
+              <svg
+                v-if="!isSubmitting"
+                class="w-4 h-4 text-mint-100 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </template>
+          </BaseButton>
 
-          <!-- Button 2: DOWNLOAD CV -->
-          <a
+          <!-- Button 2: DOWNLOAD CV using BaseButton -->
+          <BaseButton
+            variant="secondary"
+            size="lg"
+            as="a"
             :href="profile?.cv_url || '#hero'"
             :download="profile?.cv_url ? 'CV-Muhamad-Ibnhu.pdf' : null"
-            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#163832] border border-[#235347] text-[#8EB69B] hover:border-sage-400 hover:text-mint-100 hover:shadow-[0_0_15px_rgba(142,182,155,0.25)] font-medium transition-all duration-300"
+            class="w-full sm:w-auto"
           >
-            <svg class="w-4 h-4 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
+            <template #icon-left>
+              <svg class="w-4 h-4 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </template>
             <span>DOWNLOAD CV</span>
-          </a>
+          </BaseButton>
         </div>
       </form>
-    </div>
+    </GlassCard>
 
     <!-- Elegant Footer -->
     <footer class="mt-24 pt-10 border-t border-forest-700/60 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-sage-400/80">
@@ -210,10 +205,10 @@
         </a>
       </div>
 
-      <!-- Back To Top -->
+      <!-- Back To Top Button with Micro-interaction -->
       <a
         href="#hero"
-        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-forest-900 border border-forest-700 hover:border-sage-400 text-sage-400 hover:text-mint-100 transition-colors text-xs font-mono"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-forest-900 border border-forest-700 hover:border-sage-400 text-sage-400 hover:text-mint-100 transition-all text-xs font-mono active:scale-95 shadow-[0_0_10px_rgba(5,31,32,0.5)]"
       >
         <span>Back to Top</span>
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -221,12 +216,14 @@
         </svg>
       </a>
     </footer>
-  </section>
+  </SectionContainer>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
+import SectionContainer from './ui/SectionContainer.vue';
+import GlassCard from './ui/GlassCard.vue';
+import BaseButton from './ui/BaseButton.vue';
+import { useContactSubmission } from '../composables/useContactSubmission';
 
 const props = defineProps({
   profile: {
@@ -235,52 +232,10 @@ const props = defineProps({
   },
 });
 
-const form = ref({
-  name: '',
-  email: '',
-  message: '',
-});
-
-const isSubmitting = ref(false);
-const feedback = ref({
-  message: '',
-  success: false,
-});
-
-const handleSubmit = async () => {
-  isSubmitting.value = true;
-  feedback.value = { message: '', success: false };
-
-  try {
-    const response = await axios.post('/api/contact', {
-      name: form.value.name,
-      email: form.value.email,
-      message: form.value.message,
-    });
-
-    if (response.data && response.data.success) {
-      feedback.value = {
-        message: response.data.message || 'Terima kasih, pesan Anda telah berhasil dikirim!',
-        success: true,
-      };
-      form.value = { name: '', email: '', message: '' };
-    } else {
-      feedback.value = {
-        message: 'Gagal mengirim pesan. Silakan coba kembali.',
-        success: false,
-      };
-    }
-  } catch (error) {
-    const errorMsg =
-      error.response?.data?.message ||
-      'Terjadi kesalahan saat mengirim pesan. Pastikan semua bidang terisi dengan benar.';
-    feedback.value = {
-      message: errorMsg,
-      success: false,
-    };
-  } finally {
-    isSubmitting.value = false;
-  }
-};
+const {
+  form,
+  isSubmitting,
+  feedback,
+  submit,
+} = useContactSubmission();
 </script>
-

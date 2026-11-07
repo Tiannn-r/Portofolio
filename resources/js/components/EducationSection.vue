@@ -1,20 +1,15 @@
 <template>
-  <section id="education" class="relative py-20 z-10">
-    <!-- Section Heading -->
-    <div class="text-center mb-12">
-      <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-sage-400 uppercase bg-forest-900 border border-forest-700 rounded-full mb-3 shadow-[0_0_10px_rgba(142,182,155,0.15)]">
-        Academic & Credentials
-      </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-mint-100">
-        Education & <span class="text-sage-400">Certifications</span>
-      </h2>
-      <p class="mt-3 text-sage-400/80 max-w-xl mx-auto text-sm sm:text-base">
-        Formal academic foundations and professional certifications backing up practical craftsmanship.
-      </p>
-    </div>
-
+  <SectionContainer
+    id="education"
+    badge="Academic & Credentials"
+    title="Education & <span class='text-sage-400'>Certifications</span>"
+    description="Formal academic foundations and professional certifications backing up practical craftsmanship."
+  >
     <!-- Full Glassmorphism Card with 2-Column Layout -->
-    <div class="bg-forest-800/60 backdrop-blur-md border border-sage-400/25 rounded-2xl p-6 sm:p-10 shadow-[0_10px_35px_rgba(5,31,32,0.6)] relative overflow-hidden">
+    <GlassCard
+      variant="primary"
+      class="relative overflow-hidden"
+    >
       <!-- Background Ambient Glow -->
       <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-sage-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -29,7 +24,7 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-xl sm:text-2xl font-bold text-mint-100">
+              <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
                 Formal Education
               </h3>
               <span class="text-xs text-sage-400">Academic Degrees & Majors</span>
@@ -41,7 +36,7 @@
             <div
               v-for="(item, idx) in educationList"
               :key="item.id || idx"
-              class="group bg-forest-900 border border-forest-700 hover:border-sage-400 rounded-xl p-5 hover:bg-forest-800/80 transition-all duration-300 hover:shadow-[0_0_18px_rgba(142,182,155,0.2)] relative pl-14"
+              class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 rounded-xl p-5 hover:bg-forest-800/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(142,182,155,0.2)] ring-1 ring-transparent hover:ring-sage-400/30 relative pl-14"
             >
               <!-- Icon Indicator with Sage Glow -->
               <div class="w-8 h-8 rounded-full bg-forest-800 border border-sage-400 flex items-center justify-center text-sage-400 absolute left-4 top-5 shadow-[0_0_8px_#8EB69B] group-hover:scale-110 transition-transform">
@@ -51,7 +46,7 @@
               </div>
 
               <!-- Content -->
-              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-forest-950 text-sage-400 border border-forest-700 mb-1.5">
+              <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-forest-950 text-sage-400 border border-forest-700/80 mb-1.5 ring-1 ring-sage-400/10">
                 {{ item.period }}
               </span>
               <h4 class="text-base sm:text-lg font-bold text-mint-100 group-hover:text-sage-400 transition-colors">
@@ -77,7 +72,7 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-xl sm:text-2xl font-bold text-mint-100">
+              <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
                 Certifications
               </h3>
               <span class="text-xs text-sage-400">Industry & Professional Badges</span>
@@ -89,7 +84,7 @@
             <div
               v-for="(item, idx) in certificationList"
               :key="item.id || idx"
-              class="group bg-forest-900 border border-forest-700 hover:border-sage-400 rounded-xl p-5 hover:bg-forest-800/80 transition-all duration-300 hover:shadow-[0_0_18px_rgba(142,182,155,0.2)] relative pl-14"
+              class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 rounded-xl p-5 hover:bg-forest-800/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(142,182,155,0.2)] ring-1 ring-transparent hover:ring-sage-400/30 relative pl-14"
             >
               <!-- Icon Indicator with Sage Glow -->
               <div class="w-8 h-8 rounded-full bg-forest-800 border border-sage-400 flex items-center justify-center text-sage-400 absolute left-4 top-5 shadow-[0_0_8px_#8EB69B] group-hover:scale-110 transition-transform">
@@ -99,7 +94,7 @@
               </div>
 
               <!-- Content -->
-              <span class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-forest-950 text-sage-400 border border-forest-700 mb-1.5">
+              <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-forest-950 text-sage-400 border border-forest-700/80 mb-1.5 ring-1 ring-sage-400/10">
                 {{ item.period }}
               </span>
               <h4 class="text-base sm:text-lg font-bold text-mint-100 group-hover:text-sage-400 transition-colors">
@@ -115,12 +110,14 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </GlassCard>
+  </SectionContainer>
 </template>
 
 <script setup>
 import { computed } from 'vue';
+import SectionContainer from './ui/SectionContainer.vue';
+import GlassCard from './ui/GlassCard.vue';
 
 const props = defineProps({
   educations: {
@@ -177,4 +174,3 @@ const certificationList = computed(() => {
   return defaultCertifications;
 });
 </script>
-
