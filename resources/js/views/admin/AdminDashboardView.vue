@@ -23,21 +23,8 @@
       />
 
       <!-- Content Area on Background #051F20 -->
-      <main class="flex-1 p-4 sm:p-8 space-y-8 max-w-7xl w-full mx-auto">
-        <!-- Toast Alert Notification -->
-        <div
-          v-if="toastMessage"
-          class="p-4 rounded-xl flex items-center justify-between text-xs font-semibold shadow-lg transition-all animate-fade-in"
-          :class="toastType === 'success' ? 'bg-[#0B2B26] border border-[#8EB69B] text-[#DAF1DE] shadow-[0_0_15px_rgba(142,182,155,0.25)]' : 'bg-red-950/90 border border-red-500/50 text-red-200'"
-        >
-          <div class="flex items-center gap-2.5">
-            <span class="w-2.5 h-2.5 rounded-full" :class="toastType === 'success' ? 'bg-[#8EB69B] shadow-[0_0_8px_#8EB69B]' : 'bg-red-400'"></span>
-            <span>{{ toastMessage }}</span>
-          </div>
-          <button @click="toastMessage = ''" class="text-xs text-[#8EB69B] hover:text-[#DAF1DE]">✕</button>
-        </div>
-
-        <!-- 2. Hero Summary Card (Always present or highlighted) -->
+      <main class="flex-1 p-4 sm:p-8 space-y-8 max-w-7xl w-full mx-auto animate-fade-in">
+        <!-- 2. Hero Summary Card -->
         <HeroSummaryCard
           :profile="profile"
           @edit-profile="isProfileModalOpen = true"
@@ -57,15 +44,15 @@
             :key="tab.id"
             type="button"
             @click="handleTabChange(tab.id)"
-            class="px-4 py-2 rounded-xl text-xs font-bold tracking-wide uppercase transition-all whitespace-nowrap flex items-center gap-2"
+            class="px-4 py-2 rounded-xl text-xs font-bold tracking-wide uppercase transition-all duration-300 whitespace-nowrap flex items-center gap-2 active:scale-95"
             :class="activeTab === tab.id
-              ? 'bg-[#235347] text-[#DAF1DE] border border-[#8EB69B] shadow-[0_0_12px_rgba(142,182,155,0.3)]'
+              ? 'bg-[#235347] text-[#DAF1DE] border border-[#8EB69B] shadow-[0_0_12px_rgba(142,182,155,0.3)] ring-1 ring-sage-400/20'
               : 'bg-[#0B2B26] text-[#8EB69B] border border-[#235347] hover:text-[#DAF1DE] hover:bg-[#163832]'"
           >
             <span>{{ tab.label }}</span>
             <span
               v-if="tab.count !== undefined"
-              class="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-[#051F20] text-[#8EB69B]"
+              class="px-1.5 py-0.5 rounded-md text-[10px] font-mono bg-[#051F20] text-[#8EB69B] ring-1 ring-sage-400/10"
             >
               {{ tab.count }}
             </span>
@@ -150,27 +137,16 @@ import EducationsCrud from '../../components/admin/EducationsCrud.vue';
 import ContactInboxSection from '../../components/admin/ContactInboxSection.vue';
 import ProfileEditModal from '../../components/admin/ProfileEditModal.vue';
 import SocialLinksModal from '../../components/admin/SocialLinksModal.vue';
+import { useToast } from '../../composables/useToast';
 
 const route = useRoute();
 const router = useRouter();
+const { success, error: toastError } = useToast();
 
 const isSidebarOpen = ref(false);
 const isProfileModalOpen = ref(false);
 const isSocialModalOpen = ref(false);
 const activeTab = ref('dashboard');
-
-const toastMessage = ref('');
-const toastType = ref('success');
-let toastTimer = null;
-
-const showToast = (msg, type = 'success') => {
-  toastMessage.value = msg;
-  toastType.value = type;
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toastMessage.value = '';
-  }, 4000);
-};
 
 // Data States
 const profile = ref({});
@@ -235,10 +211,10 @@ const handleToggleFreelance = async () => {
     await axios.post('/api/admin/profile', {
       is_available: newStatus ? 1 : 0,
     });
-    showToast(`Status ketersediaan freelance diubah menjadi: ${newStatus ? 'TERSEDIA' : 'TIDAK TERSEDIA'}`);
+    success(`Status freelance diubah: ${newStatus ? 'TERSEDIA' : 'TIDAK TERSEDIA'}`);
   } catch (err) {
     console.error('Error toggling freelance status:', err);
-    showToast('Gagal mengubah status freelance.', 'error');
+    toastError('Gagal mengubah status freelance.');
   }
 };
 
@@ -250,11 +226,11 @@ const handleCvUpload = async (file) => {
     const res = await axios.post('/api/admin/profile', formData);
     if (res.data?.success) {
       profile.value = res.data.data;
-      showToast('File CV (PDF) berhasil diunggah!');
+      success('File CV (PDF) berhasil diunggah!');
     }
   } catch (err) {
     console.error('Error uploading CV:', err);
-    showToast('Gagal mengunggah file CV (Pastikan format PDF max 5MB).', 'error');
+    toastError('Gagal mengunggah file CV (Pastikan format PDF max 5MB).');
   }
 };
 
@@ -266,11 +242,11 @@ const handleAvatarUpload = async (file) => {
     const res = await axios.post('/api/admin/profile', formData);
     if (res.data?.success) {
       profile.value = res.data.data;
-      showToast('Foto profil berhasil diperbarui!');
+      success('Foto profil berhasil diperbarui!');
     }
   } catch (err) {
     console.error('Error uploading avatar:', err);
-    showToast('Gagal mengunggah foto profil.', 'error');
+    toastError('Gagal mengunggah foto profil.');
   }
 };
 
@@ -280,12 +256,12 @@ const handleSaveMetrics = async (metrics, callback) => {
     const res = await axios.post('/api/admin/profile', metrics);
     if (res.data?.success) {
       profile.value = res.data.data;
-      showToast('Angka statistik berhasil diperbarui!');
+      success('Angka statistik berhasil diperbarui!');
       if (callback) callback();
     }
   } catch (err) {
     console.error('Error saving metrics:', err);
-    showToast('Gagal menyimpan metrik statistik.', 'error');
+    toastError('Gagal menyimpan metrik statistik.');
     if (callback) callback();
   }
 };
@@ -306,12 +282,12 @@ const handleSaveProfile = async (formDataPayload, callback) => {
     const res = await axios.post('/api/admin/profile', formData);
     if (res.data?.success) {
       profile.value = res.data.data;
-      showToast('Profil berhasil disimpan!');
+      success('Profil berhasil disimpan!');
       if (callback) callback();
     }
   } catch (err) {
     console.error('Error updating profile:', err);
-    showToast('Gagal memperbarui profil.', 'error');
+    toastError('Gagal memperbarui profil.');
     if (callback) callback();
   }
 };
@@ -324,24 +300,22 @@ const handleSaveSocialLinks = async (links, callback) => {
     });
     if (res.data?.success) {
       profile.value = res.data.data;
-      showToast('Tautan sosial media berhasil diperbarui!');
+      success('Tautan sosial media berhasil diperbarui!');
       if (callback) callback();
     }
   } catch (err) {
     console.error('Error updating social links:', err);
-    showToast('Gagal memperbarui tautan sosial media.', 'error');
+    toastError('Gagal memperbarui tautan sosial media.');
     if (callback) callback();
   }
 };
 
 onMounted(() => {
-  // Sync tab with URL param if available
   const tabParam = route.params.tab;
   if (tabParam && ['dashboard', 'projects', 'services', 'skills', 'educations', 'messages', 'profile'].includes(tabParam)) {
     activeTab.value = tabParam;
   }
 
-  // Load user from storage
   const savedUser = localStorage.getItem('admin_user');
   if (savedUser) {
     try {
@@ -353,4 +327,3 @@ onMounted(() => {
   fetchData();
 });
 </script>
-

@@ -1,11 +1,11 @@
 <template>
-  <div class="rounded-2xl p-6 sm:p-7 bg-gradient-to-r from-[#163832] via-[#235347] to-[#8EB69B] shadow-[0_10px_35px_rgba(22,56,50,0.5)] border border-[#8EB69B]/40 relative overflow-hidden group">
+  <div class="rounded-2xl p-6 sm:p-7 bg-gradient-to-r from-[#163832] via-[#235347] to-[#8EB69B] shadow-[0_10px_35px_rgba(22,56,50,0.5)] border border-[#8EB69B]/40 ring-1 ring-[#8EB69B]/25 relative overflow-hidden group">
     <!-- Ornaments inside banner -->
     <div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
 
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5 border-b border-[#DAF1DE]/20 pb-3">
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-[#DAF1DE] shadow-[0_0_8px_#DAF1DE]"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-[#DAF1DE] shadow-[0_0_8px_#DAF1DE] animate-pulse"></span>
         <h3 class="text-sm font-bold uppercase tracking-wider text-[#DAF1DE]">
           Statistik Utama Portofolio (Live Metrics)
         </h3>
@@ -13,7 +13,7 @@
       <button
         type="button"
         @click="isEditing = !isEditing"
-        class="self-start sm:self-auto px-3.5 py-1 rounded-full bg-[#051F20]/50 hover:bg-[#051F20] text-[#DAF1DE] text-xs font-semibold border border-[#DAF1DE]/30 transition-all flex items-center gap-1.5"
+        class="self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-[#051F20]/50 hover:bg-[#051F20] text-[#DAF1DE] text-xs font-semibold border border-[#DAF1DE]/30 transition-all flex items-center gap-1.5 active:scale-95"
       >
         <svg class="w-3.5 h-3.5 text-[#DAF1DE]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -22,10 +22,10 @@
       </button>
     </div>
 
-    <!-- 4 Metrics Columns Display Mode -->
+    <!-- 4 Metrics Columns Display Mode with Micro-interactions -->
     <div v-if="!isEditing" class="grid grid-cols-2 md:grid-cols-4 gap-5 text-center">
       <!-- Metric 1: Happy Clients -->
-      <div class="p-3.5 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center">
+      <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
         <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -38,7 +38,7 @@
       </div>
 
       <!-- Metric 2: Projects Completed -->
-      <div class="p-3.5 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center">
+      <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
         <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
@@ -51,7 +51,7 @@
       </div>
 
       <!-- Metric 3: Years Experience -->
-      <div class="p-3.5 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center">
+      <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
         <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -64,7 +64,7 @@
       </div>
 
       <!-- Metric 4: Awards Received -->
-      <div class="p-3.5 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center">
+      <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
         <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -122,13 +122,15 @@
             required
             class="w-full bg-[#051F20]/80 border border-white/20 text-[#DAF1DE] rounded-xl px-3 py-2 text-sm font-mono outline-none focus:border-[#DAF1DE]"
           />
-          <button
+          <BaseButton
             type="submit"
-            :disabled="saving"
-            class="px-4 py-2 rounded-xl bg-[#051F20] hover:bg-[#163832] text-[#DAF1DE] font-bold text-xs uppercase transition-colors shrink-0 border border-white/20"
+            variant="primary"
+            size="sm"
+            :loading="saving"
+            class="shrink-0"
           >
-            {{ saving ? '...' : 'Simpan' }}
-          </button>
+            <span>Simpan</span>
+          </BaseButton>
         </div>
       </div>
     </form>
@@ -137,6 +139,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import BaseButton from '../ui/BaseButton.vue';
 
 const props = defineProps({
   profile: {
@@ -161,10 +164,12 @@ watch(
   () => props.profile,
   (newVal) => {
     if (newVal) {
-      form.value.happy_clients = newVal.happy_clients ?? 18;
-      form.value.projects_completed = newVal.projects_completed ?? 24;
-      form.value.years_experience = newVal.years_experience ?? 3;
-      form.value.awards_received = newVal.awards_received ?? 5;
+      form.value = {
+        happy_clients: newVal.happy_clients ?? 18,
+        projects_completed: newVal.projects_completed ?? 24,
+        years_experience: newVal.years_experience ?? 3,
+        awards_received: newVal.awards_received ?? 5,
+      };
     }
   },
   { immediate: true }
@@ -178,4 +183,3 @@ const saveStats = () => {
   });
 };
 </script>
-

@@ -7,7 +7,7 @@
     <div class="relative w-full max-w-md z-10">
       <!-- Brand Logo / Badge -->
       <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-forest-900 border border-sage-400/50 shadow-[0_0_20px_rgba(142,182,155,0.3)] mb-4">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-forest-900 border border-sage-400/50 shadow-[0_0_20px_rgba(142,182,155,0.3)] mb-4 ring-1 ring-sage-400/30">
           <span class="text-xl font-extrabold text-sage-400 tracking-wider">MI</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight">
@@ -18,8 +18,8 @@
         </p>
       </div>
 
-      <!-- Login Glassmorphism Card -->
-      <div class="bg-forest-900/90 backdrop-blur-md border border-forest-700 rounded-2xl p-6 sm:p-8 shadow-[0_15px_40px_rgba(5,31,32,0.8)]">
+      <!-- Login GlassCard -->
+      <GlassCard variant="primary" class="p-6 sm:p-8">
         <!-- Error Alert -->
         <div
           v-if="errorMessage"
@@ -43,7 +43,7 @@
                 required
                 autocomplete="email"
                 placeholder="admin@portofolio.test"
-                class="w-full bg-forest-800/80 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-2.5 outline-none text-sm transition-all"
+                class="w-full bg-forest-800/80 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-2.5 outline-none text-sm transition-all shadow-inner"
               />
             </div>
           </div>
@@ -70,7 +70,7 @@
                 required
                 autocomplete="current-password"
                 placeholder="••••••••••••"
-                class="w-full bg-forest-800/80 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-2.5 outline-none text-sm transition-all"
+                class="w-full bg-forest-800/80 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-2.5 outline-none text-sm transition-all shadow-inner"
               />
             </div>
           </div>
@@ -81,38 +81,31 @@
             <span class="text-mint-100/90 font-semibold">password123</span>
           </div>
 
-          <!-- Submit Button -->
-          <button
+          <!-- Submit Button using BaseButton -->
+          <BaseButton
             type="submit"
-            :disabled="loading"
-            class="w-full mt-2 py-3 px-6 rounded-full bg-gradient-to-r from-forest-800 via-forest-700 to-sage-400 text-mint-100 font-bold text-sm tracking-wide uppercase shadow-[0_0_20px_rgba(142,182,155,0.3)] hover:shadow-[0_0_30px_rgba(142,182,155,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            variant="gradient"
+            size="lg"
+            :loading="loading"
+            class="w-full mt-2"
           >
-            <svg
-              v-if="loading"
-              class="animate-spin -ml-1 mr-2 h-4 w-4 text-mint-100"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-            </svg>
             <span>{{ loading ? 'Signing in...' : 'Sign In to Dashboard' }}</span>
-          </button>
+          </BaseButton>
         </form>
 
         <!-- Back to Website Link -->
         <div class="mt-6 pt-5 border-t border-forest-700/60 text-center">
           <router-link
             to="/"
-            class="inline-flex items-center gap-1.5 text-xs text-sage-400 hover:text-mint-100 transition-colors"
+            class="inline-flex items-center gap-1.5 text-xs text-sage-400 hover:text-mint-100 transition-colors group"
           >
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             <span>Back to Public Portfolio</span>
           </router-link>
         </div>
-      </div>
+      </GlassCard>
     </div>
   </div>
 </template>
@@ -121,6 +114,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import GlassCard from '../../components/ui/GlassCard.vue';
+import BaseButton from '../../components/ui/BaseButton.vue';
 
 const router = useRouter();
 
@@ -143,30 +138,20 @@ const handleLogin = async () => {
       password: form.value.password,
     });
 
-    if (response.data && response.data.success) {
-      const { token, user } = response.data.data;
-
-      // Store auth in localStorage
-      localStorage.setItem('admin_token', token);
-      localStorage.setItem('admin_user', JSON.stringify(user));
-
-      // Inject to Axios defaults immediately
-      window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      // Redirect to Admin Dashboard
-      router.push('/admin/dashboard');
+    if (response.data && response.data.token) {
+      localStorage.setItem('admin_token', response.data.token);
+      localStorage.setItem('admin_user', JSON.stringify(response.data.user));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      router.push('/admin');
     } else {
-      errorMessage.value = response.data.message || 'Login gagal, periksa email dan password Anda.';
+      errorMessage.value = 'Respon autentikasi tidak valid.';
     }
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.message) {
-      errorMessage.value = error.response.data.message;
-    } else {
-      errorMessage.value = 'Kredensial tidak valid atau server bermasalah.';
-    }
+    errorMessage.value =
+      error.response?.data?.message ||
+      'Kredensial tidak valid. Silakan periksa kembali email & password Anda.';
   } finally {
     loading.value = false;
   }
 };
 </script>
-
