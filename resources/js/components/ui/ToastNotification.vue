@@ -65,3 +65,4 @@ const getDotClasses = (type) => {
   }
 };
 </script>
+

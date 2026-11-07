@@ -5,20 +5,25 @@
       <!-- Badge / Pill Tag Slot -->
       <div v-if="$slots.badge || badge" class="mb-3">
         <slot name="badge">
-          <span class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-[#8EB69B] uppercase bg-[#0B2B26] border border-[#235347] rounded-full shadow-[0_0_10px_rgba(142,182,155,0.15)]">
-            {{ badge }}
-          </span>
+          <span
+            class="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-[#8EB69B] uppercase bg-[#0B2B26] border border-[#235347] rounded-full shadow-[0_0_10px_rgba(142,182,155,0.15)] ring-1 ring-sage-400/20"
+            v-html="badge"
+          ></span>
         </slot>
       </div>
 
       <!-- Title Slot -->
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#DAF1DE] tracking-tight">
-        <slot name="title">{{ title }}</slot>
+        <slot name="title">
+          <span v-html="title"></span>
+        </slot>
       </h2>
 
       <!-- Description Subtitle Slot -->
       <p v-if="$slots.description || description" class="mt-3.5 text-sm sm:text-base text-[#8EB69B]/90 leading-relaxed">
-        <slot name="description">{{ description }}</slot>
+        <slot name="description">
+          <span v-html="description"></span>
+        </slot>
       </p>
     </div>
 
@@ -54,6 +59,13 @@ const props = defineProps({
 const slots = useSlots();
 
 const hasHeader = computed(() => {
-  return props.title || props.badge || props.description || slots.title || slots.badge || slots.description;
+  return (
+    !!props.badge ||
+    !!props.title ||
+    !!props.description ||
+    !!slots.badge ||
+    !!slots.title ||
+    !!slots.description
+  );
 });
 </script>

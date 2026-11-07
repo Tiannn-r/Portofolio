@@ -111,3 +111,4 @@ const interactiveClasses = computed(() => {
     : 'hover:-translate-y-0.5 active:scale-95';
 });
 </script>
+

@@ -65,3 +65,4 @@ export function useTypingEffect(wordsSource, options = {}) {
     isTyping,
   };
 }
+

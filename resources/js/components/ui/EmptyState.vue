@@ -11,17 +11,23 @@
 
     <!-- Title -->
     <h4 class="text-base font-bold text-[#DAF1DE] mb-1">
-      <slot name="title">{{ title }}</slot>
+      <slot name="title">
+        <span v-html="title"></span>
+      </slot>
     </h4>
 
     <!-- Description -->
     <p class="text-xs text-[#8EB69B] max-w-sm leading-relaxed mb-5">
-      <slot name="description">{{ description }}</slot>
+      <slot name="description">
+        <span v-html="description"></span>
+      </slot>
     </p>
 
     <!-- Action Button Slot -->
-    <div v-if="$slots.action">
-      <slot name="action" />
+    <div v-if="$slots.action || $slots.default">
+      <slot name="action">
+        <slot />
+      </slot>
     </div>
   </div>
 </template>

@@ -30,8 +30,8 @@
             <div class="flex items-center justify-between pb-3.5 mb-5 border-b border-[#235347]">
               <div>
                 <slot name="header">
-                  <h3 class="text-lg sm:text-xl font-bold text-[#DAF1DE]">{{ title }}</h3>
-                  <p v-if="subtitle" class="text-xs text-[#8EB69B] mt-0.5">{{ subtitle }}</p>
+                  <h3 class="text-lg sm:text-xl font-bold text-[#DAF1DE]" v-html="title"></h3>
+                  <p v-if="subtitle" class="text-xs text-[#8EB69B] mt-0.5" v-html="subtitle"></p>
                 </slot>
               </div>
 
@@ -48,12 +48,15 @@
             </div>
 
             <!-- Body Slot -->
-            <div class="space-y-4">
+            <div class="text-[#DAF1DE]/90">
               <slot />
             </div>
 
             <!-- Footer Slot -->
-            <div v-if="$slots.footer" class="mt-6 pt-4 border-t border-[#235347] flex items-center justify-end gap-3">
+            <div
+              v-if="$slots.footer"
+              class="mt-6 pt-4 border-t border-[#235347] flex items-center justify-end gap-3"
+            >
               <slot name="footer" />
             </div>
           </div>
@@ -64,12 +67,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue';
+import { computed, watch, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   modelValue: {
     type: Boolean,
     default: false,
+  },
+  show: {
+    type: Boolean,
+    default: undefined,
   },
   title: {
     type: String,
@@ -81,9 +88,14 @@ const props = defineProps({
   },
   maxWidth: {
     type: String,
-    default: 'md', // 'sm', 'md', 'lg', 'xl', '2xl'
+    default: 'md',
+    validator: (val) => ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(val),
   },
   closeOnBackdrop: {
+    type: Boolean,
+    default: true,
+  },
+  closeOnEsc: {
     type: Boolean,
     default: true,
   },
@@ -91,20 +103,21 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'close']);
 
+const isVisible = computed(() => {
+  return props.show !== undefined ? props.show : props.modelValue;
+});
+
 const maxWidthClass = computed(() => {
-  switch (props.maxWidth) {
-    case 'sm':
-      return 'max-w-sm';
-    case 'lg':
-      return 'max-w-xl';
-    case 'xl':
-      return 'max-w-2xl';
-    case '2xl':
-      return 'max-w-4xl';
-    case 'md':
-    default:
-      return 'max-w-lg';
-  }
+  const map = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    '2xl': 'max-w-2xl',
+    '3xl': 'max-w-3xl',
+    '4xl': 'max-w-4xl',
+  };
+  return map[props.maxWidth] || 'max-w-md';
 });
 
 const close = () => {
@@ -119,7 +132,7 @@ const handleBackdropClick = () => {
 };
 
 const handleKeydown = (e) => {
-  if (e.key === 'Escape' && props.modelValue) {
+  if (props.closeOnEsc && e.key === 'Escape' && isVisible.value) {
     close();
   }
 };

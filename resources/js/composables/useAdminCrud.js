@@ -139,3 +139,4 @@ export function useAdminCrud({ endpoint, entityName = 'Item', defaultForm = () =
     deleteItem,
   };
 }
+
