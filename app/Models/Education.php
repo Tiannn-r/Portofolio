@@ -27,3 +27,4 @@ class Education extends Model
         ];
     }
 }
+

@@ -124,3 +124,4 @@ class SkillController extends Controller
         ]);
     }
 }
+
