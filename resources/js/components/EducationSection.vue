@@ -177,3 +177,4 @@ const certificationList = computed(() => {
   return defaultCertifications;
 });
 </script>
+

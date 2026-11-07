@@ -409,3 +409,4 @@ const openModal = (project) => {
   activeModalProject.value = project;
 };
 </script>
+
