@@ -24,4 +24,17 @@ class Skill extends Model
             'order' => 'integer',
         ];
     }
+
+    protected $appends = ['icon_url'];
+
+    public function getIconUrlAttribute(): ?string
+    {
+        if (!$this->icon) {
+            return null;
+        }
+
+        return filter_var($this->icon, FILTER_VALIDATE_URL)
+            ? $this->icon
+            : (str_starts_with($this->icon, '<svg') ? null : asset('storage/' . ltrim($this->icon, '/')));
+    }
 }

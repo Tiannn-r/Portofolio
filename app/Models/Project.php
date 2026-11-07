@@ -30,4 +30,17 @@ class Project extends Model
             'order' => 'integer',
         ];
     }
+
+    protected $appends = ['thumbnail_url'];
+
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        if (!$this->thumbnail) {
+            return null;
+        }
+
+        return filter_var($this->thumbnail, FILTER_VALIDATE_URL)
+            ? $this->thumbnail
+            : asset('storage/' . ltrim($this->thumbnail, '/'));
+    }
 }
