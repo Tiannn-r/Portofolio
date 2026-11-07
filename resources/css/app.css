@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-forest-950 text-mint-100 font-sans antialiased overflow-x-hidden selection:bg-sage-400 selection:text-forest-950;
+  }
+}
+
+/* Custom Smooth Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #051F20;
+}
+::-webkit-scrollbar-thumb {
+  background: #235347;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8EB69B;
+}
+
+/* 3D Geometric Ornaments Background Animation */
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.08) rotate(3deg);
+    opacity: 0.35;
+  }
+}
+
+.animate-ornament-1 {
+  animation: pulse-subtle 12s ease-in-out infinite;
+}
+
+.animate-ornament-2 {
+  animation: pulse-subtle 16s ease-in-out infinite reverse;
+}
