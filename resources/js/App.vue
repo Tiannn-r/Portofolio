@@ -7,9 +7,12 @@
     <Navbar :activeSection="activeSection" />
 
     <!-- Main Content Container (Padded left on desktop to make room for floating sidebar) -->
-    <main class="relative z-10 lg:pl-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="relative z-10 lg:pl-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
       <!-- Section 1: Hero Section -->
       <HeroSection :profile="portfolio.profile" />
+
+      <!-- Section 2: About Me & Technical Skills -->
+      <AboutSection :profile="portfolio.profile" :skills="portfolio.skills" />
     </main>
   </div>
 </template>
@@ -20,6 +23,7 @@ import { usePortfolio } from './composables/usePortfolio';
 import BackgroundOrnaments from './components/BackgroundOrnaments.vue';
 import Navbar from './components/Navbar.vue';
 import HeroSection from './components/HeroSection.vue';
+import AboutSection from './components/AboutSection.vue';
 
 const { portfolio, loading, error } = usePortfolio();
 const activeSection = ref('hero');
