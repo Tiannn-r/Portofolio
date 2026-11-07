@@ -20,6 +20,12 @@
         :projects="portfolio.projects"
         :services="portfolio.services"
       />
+
+      <!-- Section 4: My Skills (Progress Bar) & My Portfolio Grid -->
+      <SkillsPortfolioSection
+        :skills="portfolio.skills"
+        :projects="portfolio.projects"
+      />
     </main>
   </div>
 </template>
@@ -32,6 +38,7 @@ import Navbar from './components/Navbar.vue';
 import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
 import FeaturedServicesSection from './components/FeaturedServicesSection.vue';
+import SkillsPortfolioSection from './components/SkillsPortfolioSection.vue';
 
 const { portfolio, loading, error } = usePortfolio();
 const activeSection = ref('hero');
