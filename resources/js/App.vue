@@ -26,6 +26,12 @@
         :skills="portfolio.skills"
         :projects="portfolio.projects"
       />
+
+      <!-- Section 5: Education & Certifications -->
+      <EducationSection
+        :educations="portfolio.educations"
+        :certifications="portfolio.certifications"
+      />
     </main>
   </div>
 </template>
@@ -39,6 +45,7 @@ import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
 import FeaturedServicesSection from './components/FeaturedServicesSection.vue';
 import SkillsPortfolioSection from './components/SkillsPortfolioSection.vue';
+import EducationSection from './components/EducationSection.vue';
 
 const { portfolio, loading, error } = usePortfolio();
 const activeSection = ref('hero');
