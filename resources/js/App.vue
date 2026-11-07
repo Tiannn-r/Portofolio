@@ -32,6 +32,9 @@
         :educations="portfolio.educations"
         :certifications="portfolio.certifications"
       />
+
+      <!-- Section 6: Contact Section -->
+      <ContactSection :profile="portfolio.profile" />
     </main>
   </div>
 </template>
@@ -46,6 +49,7 @@ import AboutSection from './components/AboutSection.vue';
 import FeaturedServicesSection from './components/FeaturedServicesSection.vue';
 import SkillsPortfolioSection from './components/SkillsPortfolioSection.vue';
 import EducationSection from './components/EducationSection.vue';
+import ContactSection from './components/ContactSection.vue';
 
 const { portfolio, loading, error } = usePortfolio();
 const activeSection = ref('hero');
