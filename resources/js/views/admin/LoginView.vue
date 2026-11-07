@@ -138,10 +138,15 @@ const handleLogin = async () => {
       password: form.value.password,
     });
 
-    if (response.data && response.data.token) {
-      localStorage.setItem('admin_token', response.data.token);
-      localStorage.setItem('admin_user', JSON.stringify(response.data.user));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+    const token = response.data?.data?.token || response.data?.token;
+    const user = response.data?.data?.user || response.data?.user;
+
+    if (token) {
+      localStorage.setItem('admin_token', token);
+      if (user) {
+        localStorage.setItem('admin_user', JSON.stringify(user));
+      }
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       router.push('/admin');
     } else {
       errorMessage.value = 'Respon autentikasi tidak valid.';

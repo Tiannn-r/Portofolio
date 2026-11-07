@@ -39,10 +39,11 @@
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 rounded-xl bg-[#163832] border border-[#235347] flex items-center justify-center p-2.5 shadow-inner group-hover:scale-105 transition-transform">
               <img
-                v-if="service.icon_url || (service.icon && !service.icon.startsWith('<svg'))"
+                v-if="!failedIcons[service.id] && (service.icon_url || (service.icon && !service.icon.startsWith('<svg')))"
                 :src="service.icon_url || service.icon"
                 :alt="service.title"
                 class="w-full h-full object-contain"
+                @error="failedIcons[service.id] = true"
               />
               <svg v-else class="w-6 h-6 text-[#8EB69B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -213,6 +214,7 @@ const isEditing = ref(false);
 const editingId = ref(null);
 const saving = ref(false);
 const iconFile = ref(null);
+const failedIcons = ref({});
 
 const form = ref({
   title: '',

@@ -149,16 +149,17 @@
             <!-- Service Icon Container -->
             <div class="w-12 h-12 rounded-xl bg-forest-800 border border-forest-700 group-hover:border-sage-400/50 p-2.5 flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(142,182,155,0.15)] group-hover:scale-110 transition-transform">
               <img
-                v-if="service.icon_url || (service.icon && !service.icon.startsWith('<svg'))"
+                v-if="!brokenServiceIcons[service.id || idx] && (service.icon_url || (service.icon && !service.icon.startsWith('<svg')))"
                 :src="service.icon_url || service.icon"
                 :alt="service.title"
                 class="w-full h-full object-contain"
+                @error="brokenServiceIcons[service.id || idx] = true"
               />
               <!-- Fallback Service Icons -->
-              <svg v-else-if="idx === 0" class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg v-else-if="idx % 3 === 0" class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </svg>
-              <svg v-else-if="idx === 1" class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg v-else-if="idx % 3 === 1" class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
               </svg>
               <svg v-else class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -286,6 +287,7 @@ const props = defineProps({
 
 const currentSlide = ref(0);
 const selectedModalProject = ref(null);
+const brokenServiceIcons = ref({});
 let autoSlideInterval = null;
 
 const defaultFeatured = [
