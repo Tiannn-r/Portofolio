@@ -123,11 +123,6 @@
                 <span class="text-xs font-semibold text-mint-100 group-hover:text-sage-400 transition-colors text-center line-clamp-1">
                   {{ skill.name }}
                 </span>
-
-                <!-- Mastery Percentage Badge -->
-                <span class="text-[10px] text-sage-400/80 font-mono">
-                  {{ skill.percentage }}%
-                </span>
               </div>
             </div>
           </div>
