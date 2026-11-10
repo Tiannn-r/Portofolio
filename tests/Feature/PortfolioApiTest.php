@@ -58,6 +58,11 @@ class PortfolioApiTest extends TestCase
 
     public function test_admin_can_login_and_receive_sanctum_token(): void
     {
+        User::firstOrCreate(
+            ['email' => 'admin@portofolio.test'],
+            ['name' => 'Admin Portofolio', 'password' => bcrypt('password123')]
+        );
+
         $response = $this->postJson('/api/admin/login', [
             'email' => 'admin@portofolio.test',
             'password' => 'password123',
@@ -76,7 +81,10 @@ class PortfolioApiTest extends TestCase
 
     public function test_authenticated_admin_can_access_dashboard_stats(): void
     {
-        $admin = User::where('email', 'admin@portofolio.test')->first();
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@portofolio.test'],
+            ['name' => 'Admin Portofolio', 'password' => bcrypt('password123')]
+        );
 
         $response = $this->actingAs($admin, 'sanctum')->getJson('/api/admin/stats');
 

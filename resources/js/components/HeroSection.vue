@@ -142,16 +142,13 @@ const scrollTo = (selector) => {
 };
 
 const handleCvDownload = () => {
-  if (props.profile?.cv_url) {
-    const link = document.createElement('a');
-    link.href = props.profile.cv_url;
-    link.download = 'CV-Muhamad-Ibnhu.pdf';
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  } else {
-    scrollTo('#contact');
-  }
+  const url = props.profile?.cv_url || '/files/CV-Muhamad-Ibnhu.pdf';
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'CV-Muhamad-Ibnhu.pdf';
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 </script>

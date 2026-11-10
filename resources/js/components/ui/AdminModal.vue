@@ -9,7 +9,7 @@
       leave-to-class="opacity-0"
     >
       <div
-        v-if="modelValue"
+        v-if="isVisible"
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto"
         @click.self="handleBackdropClick"
       >
@@ -22,7 +22,7 @@
           leave-to-class="opacity-0 scale-95 -translate-y-2"
         >
           <div
-            v-if="modelValue"
+            v-if="isVisible"
             class="relative w-full bg-[#0B2B26] border border-[#8EB69B]/40 rounded-2xl p-6 sm:p-7 shadow-[0_0_40px_rgba(142,182,155,0.25)] max-h-[90vh] overflow-y-auto ring-1 ring-[#8EB69B]/20"
             :class="maxWidthClass"
           >
