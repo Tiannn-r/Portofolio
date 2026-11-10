@@ -1,9 +1,9 @@
 <template>
   <SectionContainer
     id="education"
-    badge="Academic & Credentials"
+    badge="Credentials"
     title="Education & <span class='text-sage-400'>Certifications</span>"
-    description="Formal academic foundations and professional certifications backing up practical craftsmanship."
+    description="Academic background and professional industry certifications."
   >
     <!-- Full Glassmorphism Card with 2-Column Layout -->
     <GlassCard
@@ -27,7 +27,6 @@
               <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
                 Formal Education
               </h3>
-              <span class="text-xs text-sage-400">Academic Degrees & Majors</span>
             </div>
           </div>
 
@@ -75,7 +74,6 @@
               <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
                 Certifications
               </h3>
-              <span class="text-xs text-sage-400">Industry & Professional Badges</span>
             </div>
           </div>
 

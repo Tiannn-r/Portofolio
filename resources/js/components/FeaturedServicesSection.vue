@@ -1,9 +1,9 @@
 <template>
   <SectionContainer
     id="featured"
-    badge="Showcase & Offerings"
+    badge="Showcase"
     title="Featured Projects & <span class='text-sage-400'>Services</span>"
-    description="Selected high-impact client deliverables alongside specialized engineering services I deliver."
+    description="Selected high-impact deliverables alongside specialized engineering services."
   >
     <!-- =================================================================================== -->
     <!-- 1. FULL-WIDTH FEATURED CASE STUDY (Widescreen, Grand & Prominent / Digedein & Dilebarin) -->
@@ -25,7 +25,7 @@
               <span class="relative inline-flex rounded-full h-3 w-3 bg-sage-400 shadow-[0_0_8px_#8EB69B]"></span>
             </span>
             <span class="text-xs sm:text-sm uppercase tracking-wider text-sage-400 font-bold font-mono">
-              Featured Case Studies ({{ currentSlide + 1 }}/{{ featuredProjects.length }})
+              Featured Projects ({{ currentSlide + 1 }}/{{ featuredProjects.length }})
             </span>
           </div>
 
@@ -72,20 +72,11 @@
             <span class="absolute top-4 left-4 px-3 py-1 text-xs font-semibold bg-forest-900/90 text-sage-400 border border-forest-700 rounded-lg backdrop-blur-md shadow-md">
               {{ currentProject.category }}
             </span>
-
-            <!-- Top Right: Featured Badge -->
-            <span class="absolute top-4 right-4 px-3 py-1 text-[11px] font-bold font-mono tracking-wider bg-forest-800/90 text-mint-100 border border-sage-400/50 rounded-lg backdrop-blur-md shadow-[0_0_12px_rgba(142,182,155,0.3)]">
-              ★ FEATURED
-            </span>
           </div>
 
           <!-- Right: Project Narrative & Actions -->
           <div class="lg:col-span-6 flex flex-col justify-between h-full space-y-5">
             <div>
-              <span class="text-xs font-mono text-sage-400 uppercase tracking-widest block mb-2 font-semibold">
-                // Flagship Production Deliverable
-              </span>
-
               <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-mint-100 mb-3.5 tracking-tight leading-snug">
                 {{ currentProject.title }}
               </h3>
@@ -95,19 +86,14 @@
               </p>
 
               <!-- Tech Stack Badges -->
-              <div class="mb-6">
-                <span class="text-[11px] uppercase tracking-wider text-sage-400/80 font-mono font-semibold block mb-2">
-                  Architecture & Tech Stack:
+              <div class="mb-6 flex flex-wrap gap-2">
+                <span
+                  v-for="(tech, i) in currentProject.tech_stack"
+                  :key="i"
+                  class="px-3 py-1 text-xs font-mono font-medium bg-forest-800 text-mint-100 rounded-lg border border-forest-700 ring-1 ring-sage-400/20"
+                >
+                  {{ tech }}
                 </span>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    v-for="(tech, i) in currentProject.tech_stack"
-                    :key="i"
-                    class="px-3 py-1 text-xs font-mono font-medium bg-forest-800 text-mint-100 rounded-lg border border-forest-700 ring-1 ring-sage-400/20"
-                  >
-                    {{ tech }}
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -178,15 +164,12 @@
       <!-- Sub-header Title for Services -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <span class="text-xs uppercase tracking-widest text-sage-400 font-bold font-mono">
-            // Specialized Capabilities
-          </span>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight mt-1">
-            Services & Engineering Solutions
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight">
+            Services & Solutions
           </h3>
         </div>
         <p class="text-xs sm:text-sm text-sage-400/80 max-w-md">
-          Solusi rekayasa perangkat lunak ujung-ke-ujung yang dirancang dengan standar performa, arsitektur bersih, dan skalabilitas modern.
+          Solusi rekayasa perangkat lunak ujung-ke-ujung dengan standar performa dan skalabilitas modern.
         </p>
       </div>
 
@@ -197,15 +180,15 @@
           :key="service.id || idx"
           variant="secondary"
           hoverable
-          class="h-full flex flex-col justify-between group rounded-2xl p-6 sm:p-7 transition-all duration-400 hover:-translate-y-2 hover:border-sage-400/80 ring-1 ring-forest-700/80 hover:ring-sage-400/40 hover:shadow-[0_15px_35px_rgba(142,182,155,0.22)] relative overflow-hidden"
+          class="h-full flex flex-col group rounded-2xl p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-sage-400/80 ring-1 ring-forest-700/80 hover:ring-sage-400/40 hover:shadow-[0_15px_30px_rgba(142,182,155,0.2)] relative overflow-hidden"
         >
-          <!-- Top Neon Line Accent (Expands smoothly on hover) -->
-          <div class="h-1 w-12 rounded-full bg-gradient-to-r from-forest-700 via-[#235347] to-sage-400 group-hover:w-full transition-all duration-500 mb-6"></div>
+          <!-- Top Accent Line -->
+          <div class="h-1 w-12 rounded-full bg-gradient-to-r from-forest-700 to-sage-400 group-hover:w-full transition-all duration-500 mb-6"></div>
 
           <div>
-            <!-- Header: Elevated Icon & Index Number -->
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-14 h-14 rounded-2xl bg-forest-800 border border-forest-700 group-hover:border-sage-400/60 p-3.5 flex items-center justify-center text-sage-400 group-hover:text-mint-100 shadow-[0_0_15px_rgba(142,182,155,0.2)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+            <!-- Header Icon -->
+            <div class="mb-5">
+              <div class="w-13 h-13 rounded-2xl bg-forest-800 border border-forest-700 group-hover:border-sage-400/60 p-3.5 inline-flex items-center justify-center text-sage-400 group-hover:text-mint-100 shadow-[0_0_15px_rgba(142,182,155,0.2)] group-hover:scale-105 transition-all duration-300">
                 <img
                   v-if="!brokenServiceIcons[service.id || idx] && (service.icon_url || (service.icon && !service.icon.startsWith('<svg')))"
                   :src="service.icon_url || service.icon"
@@ -214,20 +197,16 @@
                   @error="brokenServiceIcons[service.id || idx] = true"
                 />
                 <!-- Fallback SVGs -->
-                <svg v-else-if="idx % 3 === 0" class="w-7 h-7 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg v-else-if="idx % 3 === 0" class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
-                <svg v-else-if="idx % 3 === 1" class="w-7 h-7 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg v-else-if="idx % 3 === 1" class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                 </svg>
-                <svg v-else class="w-7 h-7 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg v-else class="w-6 h-6 text-sage-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-
-              <span class="text-xs font-mono font-bold text-sage-400/50 group-hover:text-sage-400 transition-colors">
-                0{{ idx + 1 }}
-              </span>
             </div>
 
             <!-- Service Title -->
@@ -236,28 +215,9 @@
             </h4>
 
             <!-- Service Description -->
-            <p class="text-xs sm:text-sm text-sage-400/85 leading-relaxed mb-6">
+            <p class="text-xs sm:text-sm text-sage-400/85 leading-relaxed">
               {{ service.description }}
             </p>
-
-            <!-- Feature Pills / Highlights -->
-            <div class="flex flex-wrap gap-1.5 mb-6">
-              <span
-                v-for="(feature, fIdx) in getServiceFeatures(idx)"
-                :key="fIdx"
-                class="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-forest-800 text-mint-100 border border-forest-700/70"
-              >
-                {{ feature }}
-              </span>
-            </div>
-          </div>
-
-          <!-- Bottom Action: Explore Shortcut -->
-          <div class="pt-4 border-t border-forest-700/60 flex items-center justify-between text-xs font-semibold text-sage-400 group-hover:text-mint-100 transition-colors">
-            <span>Specialized Craft</span>
-            <svg class="w-4 h-4 group-hover:translate-x-1.5 transition-transform text-sage-400 group-hover:text-mint-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
           </div>
         </GlassCard>
       </div>

@@ -1,9 +1,9 @@
 <template>
   <SectionContainer
     id="about"
-    badge="Discover"
+    badge="About"
     title="About Me & <span class='text-sage-400'>Technical Skills</span>"
-    description="A glimpse into who I am, what drives my passion for software engineering, and my core tech capabilities."
+    description="A brief overview of my engineering background and core technical stack."
   >
     <!-- 2 Column Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -30,42 +30,35 @@
 
             <!-- Content -->
             <div class="flex-1 flex flex-col text-center sm:text-left">
-              <span class="text-xs uppercase tracking-wider text-sage-400 font-semibold mb-1">
-                Who I Am
-              </span>
               <h3 class="text-2xl sm:text-3xl font-bold text-mint-100 mb-3 tracking-tight">
                 About Me
               </h3>
-              <p class="text-sm sm:text-base text-mint-100/90 leading-relaxed mb-4 whitespace-pre-line">
+              <p class="text-sm sm:text-base text-mint-100/90 leading-relaxed mb-5 whitespace-pre-line">
                 {{ profile?.about_me || 'Saya adalah seorang Full-Stack Developer yang berdedikasi dalam membangun produk digital modern, cepat, dan terukur. Berpengalaman dalam merancang arsitektur backend berbasis Laravel, relational database MySQL, serta antarmuka interaktif dengan Vue 3 dan Tailwind CSS.' }}
               </p>
 
-              <!-- Meta List / Highlights -->
-              <div class="grid grid-cols-2 gap-2 text-xs text-sage-400 mb-2 pt-2 border-t border-forest-700/50">
-                <div class="flex items-center gap-1.5 justify-center sm:justify-start">
-                  <span class="w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"></span>
-                  <span class="text-mint-100/90 font-medium">Location:</span> {{ profile?.location || 'Jakarta, ID' }}
+              <!-- Meta List -->
+              <div class="flex flex-wrap items-center gap-4 text-xs text-sage-400 pt-3 border-t border-forest-700/50 justify-center sm:justify-start">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sage-400"></span>
+                  <span class="text-mint-100 font-medium">Location:</span> {{ profile?.location || 'Jakarta, ID' }}
                 </div>
-                <div class="flex items-center gap-1.5 justify-center sm:justify-start">
-                  <span class="w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"></span>
-                  <span class="text-mint-100/90 font-medium">Status:</span> Freelance Ready
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sage-400"></span>
+                  <span class="text-mint-100 font-medium">Status:</span> Freelance Available
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Bottom Action: Learn More Button -->
-          <div class="mt-6 pt-4 border-t border-forest-700/50 flex flex-wrap items-center justify-between gap-4 relative z-10">
-            <span class="text-xs text-sage-400/80 font-mono">
-              // Continuous Learning & Craftsmanship
-            </span>
-
+          <div class="mt-6 pt-4 border-t border-forest-700/50 flex items-center justify-end relative z-10">
             <BaseButton
               variant="primary"
               size="sm"
               @click="isModalOpen = true"
             >
-              <span>LEARN MORE</span>
+              <span>Learn More</span>
               <template #icon-right>
                 <svg class="w-3.5 h-3.5 text-mint-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -83,21 +76,13 @@
           class="h-full flex flex-col justify-between"
         >
           <div>
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <span class="text-xs uppercase tracking-wider text-sage-400 font-semibold">
-                  Technologies
-                </span>
-                <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
-                  Technical Skills
-                </h3>
-              </div>
-              <span class="px-2.5 py-1 text-[11px] font-mono bg-forest-800 text-sage-400 border border-forest-700 rounded-md ring-1 ring-sage-400/20">
-                {{ technicalSkills.length }} Stack
-              </span>
+            <div class="mb-5">
+              <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
+                Technical Skills
+              </h3>
             </div>
 
-            <!-- Square Small Cards Grid with hover lift & micro-interactions -->
+            <!-- Square Small Cards Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 gap-3">
               <div
                 v-for="skill in technicalSkills"
@@ -125,13 +110,6 @@
                 </span>
               </div>
             </div>
-          </div>
-
-          <!-- Bottom Footer Note -->
-          <div class="mt-6 pt-3 border-t border-forest-700/50 text-center">
-            <p class="text-xs text-sage-400/80">
-              Passionate about clean code architecture, modular components & agile engineering.
-            </p>
           </div>
         </GlassCard>
       </div>

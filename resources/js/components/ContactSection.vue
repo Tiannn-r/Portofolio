@@ -1,9 +1,9 @@
 <template>
   <SectionContainer
     id="contact"
-    badge="Get In Touch"
+    badge="Contact"
     title="Let's Connect & <span class='text-sage-400'>Collaborate</span>"
-    description="Have an upcoming project, freelance inquiry, or architectural challenge to discuss? Leave a message below!"
+    description="Have a project inquiry, collaboration proposal, or question? Feel free to reach out."
   >
     <!-- Center Glassmorphism Contact Card -->
     <GlassCard

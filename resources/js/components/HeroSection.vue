@@ -14,33 +14,32 @@
       </span>
     </div>
 
-    <!-- Center Profile Image with Sage Glow Border & Micro-interaction -->
+    <!-- Center Profile Image with Refined Sage Glow -->
     <div class="relative mb-8 group cursor-pointer">
-      <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-sage-400 via-forest-700 to-sage-400 opacity-75 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500 shadow-[0_0_25px_rgba(142,182,155,0.4)]"></div>
-      <div class="relative w-36 h-36 md:w-44 md:h-44 rounded-full p-1 bg-forest-900 border-2 border-sage-400 shadow-[0_0_20px_rgba(142,182,155,0.35)] overflow-hidden transition-transform duration-500 group-hover:scale-105 group-active:scale-95">
+      <div class="relative w-36 h-36 md:w-44 md:h-44 rounded-full p-1 bg-forest-900 border border-sage-400/70 shadow-[0_0_25px_rgba(142,182,155,0.25)] overflow-hidden transition-transform duration-500 group-hover:scale-105">
         <img
           :src="profile?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'"
           :alt="profile?.name || 'Profile Picture'"
-          class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-110"
+          class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-105"
         />
       </div>
     </div>
 
     <!-- Greeting & Name -->
     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-mint-100 mb-4">
-      Hi, I'm <span class="text-sage-400 underline decoration-forest-700 decoration-wavy decoration-2">{{ profile?.name || 'Muhamad Ibnhu' }}</span>
+      Hi, I'm <span class="text-sage-400">{{ profile?.name || 'Muhamad Ibnhu' }}</span>
     </h1>
 
-    <!-- Typing Effect Role using Composable -->
+    <!-- Typing Effect Role -->
     <div class="h-10 md:h-12 flex items-center justify-center mb-6">
       <p class="text-xl sm:text-2xl md:text-3xl font-medium text-mint-100/90 font-mono">
-        I'm a <span class="text-sage-400 font-semibold">{{ currentText }}</span>
-        <span class="animate-pulse text-sage-400 font-bold ml-0.5">|</span>
+        <span class="text-sage-400 font-semibold">{{ currentText }}</span>
+        <span class="animate-pulse text-sage-400 font-bold ml-1">_</span>
       </p>
     </div>
 
     <!-- Short Bio Description -->
-    <p class="max-w-2xl text-base sm:text-lg md:text-xl text-sage-400/90 leading-relaxed mb-10 px-4">
+    <p class="max-w-2xl text-base sm:text-lg text-sage-400/90 leading-relaxed mb-10 px-4">
       {{ profile?.short_bio || 'Passionate Full-Stack Developer crafting scalable web applications, sleek user experiences, and robust RESTful APIs using Laravel and Vue.js.' }}
     </p>
 
@@ -77,59 +76,20 @@
       </BaseButton>
     </div>
 
-    <!-- Quick Stats Bar using GlassCard with hover-lift & micro-interactions -->
-    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl px-4">
-      <GlassCard
-        variant="subtle"
-        hoverable
-        class="text-center transition-all duration-300 hover:-translate-y-1 hover:border-sage-400/50"
+    <!-- Clean Integrated Stats Row -->
+    <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full max-w-3xl px-4">
+      <div
+        v-for="(stat, idx) in quickStats"
+        :key="idx"
+        class="py-3.5 px-4 rounded-xl bg-forest-900/60 border border-forest-700/60 backdrop-blur-sm text-center transition-all hover:border-sage-400/40"
       >
-        <span class="text-3xl sm:text-4xl font-extrabold text-mint-100 font-mono tracking-tight block">
-          {{ profile?.years_experience || 3 }}+
+        <span class="text-2xl sm:text-3xl font-bold text-mint-100 font-mono tracking-tight block">
+          {{ stat.value }}
         </span>
-        <span class="text-xs text-sage-400 mt-1 uppercase tracking-wider font-semibold block">
-          Years Experience
+        <span class="text-xs text-sage-400/80 mt-1 font-medium block">
+          {{ stat.label }}
         </span>
-      </GlassCard>
-
-      <GlassCard
-        variant="subtle"
-        hoverable
-        class="text-center transition-all duration-300 hover:-translate-y-1 hover:border-sage-400/50"
-      >
-        <span class="text-3xl sm:text-4xl font-extrabold text-mint-100 font-mono tracking-tight block">
-          {{ profile?.projects_completed || 24 }}+
-        </span>
-        <span class="text-xs text-sage-400 mt-1 uppercase tracking-wider font-semibold block">
-          Projects Done
-        </span>
-      </GlassCard>
-
-      <GlassCard
-        variant="subtle"
-        hoverable
-        class="text-center transition-all duration-300 hover:-translate-y-1 hover:border-sage-400/50"
-      >
-        <span class="text-3xl sm:text-4xl font-extrabold text-mint-100 font-mono tracking-tight block">
-          {{ profile?.happy_clients || 18 }}+
-        </span>
-        <span class="text-xs text-sage-400 mt-1 uppercase tracking-wider font-semibold block">
-          Happy Clients
-        </span>
-      </GlassCard>
-
-      <GlassCard
-        variant="subtle"
-        hoverable
-        class="text-center transition-all duration-300 hover:-translate-y-1 hover:border-sage-400/50"
-      >
-        <span class="text-3xl sm:text-4xl font-extrabold text-mint-100 font-mono tracking-tight block">
-          {{ profile?.awards_received || 5 }}
-        </span>
-        <span class="text-xs text-sage-400 mt-1 uppercase tracking-wider font-semibold block">
-          Awards & Certs
-        </span>
-      </GlassCard>
+      </div>
     </div>
   </section>
 </template>
@@ -166,6 +126,13 @@ const { currentText } = useTypingEffect(roles, {
   deleteSpeed: 45,
   delayBetween: 1800,
 });
+
+const quickStats = computed(() => [
+  { value: `${props.profile?.years_experience || 3}+`, label: 'Years Experience' },
+  { value: `${props.profile?.projects_completed || 24}+`, label: 'Projects Done' },
+  { value: `${props.profile?.happy_clients || 18}+`, label: 'Happy Clients' },
+  { value: `${props.profile?.awards_received || 5}`, label: 'Certifications' },
+]);
 
 const scrollTo = (selector) => {
   const el = document.querySelector(selector);

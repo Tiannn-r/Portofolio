@@ -3,9 +3,9 @@
     <!-- Part 1: My Skills (Progress Bars) -->
     <SectionContainer
       id="skills-overview"
-      badge="Core Competencies"
+      badge="Competencies"
       title="My Skills & <span class='text-sage-400'>Proficiency</span>"
-      description="Quantitative assessment of my engineering and interface development proficiencies."
+      description="Core technical proficiencies across backend architecture and modern web systems."
     >
       <!-- Glassmorphism Card with Illustration on Left & Progress Bars on Right -->
       <GlassCard
@@ -13,40 +13,23 @@
         class="relative overflow-hidden"
       >
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <!-- Left: Futuristic Illustration / Code Visualizer -->
-          <div class="lg:col-span-5 flex flex-col items-center justify-center">
-            <div class="w-full max-w-sm bg-forest-950/95 border border-forest-700 ring-1 ring-sage-400/20 rounded-2xl p-5 shadow-[0_0_25px_rgba(142,182,155,0.15)] relative">
-              <!-- Window dots -->
-              <div class="flex items-center gap-1.5 mb-4 pb-3 border-b border-forest-700/60">
-                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
-                <span class="w-3 h-3 rounded-full bg-sage-400 shadow-[0_0_8px_#8EB69B]"></span>
-                <span class="ml-2 text-[11px] font-mono text-sage-400/70">developer-skills.config.ts</span>
-              </div>
+          <!-- Left: Engineering Philosophy & Focus -->
+          <div class="lg:col-span-5 flex flex-col justify-center space-y-4">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight leading-snug">
+              Engineering Scalable & Resilient Systems
+            </h3>
+            <p class="text-sm text-sage-400/90 leading-relaxed">
+              Fokus pada rekayasa perangkat lunak yang andal, pemeliharaan kode bersih, serta antarmuka interaktif yang cepat dan terukur.
+            </p>
 
-              <!-- Code snippet illustration -->
-              <div class="space-y-2 font-mono text-xs">
-                <p class="text-sage-400/60">// Full-Stack Mastery</p>
-                <p class="text-mint-100"><span class="text-sage-400 font-bold">const</span> developer = {</p>
-                <p class="text-mint-100/90 pl-4">mindset: <span class="text-emerald-400">'Scalable & Resilient'</span>,</p>
-                <p class="text-mint-100/90 pl-4">backend: [<span class="text-emerald-400">'Laravel'</span>, <span class="text-emerald-400">'MySQL'</span>, <span class="text-emerald-400">'REST API'</span>],</p>
-                <p class="text-mint-100/90 pl-4">frontend: [<span class="text-emerald-400">'Vue 3'</span>, <span class="text-emerald-400">'Tailwind CSS'</span>],</p>
-                <p class="text-mint-100/90 pl-4">cleanCode: <span class="text-sage-400">true</span>,</p>
-                <p class="text-mint-100/90 pl-4">testDriven: <span class="text-sage-400">true</span>,</p>
-                <p class="text-mint-100">};</p>
+            <div class="pt-2 grid grid-cols-2 gap-3">
+              <div class="p-3.5 rounded-xl bg-forest-900/80 border border-forest-700/80 ring-1 ring-sage-400/10">
+                <span class="text-xs font-bold text-mint-100 block">Modern Backend</span>
+                <span class="text-[11px] text-sage-400/80 block mt-0.5">Laravel, MySQL, REST API</span>
               </div>
-
-              <!-- Floating Accent Badge -->
-              <div class="mt-5 p-3 rounded-xl bg-forest-900 border border-sage-400/30 flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-forest-800 flex items-center justify-center text-sage-400 shrink-0 shadow-[0_0_8px_rgba(142,182,155,0.2)]">
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <div>
-                  <h5 class="text-xs font-bold text-mint-100">High Execution Velocity</h5>
-                  <p class="text-[11px] text-sage-400/80">Rapid prototyping to production.</p>
-                </div>
+              <div class="p-3.5 rounded-xl bg-forest-900/80 border border-forest-700/80 ring-1 ring-sage-400/10">
+                <span class="text-xs font-bold text-mint-100 block">Reactive Frontend</span>
+                <span class="text-[11px] text-sage-400/80 block mt-0.5">Vue 3, Tailwind CSS</span>
               </div>
             </div>
           </div>
