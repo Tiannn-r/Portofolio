@@ -6,7 +6,7 @@
     <!-- Left Floating Vertical Pill Sidebar -->
     <Navbar
       :activeSection="activeSection"
-      @section-change="(id) => activeSection = id"
+      @section-change="onSectionChange"
     />
 
     <!-- Skeleton Loading Screen when initial fetch is active and data is empty -->
@@ -76,9 +76,22 @@ import SkeletonLoader from '../components/ui/SkeletonLoader.vue';
 
 const { portfolio, loading, error } = usePublicPortfolio();
 const activeSection = ref('hero');
+let isClickScrolling = false;
+let scrollLockTimeout = null;
 
-// Bulletproof Scroll Spy using getBoundingClientRect
+const onSectionChange = (id) => {
+  activeSection.value = id;
+  isClickScrolling = true;
+  if (scrollLockTimeout) clearTimeout(scrollLockTimeout);
+  scrollLockTimeout = setTimeout(() => {
+    isClickScrolling = false;
+  }, 850);
+};
+
+// Bulletproof Scroll Spy using getBoundingClientRect with requestAnimationFrame throttling
 const handleScroll = () => {
+  if (isClickScrolling) return;
+
   // 1. If at the very top of page, activate hero
   if (window.scrollY < 120) {
     activeSection.value = 'hero';
@@ -92,7 +105,7 @@ const handleScroll = () => {
     return;
   }
 
-  // 3. Find the lowest section whose top has crossed the viewport trigger point (35% from top)
+  // 3. Find the lowest section whose top has crossed the viewport trigger point (38% from top)
   const sections = ['hero', 'about', 'featured', 'portfolio', 'education', 'contact'];
   const triggerPoint = window.innerHeight * 0.38;
 
@@ -110,13 +123,25 @@ const handleScroll = () => {
   activeSection.value = current;
 };
 
+let ticking = false;
+const onScrollThrottled = () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      handleScroll();
+      ticking = false;
+    });
+    ticking = true;
+  }
+};
+
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('scroll', onScrollThrottled, { passive: true });
   // Initial check
   handleScroll();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('scroll', onScrollThrottled);
+  if (scrollLockTimeout) clearTimeout(scrollLockTimeout);
 });
 </script>

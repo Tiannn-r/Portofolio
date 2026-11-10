@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-forest-950 text-mint-100 font-sans antialiased overflow-x-hidden selection:bg-sage-400 selection:text-forest-950;
   }

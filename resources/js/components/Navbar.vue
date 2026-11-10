@@ -16,23 +16,29 @@
 
       <div class="w-6 h-[1px] bg-forest-700/60 my-1"></div>
 
-      <!-- Navigation Icons -->
-      <nav class="flex flex-col items-center gap-4">
+      <!-- Navigation Icons with Smooth Sliding Active Indicator -->
+      <nav class="relative flex flex-col items-center gap-4">
+        <!-- Silky Smooth Sliding Active Capsule & Dot -->
+        <div
+          class="absolute left-0 top-0 w-11 h-11 rounded-full bg-forest-800 border border-sage-400 ring-1 ring-sage-400/30 shadow-[0_0_18px_rgba(142,182,155,0.45)] pointer-events-none transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
+          :style="{ transform: `translateY(${desktopIndicatorTop})` }"
+        >
+          <!-- Active Glow Indicator Dot on the left edge with aura -->
+          <span
+            class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-sage-400 shadow-[0_0_10px_#8EB69B] animate-pulse"
+          ></span>
+        </div>
+
         <a
-          v-for="item in navItems"
+          v-for="(item, idx) in navItems"
           :key="item.id"
+          :ref="el => desktopItemRefs[idx] = el"
           :href="item.href"
           @click.prevent="scrollTo(item.href)"
           :title="item.label"
-          class="group relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-300 active:scale-95 cursor-pointer"
-          :class="activeSection === item.id ? 'bg-forest-800 text-mint-100 shadow-[0_0_16px_rgba(142,182,155,0.4)] border border-sage-400 ring-1 ring-sage-400/30' : 'text-sage-400/70 hover:text-mint-100 hover:bg-forest-800/60 border border-transparent'"
+          class="group relative z-10 flex items-center justify-center w-11 h-11 rounded-full transition-colors duration-300 active:scale-95 cursor-pointer"
+          :class="activeSection === item.id ? 'text-mint-100 font-semibold' : 'text-sage-400/70 hover:text-mint-100 hover:bg-forest-800/40'"
         >
-          <!-- Active Glow Indicator Dot with pulsing aura -->
-          <span
-            v-if="activeSection === item.id"
-            class="absolute -left-1 w-2 h-2 rounded-full bg-sage-400 shadow-[0_0_10px_#8EB69B] animate-pulse"
-          ></span>
-
           <!-- Icon Component with hover lift -->
           <component :is="item.icon" class="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
 
@@ -48,28 +54,35 @@
 
     <!-- Mobile Floating Bottom Pill Navigation -->
     <nav
-      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3.5 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/25 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] overflow-x-auto"
+      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3.5 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/25 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] overflow-x-auto relative"
     >
+      <!-- Sliding Active Indicator on Mobile -->
+      <div
+        class="absolute top-2 w-10 h-10 rounded-full bg-forest-800 border border-sage-400/50 shadow-[0_0_12px_rgba(142,182,155,0.35)] pointer-events-none transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
+        :style="{ transform: `translateX(${mobileIndicatorLeft})` }"
+      >
+        <span
+          class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
+        ></span>
+      </div>
+
       <a
-        v-for="item in navItems"
+        v-for="(item, idx) in navItems"
         :key="'mobile-' + item.id"
+        :ref="el => mobileItemRefs[idx] = el"
         :href="item.href"
         @click.prevent="scrollTo(item.href)"
-        class="relative flex flex-col items-center justify-center p-2.5 rounded-full transition-all duration-200 active:scale-90"
-        :class="activeSection === item.id ? 'text-mint-100 bg-forest-800 border border-sage-400/50 shadow-[0_0_12px_rgba(142,182,155,0.35)]' : 'text-sage-400/70 hover:text-mint-100'"
+        class="relative z-10 flex flex-col items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 active:scale-90"
+        :class="activeSection === item.id ? 'text-mint-100' : 'text-sage-400/70 hover:text-mint-100'"
       >
         <component :is="item.icon" class="w-5 h-5" />
-        <span
-          v-if="activeSection === item.id"
-          class="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
-        ></span>
       </a>
     </nav>
   </div>
 </template>
 
 <script setup>
-import { h } from 'vue';
+import { h, ref, computed } from 'vue';
 
 const props = defineProps({
   activeSection: {
@@ -79,6 +92,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['section-change']);
+
+const desktopItemRefs = ref([]);
+const mobileItemRefs = ref([]);
 
 // SVG Icon Helpers
 const IconHome = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
@@ -115,6 +131,25 @@ const navItems = [
   { id: 'education', label: 'Education & Certs', href: '#education', icon: IconEducation },
   { id: 'contact', label: 'Contact Me', href: '#contact', icon: IconContact },
 ];
+
+const activeIndex = computed(() => {
+  const idx = navItems.findIndex(item => item.id === props.activeSection);
+  return idx !== -1 ? idx : 0;
+});
+
+const desktopIndicatorTop = computed(() => {
+  if (desktopItemRefs.value[activeIndex.value]) {
+    return `${desktopItemRefs.value[activeIndex.value].offsetTop}px`;
+  }
+  return `${activeIndex.value * 60}px`;
+});
+
+const mobileIndicatorLeft = computed(() => {
+  if (mobileItemRefs.value[activeIndex.value]) {
+    return `${mobileItemRefs.value[activeIndex.value].offsetLeft}px`;
+  }
+  return `${activeIndex.value * 48}px`;
+});
 
 const scrollTo = (href) => {
   const target = document.querySelector(href);
