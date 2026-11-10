@@ -40,3 +40,4 @@ class FilamentAdminTest extends TestCase
         $this->actingAs($user)->get('/admin/contact-messages')->assertSuccessful();
     }
 }
+

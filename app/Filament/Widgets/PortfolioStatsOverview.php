@@ -45,3 +45,4 @@ class PortfolioStatsOverview extends BaseWidget
         ];
     }
 }
+

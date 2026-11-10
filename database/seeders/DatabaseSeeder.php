@@ -19,7 +19,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Admin User
+        // 1. Admin Users
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin Portofolio',
+                'password' => Hash::make('admin123'),
+            ]
+        );
+
         User::firstOrCreate(
             ['email' => 'admin@portofolio.test'],
             [
