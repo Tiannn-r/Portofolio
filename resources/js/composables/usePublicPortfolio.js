@@ -28,6 +28,7 @@ export function usePublicPortfolio() {
       years_experience: 3,
       awards_received: 5,
     },
+    stories: [],
     skills: {
       all: [],
       technical_grid: [],
@@ -48,6 +49,7 @@ export function usePublicPortfolio() {
       if (response.data && response.data.success) {
         const data = response.data.data;
         if (data.profile) portfolio.value.profile = data.profile;
+        if (data.stories) portfolio.value.stories = data.stories;
         if (data.skills) portfolio.value.skills = data.skills;
         if (data.services) portfolio.value.services = data.services;
         if (data.featured_projects) portfolio.value.featured_projects = data.featured_projects;

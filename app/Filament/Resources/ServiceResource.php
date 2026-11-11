@@ -42,9 +42,13 @@ class ServiceResource extends Resource
                             ->columnSpanFull()
                             ->placeholder('Describe the scope and delivery value of this service...'),
 
-                        Forms\Components\TextInput::make('icon')
-                            ->label('Icon Image URL / SVG / Class')
-                            ->placeholder('https://... or SVG markup')
+                        Forms\Components\FileUpload::make('icon')
+                            ->label('File Ikon / Logo Layanan')
+                            ->image()
+                            ->disk('public')
+                            ->directory('services')
+                            ->visibility('public')
+                            ->helperText('Upload gambar/ikon layanan (opsional, jika kosong akan menggunakan ikon default).')
                             ->columnSpanFull(),
                     ]),
             ]);

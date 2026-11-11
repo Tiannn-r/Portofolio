@@ -51,6 +51,8 @@ class DatabaseSeeder extends Seeder
                 'short_bio' => 'Passionate Full-Stack Developer with deep experience crafting scalable web applications, sleek user experiences, and robust RESTful APIs using Laravel and Vue.js.',
                 'about_me' => "Halo! Saya adalah seorang Full-Stack Developer yang berdedikasi dalam membangun produk digital modern, cepat, dan terukur. Berpengalaman dalam merancang arsitektur backend berbasis Laravel, relational database MySQL, serta antarmuka interaktif dengan Vue 3 dan Tailwind CSS.\n\nSaya mengedepankan performa, keamanan, dan clean code pada setiap aplikasi yang saya bangun, serta senantiasa antusias untuk memecahkan tantangan rekayasa perangkat lunak berskala besar.",
                 'avatar' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+                'hero_image' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+                'about_image' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
                 'cv_file' => null,
                 'is_available' => true,
                 'email' => 'ibnhu.work@gmail.com',
@@ -189,25 +191,25 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => 'Web Development',
                 'description' => 'Membangun aplikasi web kustom yang responsif, berkinerja tinggi, dan scalable menggunakan ekosistem modern Laravel 11 dan Vue 3.',
-                'icon' => 'https://api.iconify.design/heroicons:code-bracket-solid.svg',
+                'icon' => null,
                 'order' => 1,
             ],
             [
                 'title' => 'UI/UX Design & Implementation',
                 'description' => 'Menerjemahkan ide produk ke dalam antarmuka visual yang memukau, intuitif, dan responsif dengan Tailwind CSS dan user-centric design.',
-                'icon' => 'https://api.iconify.design/heroicons:paint-brush-solid.svg',
+                'icon' => null,
                 'order' => 2,
             ],
             [
                 'title' => 'RESTful API & Integration',
                 'description' => 'Merancang arsitektur API yang aman, berkecepatan tinggi, terstandarisasi, dan terintegrasi dengan payment gateway maupun layanan pihak ketiga.',
-                'icon' => 'https://api.iconify.design/heroicons:circle-stack-solid.svg',
+                'icon' => null,
                 'order' => 3,
             ],
             [
                 'title' => 'Database & Performance Tuning',
                 'description' => 'Optimalisasi relasi database MySQL, query indexing, caching Redis, dan peningkatan kecepatan loading aplikasi web.',
-                'icon' => 'https://api.iconify.design/heroicons:server-solid.svg',
+                'icon' => null,
                 'order' => 4,
             ],
         ];

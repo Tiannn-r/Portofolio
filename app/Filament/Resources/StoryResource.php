@@ -72,9 +72,14 @@ class StoryResource extends Resource
                             ->numeric()
                             ->default(0),
 
-                        Forms\Components\TextInput::make('thumbnail')
-                            ->label('URL Gambar / Foto Berita')
-                            ->placeholder('https://images.unsplash.com/... atau /storage/...')
+                        Forms\Components\FileUpload::make('thumbnail')
+                            ->label('File Gambar / Foto Berita')
+                            ->image()
+                            ->disk('public')
+                            ->directory('stories')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->helperText('Upload foto kegiatan, dokumentasi, atau gambar pendukung berita.')
                             ->columnSpanFull(),
 
                         Forms\Components\TagsInput::make('tags')

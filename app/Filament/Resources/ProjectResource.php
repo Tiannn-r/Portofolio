@@ -60,9 +60,14 @@ class ProjectResource extends Resource
                 Forms\Components\Section::make('Media & Architecture')
                     ->columns(2)
                     ->schema([
-                        Forms\Components\TextInput::make('thumbnail')
-                            ->label('Thumbnail Image URL / Path')
-                            ->placeholder('https://images.unsplash.com/... or /storage/...')
+                        Forms\Components\FileUpload::make('thumbnail')
+                            ->label('File Thumbnail / Foto Proyek')
+                            ->image()
+                            ->disk('public')
+                            ->directory('projects')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->helperText('Upload screenshot atau gambar sampul proyek (PNG/JPG/WebP).')
                             ->columnSpanFull(),
 
                         Forms\Components\TagsInput::make('tech_stack')

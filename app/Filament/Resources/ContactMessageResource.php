@@ -16,7 +16,13 @@ class ContactMessageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
-    protected static ?string $navigationGroup = 'Inquiries';
+    protected static ?string $navigationGroup = 'Inquiries & Messages';
+
+    protected static ?string $navigationLabel = 'Pesan Masuk (Messages)';
+
+    protected static ?string $modelLabel = 'Pesan Masuk';
+
+    protected static ?string $pluralModelLabel = 'Pesan Masuk';
 
     protected static ?int $navigationSort = 1;
 
@@ -28,32 +34,31 @@ class ContactMessageResource extends Resource
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return 'danger';
+        return 'warning';
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Inquiry Details')
+                Forms\Components\Section::make('Detail Pesan Pengunjung')
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->required()
+                            ->label('Nama Pengirim')
                             ->disabled(),
 
                         Forms\Components\TextInput::make('email')
-                            ->email()
-                            ->required()
+                            ->label('Alamat Email')
                             ->disabled(),
 
                         Forms\Components\Toggle::make('is_read')
-                            ->label('Mark as Read / Processed')
+                            ->label('Status: Sudah Dibaca / Ditanggapi')
                             ->default(false),
 
                         Forms\Components\Textarea::make('message')
-                            ->required()
-                            ->rows(6)
+                            ->label('Isi Pesan')
+                            ->rows(8)
                             ->columnSpanFull()
                             ->disabled(),
                     ]),
@@ -64,48 +69,79 @@ class ContactMessageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\IconColumn::make('is_read')
-                    ->label('Status')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-exclamation-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger')
-                    ->sortable(),
+                Tables\Columns\Layout\Stack::make([
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\TextColumn::make('name')
+                            ->weight('bold')
+                            ->size(Tables\Columns\TextColumn\TextColumnSize::Large)
+                            ->icon('heroicon-m-user')
+                            ->searchable()
+                            ->grow(false),
 
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable()
-                    ->sortable()
-                    ->weight('bold'),
+                        Tables\Columns\TextColumn::make('email')
+                            ->icon('heroicon-m-envelope')
+                            ->color('gray')
+                            ->copyable()
+                            ->searchable()
+                            ->grow(false),
 
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable()
-                    ->copyable(),
+                        Tables\Columns\IconColumn::make('is_read')
+                            ->label('Status')
+                            ->boolean()
+                            ->trueIcon('heroicon-s-check-circle')
+                            ->falseIcon('heroicon-s-bell-alert')
+                            ->trueColor('success')
+                            ->falseColor('warning')
+                            ->grow(false),
 
-                Tables\Columns\TextColumn::make('message')
-                    ->limit(65)
-                    ->searchable(),
+                        Tables\Columns\TextColumn::make('created_at')
+                            ->label('Waktu Dikirim')
+                            ->since()
+                            ->dateTimeTooltip()
+                            ->color('gray')
+                            ->alignment('right'),
+                    ]),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Received At')
-                    ->dateTime()
-                    ->sortable(),
+                    Tables\Columns\TextColumn::make('message')
+                        ->label('Pesan')
+                        ->wrap()
+                        ->searchable()
+                        ->extraAttributes([
+                            'class' => 'p-4 rounded-xl bg-gray-900/80 border border-gray-800 text-gray-200 text-sm whitespace-pre-wrap leading-relaxed my-2',
+                        ]),
+                ])->space(2),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_read')
-                    ->label('Read Status'),
+                    ->label('Status Baca')
+                    ->placeholder('Semua Pesan')
+                    ->trueLabel('Hanya Sudah Dibaca')
+                    ->falseLabel('Hanya Belum Dibaca'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('markRead')
-                    ->label('Toggle Read')
-                    ->icon('heroicon-o-check')
+                Tables\Actions\Action::make('toggleRead')
+                    ->label(fn (ContactMessage $record) => $record->is_read ? 'Tandai Belum Dibaca' : 'Tandai Sudah Dibaca')
+                    ->icon(fn (ContactMessage $record) => $record->is_read ? 'heroicon-o-arrow-path' : 'heroicon-o-check-circle')
+                    ->color(fn (ContactMessage $record) => $record->is_read ? 'gray' : 'success')
                     ->action(fn (ContactMessage $record) => $record->update(['is_read' => !$record->is_read])),
-                Tables\Actions\DeleteAction::make(),
+
+                Tables\Actions\Action::make('reply')
+                    ->label('Balas Email')
+                    ->icon('heroicon-o-arrow-uturn-left')
+                    ->color('info')
+                    ->url(fn (ContactMessage $record) => "mailto:{$record->email}?subject=" . urlencode("Balasan: Pesan Portofolio dari " . $record->name))
+                    ->openUrlInNewTab(),
+
+                Tables\Actions\DeleteAction::make()
+                    ->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('markRead')
+                        ->label('Tandai Sudah Dibaca')
+                        ->icon('heroicon-o-check-circle')
+                        ->action(fn ($records) => $records->each->update(['is_read' => true])),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -115,7 +151,6 @@ class ContactMessageResource extends Resource
     {
         return [
             'index' => Pages\ListContactMessages::route('/'),
-            'edit' => Pages\EditContactMessage::route('/{record}/edit'),
         ];
     }
 }

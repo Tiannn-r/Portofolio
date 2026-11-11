@@ -52,10 +52,13 @@ class TechnicalSkillResource extends Resource
                             ->numeric()
                             ->default(0),
 
-                        Forms\Components\TextInput::make('icon')
-                            ->label('URL Ikon Logo (SVG / DevIcon CDN)')
-                            ->placeholder('https://cdn.jsdelivr.net/gh/devicons/devicon/icons/...')
-                            ->helperText('Gunakan CDN devicon atau link icon SVG transparan')
+                        Forms\Components\FileUpload::make('icon')
+                            ->label('File Logo / Ikon')
+                            ->image()
+                            ->disk('public')
+                            ->directory('skills')
+                            ->visibility('public')
+                            ->helperText('Upload file logo teknologi (PNG, SVG, atau WebP).')
                             ->columnSpanFull()
                             ->required(),
 
@@ -74,6 +77,8 @@ class TechnicalSkillResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('icon')
                     ->label('Logo')
+                    ->disk('public')
+                    ->defaultImageUrl(fn (Skill $record) => $record->icon_url)
                     ->square()
                     ->size(36),
 
@@ -114,4 +119,3 @@ class TechnicalSkillResource extends Resource
         ];
     }
 }
-

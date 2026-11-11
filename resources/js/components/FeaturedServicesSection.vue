@@ -62,7 +62,7 @@
           <!-- Left: Big Story Image Container -->
           <div class="lg:col-span-6 relative w-full h-64 sm:h-80 lg:h-[400px] rounded-2xl overflow-hidden border border-forest-700 ring-1 ring-sage-400/25 group/img shadow-[0_10px_35px_rgba(5,31,32,0.9)] bg-forest-950">
             <img
-              :src="currentStory.image_url || currentStory.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80'"
+              :src="currentStory.thumbnail_url || currentStory.thumbnail || currentStory.image_url || currentStory.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80'"
               :alt="currentStory.title"
               class="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105"
             />
@@ -253,7 +253,7 @@
 
         <div class="rounded-xl overflow-hidden border border-forest-700 max-h-72 ring-1 ring-sage-400/20">
           <img
-            :src="selectedModalStory.image_url || selectedModalStory.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80'"
+            :src="selectedModalStory.thumbnail_url || selectedModalStory.thumbnail || selectedModalStory.image_url || selectedModalStory.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80'"
             :alt="selectedModalStory.title"
             class="w-full h-full object-cover"
           />

@@ -18,7 +18,7 @@
     <div class="relative mb-8 group cursor-pointer">
       <div class="relative w-36 h-36 md:w-44 md:h-44 rounded-full p-1 bg-forest-900 border border-sage-400/70 shadow-[0_0_25px_rgba(142,182,155,0.25)] overflow-hidden transition-transform duration-500 group-hover:scale-105">
         <img
-          :src="profile?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'"
+          :src="profile?.hero_image_url || profile?.hero_image || profile?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'"
           :alt="profile?.name || 'Profile Picture'"
           class="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-105"
         />

@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Profile;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TagsInput;
@@ -22,7 +23,7 @@ class ManageAboutMe extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationLabel = 'About Me';
+    protected static ?string $navigationLabel = 'About Me & Profile';
 
     protected static ?string $title = 'Edit About Me & Profile';
 
@@ -45,6 +46,7 @@ class ManageAboutMe extends Page implements HasForms
                 'about_me' => 'Halo! Saya adalah seorang Full-Stack Developer yang berdedikasi membangun produk modern.',
                 'is_available' => true,
                 'email' => 'ibnhu.work@gmail.com',
+                'phone' => '+62 812-3456-7890',
                 'location' => 'Jakarta, Indonesia',
                 'happy_clients' => 18,
                 'projects_completed' => 24,
@@ -61,7 +63,7 @@ class ManageAboutMe extends Page implements HasForms
         return $form
             ->schema([
                 Section::make('Personal Identity & Availability')
-                    ->description('Kelola identitas utama, foto avatar, dokumen CV, dan ketersediaan kerja freelance.')
+                    ->description('Kelola identitas utama, ketersediaan freelance, kontak, dan lokasi.')
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
@@ -74,14 +76,6 @@ class ManageAboutMe extends Page implements HasForms
                             ->helperText('Menampilkan badge hijau aktif di Hero section')
                             ->inline(false)
                             ->default(true),
-
-                        TextInput::make('avatar')
-                            ->label('URL / Path Foto Profil')
-                            ->placeholder('https://images.unsplash.com/... atau /storage/...'),
-
-                        TextInput::make('cv_file')
-                            ->label('URL / Path Dokumen CV (PDF)')
-                            ->placeholder('/files/CV-Muhamad-Ibnhu.pdf'),
 
                         TextInput::make('email')
                             ->label('Alamat Email')
@@ -96,7 +90,44 @@ class ManageAboutMe extends Page implements HasForms
                         TextInput::make('location')
                             ->label('Lokasi')
                             ->placeholder('Jakarta, Indonesia')
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Foto Profil & File Dokumen CV')
+                    ->description('Upload foto khusus landing page hero, foto khusus about me, dan file dokumen CV resmi (PDF/Word).')
+                    ->columns(2)
+                    ->schema([
+                        FileUpload::make('hero_image')
+                            ->label('Foto Landing Page (Hero Section)')
+                            ->image()
+                            ->disk('public')
+                            ->directory('profile')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->helperText('Upload foto profil untuk bagian paling atas / landing page (Hero).'),
+
+                        FileUpload::make('about_image')
+                            ->label('Foto Section About Me')
+                            ->image()
+                            ->disk('public')
+                            ->directory('profile')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->helperText('Upload foto profil khusus untuk kartu About Me.'),
+
+                        FileUpload::make('cv_file')
+                            ->label('File Dokumen CV / Resume (PDF / DOCX)')
+                            ->disk('public')
+                            ->directory('documents')
+                            ->visibility('public')
+                            ->acceptedFileTypes([
+                                'application/pdf',
+                                'application/msword',
+                                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                            ])
+                            ->helperText('Upload file berkas CV Anda. Tombol "Download CV" di web akan langsung mendownload file ini.')
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Peran & Narasi Tentang Saya (About Me)')
@@ -169,7 +200,7 @@ class ManageAboutMe extends Page implements HasForms
         }
 
         Notification::make()
-            ->title('Data About Me Berhasil Disimpan!')
+            ->title('Data About Me & Profil Berhasil Disimpan!')
             ->success()
             ->send();
     }
@@ -184,4 +215,3 @@ class ManageAboutMe extends Page implements HasForms
         ];
     }
 }
-

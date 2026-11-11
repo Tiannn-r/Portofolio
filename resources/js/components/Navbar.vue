@@ -8,7 +8,7 @@
       <a
         href="#hero"
         @click.prevent="scrollTo('#hero')"
-        class="w-10 h-10 rounded-full bg-forest-900 border border-sage-400/40 p-1.5 flex items-center justify-center hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_14px_rgba(142,182,155,0.3)] overflow-hidden group"
+        class="w-10 h-10 rounded-full bg-forest-900 border border-sage-400/40 p-1.5 flex items-center justify-center hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_14px_rgba(142,182,155,0.3)] overflow-hidden group cursor-pointer"
         title="Home"
       >
         <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain group-hover:scale-105 transition-transform" />
@@ -21,7 +21,7 @@
         <!-- Silky Smooth Sliding Active Capsule & Dot -->
         <div
           class="absolute left-0 top-0 w-11 h-11 rounded-full bg-forest-800 border border-sage-400 ring-1 ring-sage-400/30 shadow-[0_0_18px_rgba(142,182,155,0.45)] pointer-events-none transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
-          :style="{ transform: `translateY(${desktopIndicatorTop})` }"
+          :style="desktopIndicatorStyle"
         >
           <!-- Active Glow Indicator Dot on the left edge with aura -->
           <span
@@ -32,7 +32,7 @@
         <a
           v-for="(item, idx) in navItems"
           :key="item.id"
-          :ref="el => desktopItemRefs[idx] = el"
+          :ref="el => setDesktopRef(el, idx)"
           :href="item.href"
           @click.prevent="scrollTo(item.href)"
           :title="item.label"
@@ -52,37 +52,54 @@
       </nav>
     </aside>
 
-    <!-- Mobile Floating Bottom Pill Navigation -->
+    <!-- Mobile Floating Bottom Pill Navigation with Logo & Sliding Indicator -->
     <nav
-      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3.5 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/25 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] overflow-x-auto relative"
+      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/25 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] select-none"
     >
-      <!-- Sliding Active Indicator on Mobile -->
-      <div
-        class="absolute top-2 w-10 h-10 rounded-full bg-forest-800 border border-sage-400/50 shadow-[0_0_12px_rgba(142,182,155,0.35)] pointer-events-none transition-transform duration-400 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
-        :style="{ transform: `translateX(${mobileIndicatorLeft})` }"
-      >
-        <span
-          class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
-        ></span>
-      </div>
-
+      <!-- Brand Logo on Mobile Navbar -->
       <a
-        v-for="(item, idx) in navItems"
-        :key="'mobile-' + item.id"
-        :ref="el => mobileItemRefs[idx] = el"
-        :href="item.href"
-        @click.prevent="scrollTo(item.href)"
-        class="relative z-10 flex flex-col items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 active:scale-90"
-        :class="activeSection === item.id ? 'text-mint-100' : 'text-sage-400/70 hover:text-mint-100'"
+        href="#hero"
+        @click.prevent="scrollTo('#hero')"
+        class="w-9 h-9 rounded-full bg-forest-950 border border-sage-400/50 p-1 flex items-center justify-center hover:scale-105 active:scale-90 transition-all duration-200 shrink-0 shadow-sm"
+        title="Muhamad Ibnhu - Home"
       >
-        <component :is="item.icon" class="w-5 h-5" />
+        <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain" />
       </a>
+
+      <!-- Divider -->
+      <div class="w-[1px] h-5 bg-forest-700/80 shrink-0 mx-0.5"></div>
+
+      <!-- Navigation Icons Container (Positioned relative so offsetLeft matches exactly) -->
+      <div class="relative flex items-center gap-1">
+        <!-- Sliding Active Capsule on Mobile -->
+        <div
+          class="absolute top-0 w-9 h-9 rounded-full bg-forest-800 border border-sage-400/80 ring-1 ring-sage-400/30 shadow-[0_0_14px_rgba(142,182,155,0.4)] pointer-events-none transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
+          :style="mobileIndicatorStyle"
+        >
+          <span
+            class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
+          ></span>
+        </div>
+
+        <a
+          v-for="(item, idx) in navItems"
+          :key="'mobile-' + item.id"
+          :ref="el => setMobileRef(el, idx)"
+          :href="item.href"
+          @click.prevent="scrollTo(item.href)"
+          class="relative z-10 flex items-center justify-center w-9 h-9 rounded-full transition-colors duration-200 active:scale-90 cursor-pointer"
+          :class="activeSection === item.id ? 'text-mint-100 font-semibold' : 'text-sage-400/70 hover:text-mint-100'"
+          :title="item.label"
+        >
+          <component :is="item.icon" class="w-4 h-4" />
+        </a>
+      </div>
     </nav>
   </div>
 </template>
 
 <script setup>
-import { h, ref, computed } from 'vue';
+import { h, ref, computed, nextTick, onMounted } from 'vue';
 import logoUrl from '../../images/logo.png';
 
 const props = defineProps({
@@ -96,6 +113,15 @@ const emit = defineEmits(['section-change']);
 
 const desktopItemRefs = ref([]);
 const mobileItemRefs = ref([]);
+const layoutRevision = ref(0);
+
+const setDesktopRef = (el, idx) => {
+  if (el) desktopItemRefs.value[idx] = el;
+};
+
+const setMobileRef = (el, idx) => {
+  if (el) mobileItemRefs.value[idx] = el;
+};
 
 // SVG Icon Helpers
 const IconHome = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
@@ -106,12 +132,10 @@ const IconAbout = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: '
   h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' })
 ]);
 
-// 4-squares grid icon for Featured Showcase / Projects
 const IconFeatured = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
   h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' })
 ]);
 
-// Code </> icon for Skills & Technical Portfolio
 const IconSkills = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': 1.8 }, [
   h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' })
 ]);
@@ -138,18 +162,31 @@ const activeIndex = computed(() => {
   return idx !== -1 ? idx : 0;
 });
 
-const desktopIndicatorTop = computed(() => {
-  if (desktopItemRefs.value[activeIndex.value]) {
-    return `${desktopItemRefs.value[activeIndex.value].offsetTop}px`;
+const desktopIndicatorStyle = computed(() => {
+  // Access layoutRevision to trigger recalculation on layout events
+  const _ = layoutRevision.value;
+  const el = desktopItemRefs.value[activeIndex.value];
+  if (el) {
+    return {
+      transform: `translateY(${el.offsetTop}px)`,
+    };
   }
-  return `${activeIndex.value * 60}px`;
+  return {
+    transform: `translateY(${activeIndex.value * 60}px)`,
+  };
 });
 
-const mobileIndicatorLeft = computed(() => {
-  if (mobileItemRefs.value[activeIndex.value]) {
-    return `${mobileItemRefs.value[activeIndex.value].offsetLeft}px`;
+const mobileIndicatorStyle = computed(() => {
+  const _ = layoutRevision.value;
+  const el = mobileItemRefs.value[activeIndex.value];
+  if (el) {
+    return {
+      transform: `translateX(${el.offsetLeft}px)`,
+    };
   }
-  return `${activeIndex.value * 48}px`;
+  return {
+    transform: `translateX(${activeIndex.value * 40}px)`,
+  };
 });
 
 const scrollTo = (href) => {
@@ -158,11 +195,20 @@ const scrollTo = (href) => {
     const sectionId = href.replace('#', '');
     emit('section-change', sectionId);
 
-    const targetTop = target.getBoundingClientRect().top + window.scrollY - 30;
+    const targetTop = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 30);
     window.scrollTo({
       top: targetTop,
       behavior: 'smooth'
     });
   }
 };
+
+onMounted(() => {
+  nextTick(() => {
+    layoutRevision.value++;
+  });
+  window.addEventListener('resize', () => {
+    layoutRevision.value++;
+  }, { passive: true });
+});
 </script>

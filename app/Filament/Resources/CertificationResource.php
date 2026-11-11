@@ -74,10 +74,14 @@ class CertificationResource extends Resource
                             ->numeric()
                             ->default(0),
 
-                        Forms\Components\TextInput::make('certificate_image')
-                            ->label('URL Gambar Sertifikat (Preview Saat Diklik)')
-                            ->placeholder('https://images.unsplash.com/... atau /storage/...')
-                            ->helperText('Gambar ini akan ditampilkan pada pop-up modal saat sertifikat diklik pengunjung.')
+                        Forms\Components\FileUpload::make('certificate_image')
+                            ->label('File Gambar Sertifikat (Preview Saat Diklik)')
+                            ->image()
+                            ->disk('public')
+                            ->directory('certificates')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->helperText('Upload foto / scan dokumen sertifikat (PNG/JPG/WebP). Gambar ini akan ditampilkan saat sertifikat diklik oleh pengunjung.')
                             ->columnSpanFull(),
 
                         Forms\Components\Textarea::make('description')

@@ -21,7 +21,7 @@
             <!-- Square Photo with border glow -->
             <div class="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden shrink-0 border border-sage-400/40 shadow-[0_0_20px_rgba(142,182,155,0.25)] ring-1 ring-sage-400/20">
               <img
-                :src="profile?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'"
+                :src="profile?.about_image_url || profile?.about_image || profile?.avatar_url || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'"
                 :alt="profile?.name || 'About Me Photo'"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

@@ -15,6 +15,8 @@ class Profile extends Model
         'short_bio',
         'about_me',
         'avatar',
+        'hero_image',
+        'about_image',
         'cv_file',
         'is_available',
         'email',
@@ -42,7 +44,7 @@ class Profile extends Model
         ];
     }
 
-    protected $appends = ['avatar_url', 'cv_url'];
+    protected $appends = ['avatar_url', 'hero_image_url', 'about_image_url', 'cv_url'];
 
     public function getAvatarUrlAttribute(): ?string
     {
@@ -53,6 +55,30 @@ class Profile extends Model
         return filter_var($this->avatar, FILTER_VALIDATE_URL)
             ? $this->avatar
             : asset('storage/' . ltrim($this->avatar, '/'));
+    }
+
+    public function getHeroImageUrlAttribute(): ?string
+    {
+        $src = $this->hero_image ?: $this->avatar;
+        if (!$src) {
+            return null;
+        }
+
+        return filter_var($src, FILTER_VALIDATE_URL)
+            ? $src
+            : asset('storage/' . ltrim($src, '/'));
+    }
+
+    public function getAboutImageUrlAttribute(): ?string
+    {
+        $src = $this->about_image ?: $this->avatar;
+        if (!$src) {
+            return null;
+        }
+
+        return filter_var($src, FILTER_VALIDATE_URL)
+            ? $src
+            : asset('storage/' . ltrim($src, '/'));
     }
 
     public function getCvUrlAttribute(): ?string

@@ -81,20 +81,33 @@ import SkeletonLoader from '../components/ui/SkeletonLoader.vue';
 const { portfolio, loading, error } = usePublicPortfolio();
 const activeSection = ref('hero');
 let isClickScrolling = false;
-let scrollLockTimeout = null;
+let scrollEndDebounce = null;
+let maxLockTimer = null;
 
 const onSectionChange = (id) => {
   activeSection.value = id;
   isClickScrolling = true;
-  if (scrollLockTimeout) clearTimeout(scrollLockTimeout);
-  scrollLockTimeout = setTimeout(() => {
+
+  if (scrollEndDebounce) clearTimeout(scrollEndDebounce);
+  if (maxLockTimer) clearTimeout(maxLockTimer);
+
+  // Maximum fail-safe lock duration for mobile smooth scrolling
+  maxLockTimer = setTimeout(() => {
     isClickScrolling = false;
-  }, 850);
+  }, 2500);
 };
 
 // Bulletproof Scroll Spy using getBoundingClientRect with requestAnimationFrame throttling
 const handleScroll = () => {
-  if (isClickScrolling) return;
+  if (isClickScrolling) {
+    // When smooth scrolling from click, debounce until momentum scroll completely settles
+    if (scrollEndDebounce) clearTimeout(scrollEndDebounce);
+    scrollEndDebounce = setTimeout(() => {
+      isClickScrolling = false;
+      if (maxLockTimer) clearTimeout(maxLockTimer);
+    }, 180);
+    return;
+  }
 
   // 1. If at the very top of page, activate hero
   if (window.scrollY < 120) {
@@ -103,7 +116,7 @@ const handleScroll = () => {
   }
 
   // 2. If at the bottom of the page (footer / contact area), activate contact
-  const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 120;
+  const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 140;
   if (isBottom) {
     activeSection.value = 'contact';
     return;
@@ -146,6 +159,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', onScrollThrottled);
-  if (scrollLockTimeout) clearTimeout(scrollLockTimeout);
+  if (scrollEndDebounce) clearTimeout(scrollEndDebounce);
+  if (maxLockTimer) clearTimeout(maxLockTimer);
 });
 </script>
