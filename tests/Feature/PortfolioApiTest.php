@@ -12,6 +12,14 @@ use Tests\TestCase;
 
 class PortfolioApiTest extends TestCase
 {
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->seed();
+    }
+
     public function test_can_fetch_public_portfolio_data(): void
     {
         $response = $this->getJson('/api/portfolio');
