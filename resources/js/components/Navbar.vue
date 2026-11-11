@@ -126,7 +126,7 @@ const IconContact = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke:
 const navItems = [
   { id: 'hero', label: 'Home', href: '#hero', icon: IconHome },
   { id: 'about', label: 'About', href: '#about', icon: IconAbout },
-  { id: 'featured', label: 'Featured', href: '#featured', icon: IconFeatured },
+  { id: 'featured', label: 'Stories', href: '#featured', icon: IconFeatured },
   { id: 'portfolio', label: 'Portfolio', href: '#portfolio', icon: IconSkills },
   { id: 'education', label: 'Education', href: '#education', icon: IconEducation },
   { id: 'contact', label: 'Contact', href: '#contact', icon: IconContact },

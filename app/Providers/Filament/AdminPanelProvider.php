@@ -46,6 +46,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->defaultThemeMode(\Filament\Enums\ThemeMode::Dark)
             ->sidebarCollapsibleOnDesktop()
+            ->navigationGroups([
+                'Portfolio Profile',
+                'Skills & Competencies',
+                'Stories & News',
+                'Content & Showcase',
+                'Academic & Credentials',
+                'Inquiries',
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -54,7 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 \App\Filament\Widgets\PortfolioStatsOverview::class,
-                Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

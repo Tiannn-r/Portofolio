@@ -13,23 +13,23 @@
         class="relative overflow-hidden"
       >
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <!-- Left: Engineering Philosophy & Focus -->
+          <!-- Left: Engineering Philosophy & Focus (Configurable via Filament CMS) -->
           <div class="lg:col-span-5 flex flex-col justify-center space-y-4">
             <h3 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight leading-snug">
-              Engineering Scalable & Resilient Systems
+              {{ overviewTitle }}
             </h3>
             <p class="text-sm text-sage-400/90 leading-relaxed">
-              Fokus pada rekayasa perangkat lunak yang andal, pemeliharaan kode bersih, serta antarmuka interaktif yang cepat dan terukur.
+              {{ overviewDescription }}
             </p>
 
-            <div class="pt-2 grid grid-cols-2 gap-3">
-              <div class="p-3.5 rounded-xl bg-forest-900/80 border border-forest-700/80 ring-1 ring-sage-400/10">
-                <span class="text-xs font-bold text-mint-100 block">Modern Backend</span>
-                <span class="text-[11px] text-sage-400/80 block mt-0.5">Laravel, MySQL, REST API</span>
-              </div>
-              <div class="p-3.5 rounded-xl bg-forest-900/80 border border-forest-700/80 ring-1 ring-sage-400/10">
-                <span class="text-xs font-bold text-mint-100 block">Reactive Frontend</span>
-                <span class="text-[11px] text-sage-400/80 block mt-0.5">Vue 3, Tailwind CSS</span>
+            <div class="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div
+                v-for="(hl, idx) in overviewHighlights"
+                :key="idx"
+                class="p-3.5 rounded-xl bg-forest-900/80 border border-forest-700/80 ring-1 ring-sage-400/10 hover:border-sage-400/60 transition-colors"
+              >
+                <span class="text-xs font-bold text-mint-100 block">{{ hl.title }}</span>
+                <span class="text-[11px] text-sage-400/80 block mt-0.5">{{ hl.subtitle }}</span>
               </div>
             </div>
           </div>
@@ -263,6 +263,10 @@ import BaseButton from './ui/BaseButton.vue';
 import AdminModal from './ui/AdminModal.vue';
 
 const props = defineProps({
+  profile: {
+    type: Object,
+    default: () => null,
+  },
   skills: {
     type: Object,
     default: () => ({
@@ -277,6 +281,25 @@ const props = defineProps({
 
 const selectedCategory = ref('All');
 const activeModalProject = ref(null);
+
+const overviewTitle = computed(() => {
+  return props.profile?.skills_overview?.title || 'Engineering Scalable & Resilient Systems';
+});
+
+const overviewDescription = computed(() => {
+  return props.profile?.skills_overview?.description || 'Fokus pada rekayasa perangkat lunak yang andal, pemeliharaan kode bersih, serta antarmuka interaktif yang cepat dan terukur.';
+});
+
+const overviewHighlights = computed(() => {
+  const custom = props.profile?.skills_overview?.highlights;
+  if (Array.isArray(custom) && custom.length > 0) {
+    return custom;
+  }
+  return [
+    { title: 'Modern Backend', subtitle: 'Laravel, MySQL, REST API' },
+    { title: 'Reactive Frontend', subtitle: 'Vue 3, Tailwind CSS' },
+  ];
+});
 
 const defaultProgressSkills = [
   { name: 'Backend Architecture & API Development', percentage: 92 },

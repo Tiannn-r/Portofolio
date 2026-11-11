@@ -9,6 +9,7 @@ use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Skill;
+use App\Models\Story;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class PublicPortfolioController extends Controller
         $profile = Profile::query()->first();
         $skills = Skill::query()->orderBy('order')->orderBy('id')->get();
         $services = Service::query()->orderBy('order')->orderBy('id')->get();
+        $stories = Story::query()->orderBy('order')->orderByDesc('id')->get();
         $featuredProjects = Project::query()->where('is_featured', true)->orderBy('order')->orderByDesc('id')->get();
         $allProjects = Project::query()->orderBy('order')->orderByDesc('id')->get();
         $educations = Education::query()->where('type', 'education')->orderBy('order')->orderByDesc('id')->get();
@@ -33,10 +35,11 @@ class PublicPortfolioController extends Controller
                 'profile' => $profile,
                 'skills' => [
                     'all' => $skills,
-                    'technical_grid' => $skills->where('type', 'grid_icon')->values(),
-                    'progress_bars' => $skills->where('type', 'progress_bar')->values(),
+                    'technical_grid' => $skills->filter(fn ($s) => in_array($s->type, ['grid_icon', 'technical_grid']))->values(),
+                    'progress_bars' => $skills->filter(fn ($s) => in_array($s->type, ['progress_bar', 'bar']))->values(),
                 ],
                 'services' => $services,
+                'stories' => $stories,
                 'featured_projects' => $featuredProjects,
                 'projects' => $allProjects,
                 'educations' => $educations,

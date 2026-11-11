@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class EducationResource extends Resource
 {
@@ -16,48 +17,61 @@ class EducationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Portfolio Setup';
+    protected static ?string $navigationGroup = 'Academic & Credentials';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?string $navigationLabel = 'Formal Education';
+
+    protected static ?string $modelLabel = 'Formal Education';
+
+    protected static ?string $pluralModelLabel = 'Formal Education';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('type', 'education');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Academic & Certification Details')
+                Forms\Components\Section::make('Pendidikan Formal')
+                    ->description('Gelar akademik, universitas/sekolah, dan konsentrasi studi.')
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('title')
+                            ->label('Gelar / Jenjang Studi')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g. S.Kom - Teknik Informatika / Laravel Certified Developer'),
-
-                        Forms\Components\Select::make('type')
-                            ->options([
-                                'education' => 'Formal Education',
-                                'certification' => 'Industry Certification',
-                            ])
-                            ->default('education')
-                            ->required(),
+                            ->placeholder('e.g. S1 Teknik Informatika'),
 
                         Forms\Components\TextInput::make('institution')
+                            ->label('Universitas / Institusi Pendidikan')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g. Universitas Dian Nuswantoro / Laravel LLC'),
+                            ->placeholder('e.g. Universitas Bina Nusantara'),
 
                         Forms\Components\TextInput::make('period')
+                            ->label('Tahun / Periode Studi')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g. 2020 - 2024 / Valid through 2027'),
+                            ->placeholder('e.g. 2020 - 2024'),
 
                         Forms\Components\TextInput::make('order')
+                            ->label('Urutan Tampilan')
                             ->numeric()
                             ->default(0),
 
                         Forms\Components\Textarea::make('description')
+                            ->label('Keterangan / Fokus Spesialisasi')
                             ->rows(3)
                             ->columnSpanFull()
-                            ->placeholder('Brief context or field of study...'),
+                            ->placeholder('Fokus bidang keilmuan, skripsi/tugas akhir, atau predikat kelulusan...'),
+
+                        Forms\Components\Hidden::make('type')
+                            ->default('education'),
                     ]),
             ]);
     }
@@ -67,23 +81,21 @@ class EducationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Jenjang & Jurusan')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
-                Tables\Columns\BadgeColumn::make('type')
-                    ->colors([
-                        'primary' => 'education',
-                        'warning' => 'certification',
-                    ]),
-
                 Tables\Columns\TextColumn::make('institution')
+                    ->label('Institusi')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('period')
+                    ->label('Periode')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('order')
+                    ->label('Urutan')
                     ->numeric()
                     ->sortable(),
 
@@ -93,13 +105,6 @@ class EducationResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('order', 'asc')
-            ->filters([
-                Tables\Filters\SelectFilter::make('type')
-                    ->options([
-                        'education' => 'Formal Education',
-                        'certification' => 'Certification',
-                    ]),
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

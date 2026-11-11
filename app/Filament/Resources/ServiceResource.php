@@ -16,7 +16,7 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
-    protected static ?string $navigationGroup = 'Portfolio Setup';
+    protected static ?string $navigationGroup = 'Content & Showcase';
 
     protected static ?int $navigationSort = 3;
 

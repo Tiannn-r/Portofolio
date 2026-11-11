@@ -8,6 +8,7 @@ use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Skill;
+use App\Models\Story;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -65,6 +66,14 @@ class DatabaseSeeder extends Seeder
                 'projects_completed' => 24,
                 'years_experience' => 3,
                 'awards_received' => 5,
+                'skills_overview' => [
+                    'title' => 'Engineering Scalable & Resilient Systems',
+                    'description' => 'Fokus pada rekayasa perangkat lunak yang andal, pemeliharaan kode bersih, serta antarmuka interaktif yang cepat dan terukur.',
+                    'highlights' => [
+                        ['title' => 'Modern Backend', 'subtitle' => 'Laravel, MySQL, REST API'],
+                        ['title' => 'Reactive Frontend', 'subtitle' => 'Vue 3, Tailwind CSS'],
+                    ],
+                ],
             ]
         );
 
@@ -265,7 +274,56 @@ class DatabaseSeeder extends Seeder
             Project::create($project);
         }
 
-        // 6. Educations & Certifications
+        // 6. Stories & News (Berita / Informasi Tentang Saya)
+        Story::truncate();
+
+        $stories = [
+            [
+                'title' => 'Juara 1 Lomba Inovasi Rekayasa Perangkat Lunak Nasional 2026',
+                'slug' => 'juara-1-inovasi-perangkat-lunak-2026',
+                'category' => 'Pencapaian',
+                'event_date' => 'Oktober 2026',
+                'summary' => 'Meraih peringkat pertama dalam kompetisi arsitektur enterprise berskala nasional atas solusi microservices yang hemat resource dan berkecepatan tinggi.',
+                'content' => "Dalam kompetisi bergengsi tingkat nasional ini, solusi yang dibangun berfokus pada integrasi arsitektur cloud terdistribusi menggunakan Laravel 11 dan Vue 3.\n\nTim juri mengapresiasi kecepatan respon API yang konsisten di bawah 50ms di bawah beban simulasi 50.000 concurrent user, serta struktur kode berbasis modular clean architecture yang sangat rapi dan siap produksi.",
+                'thumbnail' => 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80',
+                'tags' => ['National Award', 'Cloud Architecture', 'Laravel 11', 'Microservices'],
+                'url' => 'https://github.com/Tiannn-r',
+                'is_featured' => true,
+                'order' => 1,
+            ],
+            [
+                'title' => 'Pembicara di Tech Meetup: Membangun Web Skalabilitas Tinggi Tanpa Bottleneck',
+                'slug' => 'pembicara-tech-meetup-skalabilitas-tinggi',
+                'category' => 'Kegiatan & Berbagi',
+                'event_date' => 'Agustus 2026',
+                'summary' => 'Berbagi wawasan bersama 200+ software engineer mengenai best practices Clean Architecture, State Management, dan optimasi performa database MySQL.',
+                'content' => "Sesi webinar dan hands-on workshop ini mengupas tuntas pengalaman nyata dalam menangani lonjakan traffic, perancangan indexing database yang efisien, implementasi caching berjenjang dengan Redis, serta pembuatan antarmuka reactive yang mulus dan bebas lag.",
+                'thumbnail' => 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&q=80',
+                'tags' => ['Tech Talk', 'Community', 'Vue.js', 'Clean Code'],
+                'url' => 'https://linkedin.com/in/muhamad-ibnhu',
+                'is_featured' => true,
+                'order' => 2,
+            ],
+            [
+                'title' => 'Rilis Framework Boilerplate Enterprise untuk Pengembang Web Modern',
+                'slug' => 'rilis-framework-boilerplate-enterprise',
+                'category' => 'Inovasi & Open Source',
+                'event_date' => 'Mei 2026',
+                'summary' => 'Meluncurkan open-source starter kit terintegrasi yang memangkas waktu setup proyek full-stack hingga 70% dengan keamanan enterprise-ready.',
+                'content' => "Starter kit ini dirancang untuk menjawab tantangan pengembang dalam membangun sistem web modern: dilengkapi autentikasi Sanctum, dashboard admin Filament v3, preset styling Tailwind CSS eksklusif, serta automated test suite yang lengkap sejak hari pertama.",
+                'thumbnail' => 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1000&q=80',
+                'tags' => ['Open Source', 'Tooling', 'Productivity', 'Filament v3'],
+                'url' => 'https://github.com/Tiannn-r/Portofolio',
+                'is_featured' => true,
+                'order' => 3,
+            ],
+        ];
+
+        foreach ($stories as $story) {
+            Story::create($story);
+        }
+
+        // 7. Educations & Certifications
         Education::truncate();
 
         $educations = [
@@ -283,6 +341,10 @@ class DatabaseSeeder extends Seeder
                 'period' => '2024',
                 'description' => 'Sertifikasi kompetensi global dalam memahami kapabilitas arsitektur komputasi awan, infrastruktur modern, dan model keamanan data.',
                 'type' => 'certification',
+                'certificate_image' => 'https://images.unsplash.com/photo-1589330694653-dad6d3240a2b?auto=format&fit=crop&w=800&q=80',
+                'event_name' => 'Google Cloud Global Examination 2024',
+                'history' => 'Menyelesaikan modul komprehensif arsitektur cloud terdistribusi, evaluasi risiko keamanan infrastruktur, dan lulus ujian proctored internasional dengan skor memuaskan.',
+                'credential_url' => 'https://cloud.google.com/certification',
                 'order' => 1,
             ],
             [
@@ -291,7 +353,23 @@ class DatabaseSeeder extends Seeder
                 'period' => '2023',
                 'description' => 'Sertifikasi keahlian dalam perancangan RESTful API, arsitektur single-page application (SPA), Progressive Web Apps (PWA), dan automated unit testing.',
                 'type' => 'certification',
+                'certificate_image' => 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=800&q=80',
+                'event_name' => 'Indonesia Developer Academy 2023',
+                'history' => 'Menyelesaikan program intensif 6 bulan dengan submission proyek akhir portal e-commerce realtime yang dinilai langsung oleh code reviewer profesional industri.',
+                'credential_url' => 'https://www.dicoding.com/certificates',
                 'order' => 2,
+            ],
+            [
+                'title' => 'Laravel Architecture & Enterprise API Specialist',
+                'institution' => 'Laravel LLC',
+                'period' => '2025',
+                'description' => 'Sertifikasi penguasaan konsep clean architecture, service-repository patterns, queue optimization, dan event-driven design.',
+                'type' => 'certification',
+                'certificate_image' => 'https://images.unsplash.com/photo-1607969892198-8994a50d4d42?auto=format&fit=crop&w=800&q=80',
+                'event_name' => 'Laravel Certified Developer Benchmark 2025',
+                'history' => 'Ujian sertifikasi komprehensif yang menguji pembuatan API berkinerja tinggi, manajemen transaksi database ACID, dan implementasi caching canggih.',
+                'credential_url' => 'https://laravel.com',
+                'order' => 3,
             ],
         ];
 
@@ -299,7 +377,7 @@ class DatabaseSeeder extends Seeder
             Education::create($education);
         }
 
-        // 7. Contact Messages
+        // 8. Contact Messages
         ContactMessage::truncate();
 
         $messages = [

@@ -2,61 +2,68 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SkillResource\Pages;
+use App\Filament\Resources\ProficiencySkillResource\Pages;
 use App\Models\Skill;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
-class SkillResource extends Resource
+class ProficiencySkillResource extends Resource
 {
     protected static ?string $model = Skill::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static ?string $navigationGroup = 'Portfolio Setup';
+    protected static ?string $navigationGroup = 'Skills & Competencies';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationLabel = 'My Skills (Progress Bars)';
+
+    protected static ?string $modelLabel = 'Skill Proficiency';
+
+    protected static ?string $pluralModelLabel = 'My Skills (Progress Bars)';
+
+    protected static ?int $navigationSort = 2;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->whereIn('type', ['progress_bar', 'bar']);
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Skill Definition')
+                Forms\Components\Section::make('Competency & Proficiency')
+                    ->description('Bidang kompetensi yang ditampilkan sebagai horizontal progress bar di bagian Competencies.')
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label('Nama Kompetensi')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g. Laravel 11, Vue.js 3, MySQL'),
-
-                        Forms\Components\Select::make('type')
-                            ->label('Section / Display Format')
-                            ->options([
-                                'technical_grid' => 'Technical Grid (About Me Icons)',
-                                'progress_bar' => 'Progress Bar (Competencies)',
-                            ])
-                            ->default('technical_grid')
-                            ->required(),
+                            ->placeholder('e.g. Backend Architecture & API Development')
+                            ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('percentage')
-                            ->label('Proficiency Percentage (0 - 100)')
+                            ->label('Tingkat Kemahiran (%)')
                             ->numeric()
-                            ->minValue(0)
+                            ->minValue(1)
                             ->maxValue(100)
+                            ->suffix('%')
                             ->default(85)
-                            ->suffix('%'),
+                            ->required(),
 
                         Forms\Components\TextInput::make('order')
+                            ->label('Urutan')
                             ->numeric()
                             ->default(0),
 
-                        Forms\Components\TextInput::make('icon')
-                            ->label('Icon URL (SVG / DevIcon)')
-                            ->placeholder('https://cdn.jsdelivr.net/gh/devicons/devicon/icons/...')
-                            ->columnSpanFull(),
+                        Forms\Components\Hidden::make('type')
+                            ->default('progress_bar'),
                     ]),
             ]);
     }
@@ -66,21 +73,18 @@ class SkillResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Kompetensi')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
-                Tables\Columns\BadgeColumn::make('type')
-                    ->colors([
-                        'primary' => 'technical_grid',
-                        'success' => 'progress_bar',
-                    ]),
-
                 Tables\Columns\TextColumn::make('percentage')
+                    ->label('Persentase')
                     ->suffix('%')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('order')
+                    ->label('Urutan')
                     ->numeric()
                     ->sortable(),
 
@@ -90,13 +94,6 @@ class SkillResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('order', 'asc')
-            ->filters([
-                Tables\Filters\SelectFilter::make('type')
-                    ->options([
-                        'technical_grid' => 'Technical Grid',
-                        'progress_bar' => 'Progress Bar',
-                    ]),
-            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -111,9 +108,9 @@ class SkillResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSkills::route('/'),
-            'create' => Pages\CreateSkill::route('/create'),
-            'edit' => Pages\EditSkill::route('/{record}/edit'),
+            'index' => Pages\ListProficiencySkills::route('/'),
+            'create' => Pages\CreateProficiencySkill::route('/create'),
+            'edit' => Pages\EditProficiencySkill::route('/{record}/edit'),
         ];
     }
 }

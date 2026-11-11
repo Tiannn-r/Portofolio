@@ -31,6 +31,7 @@ class PortfolioApiTest extends TestCase
                     'profile',
                     'skills' => ['all', 'technical_grid', 'progress_bars'],
                     'services',
+                    'stories',
                     'featured_projects',
                     'projects',
                     'educations',

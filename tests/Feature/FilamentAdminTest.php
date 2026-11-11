@@ -33,10 +33,15 @@ class FilamentAdminTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $this->actingAs($user)->get('/admin/manage-about-me')->assertSuccessful();
+        $this->actingAs($user)->get('/admin/manage-competencies-overview')->assertSuccessful();
+        $this->actingAs($user)->get('/admin/technical-skills')->assertSuccessful();
+        $this->actingAs($user)->get('/admin/proficiency-skills')->assertSuccessful();
+        $this->actingAs($user)->get('/admin/stories')->assertSuccessful();
         $this->actingAs($user)->get('/admin/projects')->assertSuccessful();
         $this->actingAs($user)->get('/admin/services')->assertSuccessful();
-        $this->actingAs($user)->get('/admin/skills')->assertSuccessful();
         $this->actingAs($user)->get('/admin/education')->assertSuccessful();
+        $this->actingAs($user)->get('/admin/certifications')->assertSuccessful();
         $this->actingAs($user)->get('/admin/contact-messages')->assertSuccessful();
     }
 }

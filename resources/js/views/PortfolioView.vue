@@ -36,15 +36,15 @@
       <!-- Section 2: About Me & Technical Skills -->
       <AboutSection :profile="portfolio.profile" :skills="portfolio.skills" />
 
-      <!-- Section 3: Featured Projects & Services -->
+      <!-- Section 3: Stories & Services (Updates & Solutions) -->
       <FeaturedServicesSection
-        :featuredProjects="portfolio.featured_projects"
-        :projects="portfolio.projects"
+        :stories="portfolio.stories"
         :services="portfolio.services"
       />
 
       <!-- Section 4: My Skills (Progress Bar) & My Portfolio Grid -->
       <SkillsPortfolioSection
+        :profile="portfolio.profile"
         :skills="portfolio.skills"
         :projects="portfolio.projects"
       />
@@ -57,6 +57,9 @@
 
       <!-- Section 6: Contact Section -->
       <ContactSection :profile="portfolio.profile" />
+
+      <!-- Section 7: Professional Footer & Direct Contact Channels -->
+      <Footer :profile="portfolio.profile" />
     </main>
   </div>
 </template>
@@ -72,6 +75,7 @@ import FeaturedServicesSection from '../components/FeaturedServicesSection.vue';
 import SkillsPortfolioSection from '../components/SkillsPortfolioSection.vue';
 import EducationSection from '../components/EducationSection.vue';
 import ContactSection from '../components/ContactSection.vue';
+import Footer from '../components/Footer.vue';
 import SkeletonLoader from '../components/ui/SkeletonLoader.vue';
 
 const { portfolio, loading, error } = usePublicPortfolio();

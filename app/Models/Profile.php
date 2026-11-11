@@ -25,6 +25,7 @@ class Profile extends Model
         'projects_completed',
         'years_experience',
         'awards_received',
+        'skills_overview',
     ];
 
     protected function casts(): array
@@ -32,6 +33,7 @@ class Profile extends Model
         return [
             'roles' => 'array',
             'social_links' => 'array',
+            'skills_overview' => 'array',
             'is_available' => 'boolean',
             'happy_clients' => 'integer',
             'projects_completed' => 'integer',
