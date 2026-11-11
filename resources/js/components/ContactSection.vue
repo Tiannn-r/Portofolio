@@ -114,65 +114,6 @@
         </div>
       </form>
     </GlassCard>
-
-    <!-- Elegant Footer -->
-    <footer class="mt-24 pt-10 border-t border-forest-700/60 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-sage-400/80">
-      <div>
-        <p>© 2026 <span class="text-mint-100 font-semibold">{{ profile?.name || 'Muhamad Ibnhu' }}</span>. All rights reserved.</p>
-        <p class="text-[11px] text-sage-400/60 mt-0.5 font-mono">Built with Laravel 11, Vue 3, & Tailwind CSS</p>
-      </div>
-
-      <!-- Social Links -->
-      <div class="flex items-center gap-4">
-        <a
-          v-if="profile?.social_links?.github"
-          :href="profile.social_links.github"
-          target="_blank"
-          class="hover:text-mint-100 transition-colors"
-          title="GitHub"
-        >
-          GitHub
-        </a>
-        <a
-          v-if="profile?.social_links?.linkedin"
-          :href="profile.social_links.linkedin"
-          target="_blank"
-          class="hover:text-mint-100 transition-colors"
-          title="LinkedIn"
-        >
-          LinkedIn
-        </a>
-        <a
-          v-if="profile?.social_links?.twitter"
-          :href="profile.social_links.twitter"
-          target="_blank"
-          class="hover:text-mint-100 transition-colors"
-          title="Twitter"
-        >
-          Twitter / X
-        </a>
-        <a
-          v-if="profile?.social_links?.instagram"
-          :href="profile.social_links.instagram"
-          target="_blank"
-          class="hover:text-mint-100 transition-colors"
-          title="Instagram"
-        >
-          Instagram
-        </a>
-      </div>
-
-      <!-- Back To Top Button with Micro-interaction -->
-      <a
-        href="#hero"
-        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-forest-900 border border-forest-700 hover:border-sage-400 text-sage-400 hover:text-mint-100 transition-all text-xs font-mono active:scale-95 shadow-[0_0_10px_rgba(5,31,32,0.5)]"
-      >
-        <span>Back to Top</span>
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </a>
-    </footer>
   </SectionContainer>
 </template>
 
