@@ -340,7 +340,7 @@ const defaultStories = [
     content: 'Proyek ini menggabungkan performa Laravel 11 di sisi backend dengan reaktivitas Vue 3 di frontend. Fitur utamanya mencakup manajemen portofolio dinamis, otentikasi token Sanctum, optimasi database MySQL, dan tema visual terkurasi dengan nuansa Forest Deep Green.',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80',
     tags: ['Laravel11', 'Vue3', 'Filament', 'CleanCode'],
-    url: 'https://github.com/Tiannn-r/Portofolio',
+    url: null,
   },
   {
     title: 'Meraih Sertifikasi Cloud Architecture & Backend Optimization',
