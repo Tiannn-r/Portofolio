@@ -17,3 +17,4 @@ class ListProficiencySkills extends ListRecords
         ];
     }
 }
+

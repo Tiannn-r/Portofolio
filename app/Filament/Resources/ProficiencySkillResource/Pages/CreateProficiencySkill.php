@@ -15,3 +15,4 @@ class CreateProficiencySkill extends CreateRecord
         return $data;
     }
 }
+

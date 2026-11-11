@@ -17,3 +17,4 @@ class EditTechnicalSkill extends EditRecord
         ];
     }
 }
+

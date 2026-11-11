@@ -9,3 +9,4 @@ class CreateStory extends CreateRecord
 {
     protected static string $resource = StoryResource::class;
 }
+

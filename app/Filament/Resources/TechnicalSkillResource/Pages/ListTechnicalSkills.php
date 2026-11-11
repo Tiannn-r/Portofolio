@@ -17,3 +17,4 @@ class ListTechnicalSkills extends ListRecords
         ];
     }
 }
+

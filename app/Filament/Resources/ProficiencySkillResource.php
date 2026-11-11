@@ -114,3 +114,4 @@ class ProficiencySkillResource extends Resource
         ];
     }
 }
+

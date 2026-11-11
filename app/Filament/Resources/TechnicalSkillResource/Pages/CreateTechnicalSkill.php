@@ -16,3 +16,4 @@ class CreateTechnicalSkill extends CreateRecord
         return $data;
     }
 }
+

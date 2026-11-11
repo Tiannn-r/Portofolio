@@ -17,3 +17,4 @@ class EditStory extends EditRecord
         ];
     }
 }
+

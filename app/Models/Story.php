@@ -45,3 +45,4 @@ class Story extends Model
             : asset('storage/' . ltrim($this->thumbnail, '/'));
     }
 }
+

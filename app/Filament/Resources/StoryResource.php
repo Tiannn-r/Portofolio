@@ -156,3 +156,4 @@ class StoryResource extends Resource
         ];
     }
 }
+

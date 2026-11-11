@@ -17,3 +17,4 @@ class EditProficiencySkill extends EditRecord
         ];
     }
 }
+

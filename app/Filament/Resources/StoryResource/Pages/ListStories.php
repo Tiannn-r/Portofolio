@@ -17,3 +17,4 @@ class ListStories extends ListRecords
         ];
     }
 }
+

@@ -15,3 +15,4 @@ class CreateCertification extends CreateRecord
         return $data;
     }
 }
+

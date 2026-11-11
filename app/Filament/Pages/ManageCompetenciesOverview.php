@@ -112,3 +112,4 @@ class ManageCompetenciesOverview extends Page implements HasForms
         ];
     }
 }
+
