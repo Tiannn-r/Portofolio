@@ -80,7 +80,8 @@ class CertificationResource extends Resource
                             ->disk('public')
                             ->directory('certificates')
                             ->visibility('public')
-                            ->imageEditor()
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload foto / scan dokumen sertifikat (PNG/JPG/WebP). Gambar ini akan ditampilkan saat sertifikat diklik oleh pengunjung.')
                             ->columnSpanFull(),
 

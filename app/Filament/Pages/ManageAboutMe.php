@@ -104,7 +104,8 @@ class ManageAboutMe extends Page implements HasForms
                             ->disk('public')
                             ->directory('profile')
                             ->visibility('public')
-                            ->imageEditor()
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload foto profil untuk bagian paling atas / landing page (Hero).'),
 
                         FileUpload::make('about_image')
@@ -113,7 +114,8 @@ class ManageAboutMe extends Page implements HasForms
                             ->disk('public')
                             ->directory('profile')
                             ->visibility('public')
-                            ->imageEditor()
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload foto profil khusus untuk kartu About Me.'),
 
                         FileUpload::make('cv_file')
@@ -121,6 +123,8 @@ class ManageAboutMe extends Page implements HasForms
                             ->disk('public')
                             ->directory('documents')
                             ->visibility('public')
+                            ->openable()
+                            ->downloadable()
                             ->acceptedFileTypes([
                                 'application/pdf',
                                 'application/msword',

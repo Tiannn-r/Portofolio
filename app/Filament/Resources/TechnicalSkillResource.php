@@ -58,6 +58,8 @@ class TechnicalSkillResource extends Resource
                             ->disk('public')
                             ->directory('skills')
                             ->visibility('public')
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload file logo teknologi (PNG, SVG, atau WebP).')
                             ->columnSpanFull()
                             ->required(),

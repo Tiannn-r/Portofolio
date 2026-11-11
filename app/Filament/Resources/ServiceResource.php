@@ -48,6 +48,8 @@ class ServiceResource extends Resource
                             ->disk('public')
                             ->directory('services')
                             ->visibility('public')
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload gambar/ikon layanan (opsional, jika kosong akan menggunakan ikon default).')
                             ->columnSpanFull(),
                     ]),

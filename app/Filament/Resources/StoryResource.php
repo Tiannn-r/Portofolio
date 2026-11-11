@@ -78,7 +78,8 @@ class StoryResource extends Resource
                             ->disk('public')
                             ->directory('stories')
                             ->visibility('public')
-                            ->imageEditor()
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload foto kegiatan, dokumentasi, atau gambar pendukung berita.')
                             ->columnSpanFull(),
 

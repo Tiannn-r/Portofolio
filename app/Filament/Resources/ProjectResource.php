@@ -66,7 +66,8 @@ class ProjectResource extends Resource
                             ->disk('public')
                             ->directory('projects')
                             ->visibility('public')
-                            ->imageEditor()
+                            ->openable()
+                            ->downloadable()
                             ->helperText('Upload screenshot atau gambar sampul proyek (PNG/JPG/WebP).')
                             ->columnSpanFull(),
 
