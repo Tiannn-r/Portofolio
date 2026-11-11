@@ -58,11 +58,6 @@ class StoryResource extends Resource
                             ->placeholder('e.g. Oktober 2026')
                             ->default(now()->format('F Y')),
 
-                        Forms\Components\TextInput::make('url')
-                            ->label('Tautan Eksternal / Artikel Terkait (Opsional)')
-                            ->url()
-                            ->placeholder('https://...'),
-
                         Forms\Components\Toggle::make('is_featured')
                             ->label('Tampilkan di Showcase Berita')
                             ->default(true),
