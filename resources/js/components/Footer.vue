@@ -1,6 +1,6 @@
 <template>
-  <footer class="relative z-10 mt-16 py-8 pb-24 lg:pb-10 border-t border-forest-700/60 bg-forest-950/70 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-5">
+  <footer class="relative z-10 w-full mt-16 py-8 pb-24 lg:pb-10 border-t border-forest-700/60 bg-forest-950/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto lg:pl-28 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-5">
       <!-- Left: Copyright & Location Identity -->
       <div class="text-center md:text-left space-y-1">
         <p class="text-xs sm:text-sm text-sage-400 font-sans">

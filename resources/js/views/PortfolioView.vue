@@ -57,10 +57,10 @@
 
       <!-- Section 6: Contact Section -->
       <ContactSection :profile="portfolio.profile" />
-
-      <!-- Section 7: Professional Footer & Direct Contact Channels -->
-      <Footer :profile="portfolio.profile" />
     </main>
+
+    <!-- Section 7: Professional Footer & Direct Contact Channels (Full Width Kiri-Kanan) -->
+    <Footer v-if="!loading || portfolio?.profile?.name" :profile="portfolio.profile" />
   </div>
 </template>
 
