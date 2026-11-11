@@ -28,6 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('Portofolio CMS')
+            ->brandLogo(asset('logo.png'))
+            ->brandLogoHeight('2.2rem')
+            ->favicon(asset('logo.png'))
             ->colors([
                 'primary' => [
                     50 => '#f2f8f4',

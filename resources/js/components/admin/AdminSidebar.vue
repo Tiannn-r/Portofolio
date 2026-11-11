@@ -7,8 +7,8 @@
     <div class="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin">
       <!-- Admin Identity Header -->
       <div class="flex items-center gap-3.5 px-2 mb-8">
-        <div class="w-12 h-12 rounded-2xl bg-[#163832] border border-[#8EB69B]/50 flex items-center justify-center text-[#8EB69B] font-extrabold text-lg shadow-[0_0_15px_rgba(142,182,155,0.25)] shrink-0">
-          MI
+        <div class="w-12 h-12 rounded-2xl bg-[#163832] border border-[#8EB69B]/50 flex items-center justify-center p-2 shadow-[0_0_15px_rgba(142,182,155,0.25)] shrink-0 overflow-hidden">
+          <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain" />
         </div>
         <div class="overflow-hidden">
           <h2 class="text-base font-bold text-[#DAF1DE] truncate">
@@ -137,6 +137,7 @@
 import { h } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import logoUrl from '../../../../images/logo.png';
 
 const props = defineProps({
   isOpen: {

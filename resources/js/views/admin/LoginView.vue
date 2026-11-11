@@ -7,8 +7,8 @@
     <div class="relative w-full max-w-md z-10">
       <!-- Brand Logo / Badge -->
       <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-forest-900 border border-sage-400/50 shadow-[0_0_20px_rgba(142,182,155,0.3)] mb-4 ring-1 ring-sage-400/30">
-          <span class="text-xl font-extrabold text-sage-400 tracking-wider">MI</span>
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-forest-900 border border-sage-400/50 shadow-[0_0_20px_rgba(142,182,155,0.3)] mb-4 ring-1 ring-sage-400/30 p-2 overflow-hidden">
+          <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain" />
         </div>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight">
           CMS Admin <span class="text-sage-400">Portal</span>
@@ -116,6 +116,7 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import GlassCard from '../../components/ui/GlassCard.vue';
 import BaseButton from '../../components/ui/BaseButton.vue';
+import logoUrl from '../../../images/logo.png';
 
 const router = useRouter();
 

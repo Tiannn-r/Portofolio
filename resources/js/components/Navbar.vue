@@ -4,14 +4,14 @@
     <aside
       class="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-6 py-6 px-3.5 rounded-full bg-forest-900/85 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/20 shadow-[0_10px_35px_rgba(5,31,32,0.8)] transition-all duration-300"
     >
-      <!-- Brand Logo / Monogram -->
+      <!-- Brand Logo -->
       <a
         href="#hero"
         @click.prevent="scrollTo('#hero')"
-        class="w-10 h-10 rounded-full bg-forest-800 border border-sage-400/30 flex items-center justify-center text-sage-400 font-bold text-sm hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_12px_rgba(142,182,155,0.2)]"
+        class="w-10 h-10 rounded-full bg-forest-900 border border-sage-400/40 p-1.5 flex items-center justify-center hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_14px_rgba(142,182,155,0.3)] overflow-hidden group"
         title="Home"
       >
-        MI
+        <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain group-hover:scale-105 transition-transform" />
       </a>
 
       <div class="w-6 h-[1px] bg-forest-700/60 my-1"></div>
@@ -83,6 +83,7 @@
 
 <script setup>
 import { h, ref, computed } from 'vue';
+import logoUrl from '../../images/logo.png';
 
 const props = defineProps({
   activeSection: {
