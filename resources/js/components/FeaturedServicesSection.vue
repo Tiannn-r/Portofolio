@@ -16,7 +16,7 @@
         <!-- Top Header Bar with Slide Counter & Arrows -->
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-forest-700/60 relative z-10">
           <div class="flex items-center gap-3">
-            <span class="w-2.5 h-2.5 rounded-full bg-warm-400 shadow-[0_0_8px_rgba(212,165,116,0.6)]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-warm-400"></span>
             <span class="text-xs sm:text-sm tracking-wider text-sage-400 font-bold font-mono">
               KABAR & CATATAN ({{ currentSlide + 1 }}/{{ displayStories.length }})
             </span>
@@ -53,11 +53,11 @@
           class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 transition-all duration-300"
         >
           <!-- Left: Big Story Image Container -->
-          <div class="lg:col-span-6 relative w-full h-64 sm:h-80 lg:h-[400px] rounded-2xl overflow-hidden border border-forest-700 ring-1 ring-sage-400/25 group/img shadow-[0_10px_35px_rgba(5,31,32,0.9)] bg-forest-950">
+          <div class="lg:col-span-6 relative w-full h-64 sm:h-80 lg:h-[400px] rounded-2xl overflow-hidden border border-forest-700 bg-forest-950">
             <img
               :src="currentStory.thumbnail_url || currentStory.thumbnail || currentStory.image_url || currentStory.image || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80'"
               :alt="currentStory.title"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105"
+              class="w-full h-full object-cover"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-forest-950/85 via-forest-950/20 to-transparent"></div>
             
@@ -121,8 +121,8 @@
             @click="currentSlide = index"
             :title="s.title"
             type="button"
-            class="h-2.5 rounded-full transition-all duration-300"
-            :class="currentSlide === index ? 'w-10 bg-sage-400 shadow-[0_0_12px_#8EB69B]' : 'w-2.5 bg-forest-700 hover:bg-sage-400/60'"
+            class="h-2 rounded-full transition-all duration-200"
+            :class="currentSlide === index ? 'w-8 bg-warm-400' : 'w-2 bg-forest-700 hover:bg-forest-700'"
           ></button>
         </div>
       </GlassCard>

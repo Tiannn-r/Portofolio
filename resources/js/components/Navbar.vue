@@ -8,24 +8,24 @@
       <a
         href="#hero"
         @click.prevent="scrollTo('#hero')"
-        class="w-10 h-10 rounded-full bg-forest-900 border border-sage-400/40 p-1.5 flex items-center justify-center hover:scale-110 active:scale-95 hover:border-sage-400 transition-all duration-300 shadow-[0_0_14px_rgba(142,182,155,0.3)] overflow-hidden group cursor-pointer"
-        title="Home"
+        class="w-10 h-10 rounded-full bg-forest-900 border border-forest-700 p-1.5 flex items-center justify-center hover:border-warm-400 transition-colors duration-200 overflow-hidden group cursor-pointer"
+        title="Beranda"
       >
-        <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain group-hover:scale-105 transition-transform" />
+        <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain" />
       </a>
 
       <div class="w-6 h-[1px] bg-forest-700/60 my-1"></div>
 
       <!-- Navigation Icons with Smooth Sliding Active Indicator -->
       <nav class="relative flex flex-col items-center gap-4">
-        <!-- Silky Smooth Sliding Active Capsule & Dot -->
+        <!-- Sliding Active Capsule -->
         <div
-          class="absolute left-0 top-0 w-11 h-11 rounded-full bg-forest-800 border border-sage-400 ring-1 ring-sage-400/30 shadow-[0_0_18px_rgba(142,182,155,0.45)] pointer-events-none transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
+          class="absolute left-0 top-0 w-11 h-11 rounded-full bg-forest-800 border border-forest-700 pointer-events-none transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
           :style="desktopIndicatorStyle"
         >
-          <!-- Active Glow Indicator Dot on the left edge with aura -->
+          <!-- Active Indicator Dot on the left edge -->
           <span
-            class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-sage-400 shadow-[0_0_10px_#8EB69B] animate-pulse"
+            class="absolute -left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-warm-400"
           ></span>
         </div>
 
@@ -36,15 +36,15 @@
           :href="item.href"
           @click.prevent="scrollTo(item.href)"
           :title="item.label"
-          class="group relative z-10 flex items-center justify-center w-11 h-11 rounded-full transition-colors duration-300 active:scale-95 cursor-pointer"
+          class="group relative z-10 flex items-center justify-center w-11 h-11 rounded-full transition-colors duration-200 active:scale-95 cursor-pointer"
           :class="activeSection === item.id ? 'text-mint-100 font-semibold' : 'text-sage-400/70 hover:text-mint-100 hover:bg-forest-800/40'"
         >
-          <!-- Icon Component with hover lift -->
-          <component :is="item.icon" class="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
+          <!-- Icon Component -->
+          <component :is="item.icon" class="w-5 h-5 transition-colors duration-150" />
 
           <!-- Tooltip on hover -->
           <span
-            class="absolute left-16 px-3 py-1.5 rounded-lg text-xs font-medium tracking-wide bg-forest-900/95 text-mint-100 border border-forest-700 ring-1 ring-sage-400/25 shadow-xl opacity-0 -translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto transition-all duration-200 whitespace-nowrap"
+            class="absolute left-16 px-3 py-1 rounded-lg text-xs font-medium tracking-normal bg-forest-900 text-mint-100 border border-forest-700 shadow-md opacity-0 -translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto transition-all duration-150 whitespace-nowrap"
           >
             {{ item.label }}
           </span>
@@ -54,14 +54,14 @@
 
     <!-- Mobile Floating Bottom Pill Navigation with Logo & Sliding Indicator -->
     <nav
-      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 ring-1 ring-sage-400/25 shadow-[0_10px_30px_rgba(5,31,32,0.9)] max-w-[95vw] select-none"
+      class="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 py-2 px-3 rounded-full bg-forest-900/95 backdrop-blur-xl border border-forest-700 shadow-lg max-w-[95vw] select-none"
     >
       <!-- Brand Logo on Mobile Navbar -->
       <a
         href="#hero"
         @click.prevent="scrollTo('#hero')"
-        class="w-9 h-9 rounded-full bg-forest-950 border border-sage-400/50 p-1 flex items-center justify-center hover:scale-105 active:scale-90 transition-all duration-200 shrink-0 shadow-sm"
-        title="Muhamad Ibnhu - Home"
+        class="w-9 h-9 rounded-full bg-forest-950 border border-forest-700 p-1 flex items-center justify-center transition-colors duration-150 shrink-0"
+        title="Muhamad Ibnhu - Beranda"
       >
         <img :src="logoUrl" alt="Logo" class="w-full h-full object-contain" />
       </a>
@@ -69,15 +69,15 @@
       <!-- Divider -->
       <div class="w-[1px] h-5 bg-forest-700/80 shrink-0 mx-0.5"></div>
 
-      <!-- Navigation Icons Container (Positioned relative so offsetLeft matches exactly) -->
+      <!-- Navigation Icons Container -->
       <div class="relative flex items-center gap-1">
         <!-- Sliding Active Capsule on Mobile -->
         <div
-          class="absolute top-0 w-9 h-9 rounded-full bg-forest-800 border border-sage-400/80 ring-1 ring-sage-400/30 shadow-[0_0_14px_rgba(142,182,155,0.4)] pointer-events-none transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
+          class="absolute top-0 w-9 h-9 rounded-full bg-forest-800 border border-forest-700 pointer-events-none transition-transform duration-200 ease-[cubic-bezier(0.25,1,0.4,1)] z-0 will-change-transform"
           :style="mobileIndicatorStyle"
         >
           <span
-            class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"
+            class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-warm-400"
           ></span>
         </div>
 

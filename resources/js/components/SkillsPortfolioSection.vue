@@ -14,8 +14,8 @@
           :key="cat"
           @click="selectedCategory = cat"
           type="button"
-          class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 active:scale-95"
-          :class="selectedCategory === cat ? 'bg-forest-700 text-mint-100 border border-sage-400 ring-1 ring-sage-400/30 shadow-[0_0_15px_rgba(142,182,155,0.3)]' : 'bg-forest-900/80 text-sage-400/70 border border-forest-700 hover:text-mint-100 hover:bg-forest-800'"
+          class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-colors duration-150"
+          :class="selectedCategory === cat ? 'bg-forest-700 text-mint-100 border border-sage-400' : 'bg-forest-900/80 text-sage-400/70 border border-forest-700 hover:text-mint-100 hover:bg-forest-800'"
         >
           {{ cat }}
         </button>
@@ -27,15 +27,14 @@
           v-for="project in filteredProjects"
           :key="project.id || project.slug || project.title"
           variant="secondary"
-          hoverable
-          class="flex flex-col justify-between group overflow-hidden !p-0 transition-all duration-300 hover:-translate-y-1 hover:border-sage-400/80 ring-1 ring-transparent hover:ring-sage-400/30"
+          class="flex flex-col justify-between group overflow-hidden !p-0 border border-forest-700 hover:border-sage-400/70 transition-colors duration-200"
         >
           <!-- Thumbnail Image -->
-          <div class="relative h-48 overflow-hidden border-b border-forest-700/80">
+          <div class="relative h-48 overflow-hidden border-b border-forest-700/80 bg-forest-950">
             <img
               :src="project.thumbnail_url || project.thumbnail || 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80'"
               :alt="project.title"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              class="w-full h-full object-cover"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-transparent to-transparent"></div>
             <!-- Category Tag -->

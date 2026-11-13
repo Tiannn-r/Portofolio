@@ -5,7 +5,7 @@
       v-if="profile?.is_available"
       class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest-900/90 border border-forest-700 backdrop-blur-md mb-8 transition-colors duration-200 hover:border-warm-400/60"
     >
-      <span class="w-2 h-2 rounded-full bg-warm-400 shadow-[0_0_8px_rgba(212,165,116,0.6)]"></span>
+      <span class="w-2 h-2 rounded-full bg-warm-400"></span>
       <span class="text-xs font-medium text-mint-100 tracking-normal">
         Terbuka untuk Kerja Sama Proyek
       </span>

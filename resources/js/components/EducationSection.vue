@@ -15,7 +15,7 @@
         <div class="flex flex-col">
           <!-- Column Header -->
           <div class="flex items-center gap-3 mb-6 pb-3 border-b border-forest-700/60">
-            <div class="w-10 h-10 rounded-xl bg-forest-900 border border-sage-400/40 flex items-center justify-center text-sage-400 shadow-[0_0_12px_rgba(142,182,155,0.2)]">
+            <div class="w-10 h-10 rounded-xl bg-forest-900 border border-forest-700 flex items-center justify-center text-sage-400">
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5" />
               </svg>
@@ -32,17 +32,17 @@
             <div
               v-for="(item, idx) in educationList"
               :key="item.id || idx"
-              class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 rounded-xl p-5 hover:bg-forest-800/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(142,182,155,0.2)] ring-1 ring-transparent hover:ring-sage-400/30 relative pl-14"
+              class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/70 rounded-xl p-5 hover:bg-forest-800/80 transition-colors duration-200 relative pl-14"
             >
-              <!-- Icon Indicator with Sage Glow -->
-              <div class="w-8 h-8 rounded-full bg-forest-800 border border-sage-400 flex items-center justify-center text-sage-400 absolute left-4 top-5 shadow-[0_0_8px_#8EB69B] group-hover:scale-110 transition-transform">
+              <!-- Icon Indicator -->
+              <div class="w-8 h-8 rounded-full bg-forest-800 border border-forest-700 flex items-center justify-center text-sage-400 absolute left-4 top-5">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
 
               <!-- Content -->
-              <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-forest-950 text-sage-400 border border-forest-700/80 mb-1.5 ring-1 ring-sage-400/10">
+              <span class="inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-forest-950 text-sage-400 border border-forest-700/80 mb-1.5">
                 {{ item.period }}
               </span>
               <h4 class="text-base sm:text-lg font-bold text-mint-100 group-hover:text-sage-400 transition-colors">
@@ -63,7 +63,7 @@
           <!-- Column Header -->
           <div class="flex items-center justify-between mb-6 pb-3 border-b border-forest-700/60">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-forest-900 border border-sage-400/40 flex items-center justify-center text-sage-400 shadow-[0_0_12px_rgba(142,182,155,0.2)]">
+              <div class="w-10 h-10 rounded-xl bg-forest-900 border border-forest-700 flex items-center justify-center text-sage-400">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
                 </svg>
@@ -88,10 +88,10 @@
               @click="openCertificateModal(item)"
               role="button"
               tabindex="0"
-              class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 rounded-xl p-5 hover:bg-forest-800/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(142,182,155,0.2)] ring-1 ring-transparent hover:ring-sage-400/30 relative pl-14 cursor-pointer"
+              class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/70 rounded-xl p-5 hover:bg-forest-800/80 transition-colors duration-200 relative pl-14 cursor-pointer"
             >
-              <!-- Icon Indicator with Sage Glow -->
-              <div class="w-8 h-8 rounded-full bg-forest-800 border border-sage-400 flex items-center justify-center text-sage-400 absolute left-4 top-5 shadow-[0_0_8px_#8EB69B] group-hover:scale-110 transition-transform">
+              <!-- Icon Indicator -->
+              <div class="w-8 h-8 rounded-full bg-forest-800 border border-forest-700 flex items-center justify-center text-sage-400 absolute left-4 top-5">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
