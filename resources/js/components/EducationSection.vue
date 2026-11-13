@@ -1,9 +1,9 @@
 <template>
   <SectionContainer
     id="education"
-    badge="Academic & Certifications"
-    title="Education & <span class='text-sage-400'>Certifications</span>"
-    description="Formal computer science education and professional industry credentials."
+    badge="Pendidikan"
+    title="Pendidikan & Sertifikasi"
+    description="Latar belakang pendidikan formal dan sertifikasi keahlian profesional."
   >
     <!-- Glassmorphic Card Container -->
     <GlassCard

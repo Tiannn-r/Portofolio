@@ -43,12 +43,12 @@ const props = defineProps({
   },
   glow: {
     type: String,
-    default: 'hover', // 'none', 'hover', 'always'
+    default: 'none', // 'none', 'hover', 'always'
     validator: (v) => ['none', 'hover', 'always'].includes(v),
   },
   ring: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   interactive: {
     type: Boolean,
@@ -81,12 +81,12 @@ const variantClasses = computed(() => {
 const glowClasses = computed(() => {
   switch (props.glow) {
     case 'always':
-      return 'shadow-[0_0_25px_rgba(142,182,155,0.35)]';
+      return 'shadow-md border-sage-400/50';
     case 'hover':
-      return 'hover:shadow-[0_0_25px_rgba(142,182,155,0.3)] shadow-[0_10px_30px_rgba(5,31,32,0.6)]';
+      return 'hover:border-sage-400/80 shadow-sm';
     case 'none':
     default:
-      return 'shadow-md';
+      return 'shadow-sm';
   }
 });
 
@@ -96,7 +96,7 @@ const ringClasses = computed(() => {
 
 const interactiveClasses = computed(() => {
   return props.interactive
-    ? 'hover:-translate-y-1 hover:border-[#8EB69B] cursor-pointer'
+    ? 'hover:-translate-y-0.5 hover:border-sage-400 transition-all duration-200 cursor-pointer'
     : '';
 });
 

@@ -15,7 +15,11 @@ export default {
           700: '#235347', // Border kartu, tombol sekunder, & state hover
         },
         sage: {
-          400: '#8EB69B', // Aksen utama, neon glow, progress bar, & indikator aktif
+          400: '#8EB69B', // Aksen utama, progress bar, & indikator aktif
+        },
+        warm: {
+          400: '#D4A574', // Aksen hangat sekunder untuk elemen interaktif/CTA
+          500: '#C29362',
         },
         mint: {
           100: '#DAF1DE', // Warna teks utama/heading & highlight terang

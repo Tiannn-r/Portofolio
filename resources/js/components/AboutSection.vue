@@ -1,70 +1,49 @@
 <template>
   <SectionContainer
     id="about"
-    badge="About"
-    title="About Me & <span class='text-sage-400'>Technical Skills</span>"
-    description="A brief overview of my engineering background and core technical stack."
+    badge="Tentang"
+    title="Tentang Saya & Keahlian Teknis"
+    description="Ringkasan latar belakang rekayasa perangkat lunak dan keahlian teknis utama saya."
   >
     <!-- 2 Column Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left Column: About Me GlassCard -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+      <!-- Left Column: About Me Card -->
       <div class="lg:col-span-7 flex flex-col">
         <GlassCard
           variant="primary"
-          hoverable
-          class="h-full flex flex-col justify-between group"
+          class="h-full flex flex-col justify-between group p-6 sm:p-7"
         >
-          <!-- Ambient Radial Glow -->
-          <div class="absolute -top-20 -left-20 w-52 h-52 bg-sage-400/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start relative z-10">
-            <!-- Square Photo with border glow -->
-            <div class="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden shrink-0 border border-sage-400/40 shadow-[0_0_20px_rgba(142,182,155,0.25)] ring-1 ring-sage-400/20">
+          <div class="flex flex-col sm:flex-row gap-5 items-center sm:items-start relative z-10">
+            <!-- Square Photo with clean border -->
+            <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shrink-0 border border-forest-700 group-hover:border-sage-400/60 transition-colors duration-200">
               <img
                 :src="profile?.about_image_url || profile?.about_image || profile?.avatar_url || '/storage/profile/vQNDsJ2Nb1YtlQ9dV3VcI7PaMFdF0BLZq3HIhLSv.jpg'"
-                :alt="profile?.name || 'About Me Photo'"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                :alt="profile?.name || 'Foto Tentang Saya'"
+                class="w-full h-full object-cover"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-forest-950/80 via-transparent to-transparent"></div>
             </div>
 
             <!-- Content -->
             <div class="flex-1 flex flex-col text-center sm:text-left">
-              <h3 class="text-2xl sm:text-3xl font-bold text-mint-100 mb-3 tracking-tight">
-                About Me
+              <h3 class="text-xl sm:text-2xl font-bold text-mint-100 mb-2.5 tracking-tight">
+                Tentang Saya
               </h3>
-              <p class="text-sm sm:text-base text-mint-100/90 leading-relaxed mb-5 whitespace-pre-line">
+              <p class="text-xs sm:text-sm text-mint-100/85 leading-relaxed mb-4 whitespace-pre-line">
                 {{ profile?.about_me || 'Saya adalah seorang Full-Stack Developer yang berdedikasi dalam membangun produk digital modern, cepat, dan terukur. Berpengalaman dalam merancang arsitektur backend berbasis Laravel, relational database MySQL, serta antarmuka interaktif dengan Vue 3 dan Tailwind CSS.' }}
               </p>
 
               <!-- Meta List -->
-              <div class="flex flex-wrap items-center gap-4 text-xs text-sage-400 pt-3 border-t border-forest-700/50 justify-center sm:justify-start">
+              <div class="flex flex-wrap items-center gap-4 text-xs text-sage-400 pt-3 border-t border-forest-700/60 justify-center sm:justify-start">
                 <div class="flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-sage-400"></span>
-                  <span class="text-mint-100 font-medium">Location:</span> {{ profile?.location || 'Jakarta, ID' }}
+                  <span class="w-1.5 h-1.5 rounded-full bg-warm-400"></span>
+                  <span class="text-mint-100 font-medium">Lokasi:</span> {{ profile?.location || 'Jakarta, Indonesia' }}
                 </div>
                 <div class="flex items-center gap-1.5">
                   <span class="w-1.5 h-1.5 rounded-full bg-sage-400"></span>
-                  <span class="text-mint-100 font-medium">Status:</span> Freelance Available
+                  <span class="text-mint-100 font-medium">Status:</span> Terbuka untuk Kerja Sama
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Bottom Action: Learn More Button -->
-          <div class="mt-6 pt-4 border-t border-forest-700/50 flex items-center justify-end relative z-10">
-            <BaseButton
-              variant="primary"
-              size="sm"
-              @click="isModalOpen = true"
-            >
-              <span>Learn More</span>
-              <template #icon-right>
-                <svg class="w-3.5 h-3.5 text-mint-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </template>
-            </BaseButton>
           </div>
         </GlassCard>
       </div>
@@ -73,24 +52,24 @@
       <div class="lg:col-span-5 flex flex-col">
         <GlassCard
           variant="secondary"
-          class="h-full flex flex-col justify-between"
+          class="h-full flex flex-col justify-between p-6 sm:p-7"
         >
           <div>
-            <div class="mb-5">
-              <h3 class="text-xl sm:text-2xl font-bold text-mint-100 tracking-tight">
-                Technical Skills
+            <div class="mb-4">
+              <h3 class="text-lg sm:text-xl font-bold text-mint-100 tracking-tight">
+                Keahlian Teknis
               </h3>
             </div>
 
             <!-- Square Small Cards Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 gap-3">
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 gap-2.5">
               <div
                 v-for="skill in technicalSkills"
                 :key="skill.id || skill.name"
-                class="group bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 rounded-xl p-3 flex flex-col items-center justify-center gap-2 hover:bg-forest-800/90 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(142,182,155,0.25)] transition-all duration-300 cursor-default ring-1 ring-transparent hover:ring-sage-400/30"
+                class="bg-forest-900/90 border border-forest-700 hover:border-sage-400/80 rounded-xl p-2.5 flex flex-col items-center justify-center gap-2 hover:bg-forest-800/80 transition-colors duration-200 cursor-default"
               >
                 <!-- Logo / Icon -->
-                <div class="w-10 h-10 rounded-lg bg-forest-950/80 p-2 flex items-center justify-center border border-forest-700/60 group-hover:border-sage-400/50 transition-colors">
+                <div class="w-9 h-9 rounded-lg bg-forest-950/90 p-1.5 flex items-center justify-center border border-forest-700/60">
                   <!-- Inline SVG support -->
                   <div
                     v-if="skill.icon && skill.icon.trim().startsWith('<svg')"
@@ -102,18 +81,18 @@
                     v-else-if="(skill.icon_url || skill.icon) && !brokenSkillIcons[skill.id || skill.name]"
                     :src="skill.icon_url || skill.icon"
                     :alt="skill.name"
-                    class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    class="w-full h-full object-contain"
                     loading="lazy"
                     @error="brokenSkillIcons[skill.id || skill.name] = true"
                   />
                   <!-- Fallback Tech Icon -->
-                  <svg v-else class="w-5 h-5 text-sage-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <svg v-else class="w-4 h-4 text-sage-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
                 </div>
 
                 <!-- Skill Name -->
-                <span class="text-xs font-semibold text-mint-100 group-hover:text-sage-400 transition-colors text-center line-clamp-1">
+                <span class="text-[11px] font-medium text-mint-100 text-center line-clamp-1">
                   {{ skill.name }}
                 </span>
               </div>
@@ -122,62 +101,6 @@
         </GlassCard>
       </div>
     </div>
-
-    <!-- Learn More Modal Dialog using AdminModal -->
-    <AdminModal
-      :show="isModalOpen"
-      title="Deep Dive Into My Journey"
-      max-width="2xl"
-      @close="isModalOpen = false"
-    >
-      <div class="space-y-4 text-sm text-mint-100/90 leading-relaxed">
-        <div class="p-3 rounded-xl bg-forest-800/50 border border-forest-700/60 mb-2">
-          <span class="text-xs uppercase tracking-wider text-sage-400 font-semibold block mb-1">
-            Extended Story & Philosophy
-          </span>
-          <p class="text-mint-100">
-            {{ profile?.about_me }}
-          </p>
-        </div>
-        <p>
-          Saya selalu percaya bahwa sebuah aplikasi web yang hebat tidak hanya memiliki tampilan visual yang memikat, tetapi juga fondasi kode yang kokoh, terstruktur, aman, serta siap berkembang seiring bertambahnya pengguna.
-        </p>
-        <p class="text-sage-400/90">
-          Dengan fokus pada continuous integration, modular design patterns, dan performa tinggi, setiap baris kode dirancang untuk memberikan nilai bisnis nyata.
-        </p>
-      </div>
-
-      <template #footer>
-        <div class="w-full flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <a
-              v-if="profile?.social_links?.github"
-              :href="profile.social_links.github"
-              target="_blank"
-              class="text-sage-400 hover:text-mint-100 transition-colors text-xs font-mono underline"
-            >
-              GitHub ↗
-            </a>
-            <a
-              v-if="profile?.social_links?.linkedin"
-              :href="profile.social_links.linkedin"
-              target="_blank"
-              class="text-sage-400 hover:text-mint-100 transition-colors text-xs font-mono underline"
-            >
-              LinkedIn ↗
-            </a>
-          </div>
-
-          <BaseButton
-            variant="primary"
-            size="sm"
-            @click="handleContactShortcut"
-          >
-            <span>Get In Touch</span>
-          </BaseButton>
-        </div>
-      </template>
-    </AdminModal>
   </SectionContainer>
 </template>
 
@@ -185,8 +108,6 @@
 import { ref, computed } from 'vue';
 import SectionContainer from './ui/SectionContainer.vue';
 import GlassCard from './ui/GlassCard.vue';
-import BaseButton from './ui/BaseButton.vue';
-import AdminModal from './ui/AdminModal.vue';
 
 const props = defineProps({
   profile: {
@@ -202,7 +123,6 @@ const props = defineProps({
   },
 });
 
-const isModalOpen = ref(false);
 const brokenSkillIcons = ref({});
 
 const defaultTechSkills = [
@@ -222,12 +142,4 @@ const technicalSkills = computed(() => {
   }
   return defaultTechSkills;
 });
-
-const handleContactShortcut = () => {
-  isModalOpen.value = false;
-  const target = document.querySelector('#contact');
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth' });
-  }
-};
 </script>

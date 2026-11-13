@@ -1,9 +1,9 @@
 <template>
   <SectionContainer
     id="featured"
-    badge="Stories & Updates"
-    title="Stories & <span class='text-sage-400'>Updates</span>"
-    description="Berita terbaru, catatan perjalanan rekayasa perangkat lunak, dan cerita pencapaian profesional."
+    badge="Catatan"
+    title="Catatan & Cerita Perjalanan"
+    description="Berita terbaru, catatan pembelajaran rekayasa perangkat lunak, dan cerita pencapaian profesional."
   >
     <!-- =================================================================================== -->
     <!-- FULL-WIDTH STORIES & NEWS CAROUSEL (Widescreen, Grand & Prominent)                  -->
@@ -11,21 +11,14 @@
     <div class="w-full">
       <GlassCard
         variant="primary"
-        class="w-full relative overflow-hidden p-6 sm:p-8 lg:p-10 shadow-[0_15px_40px_rgba(5,31,32,0.9)] border border-[#235347] ring-1 ring-sage-400/20"
+        class="w-full relative overflow-hidden p-6 sm:p-8 lg:p-10 border border-forest-700 shadow-xl"
       >
-        <!-- Ambient Glowing Aura in Background -->
-        <div class="absolute -top-32 -right-32 w-96 h-96 bg-sage-400/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-forest-700/20 rounded-full blur-[120px] pointer-events-none"></div>
-
         <!-- Top Header Bar with Slide Counter & Arrows -->
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-forest-700/60 relative z-10">
           <div class="flex items-center gap-3">
-            <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-sage-400 shadow-[0_0_8px_#8EB69B]"></span>
-            </span>
-            <span class="text-xs sm:text-sm uppercase tracking-wider text-sage-400 font-bold font-mono">
-              BERITA & CERITA ({{ currentSlide + 1 }}/{{ displayStories.length }})
+            <span class="w-2.5 h-2.5 rounded-full bg-warm-400 shadow-[0_0_8px_rgba(212,165,116,0.6)]"></span>
+            <span class="text-xs sm:text-sm tracking-wider text-sage-400 font-bold font-mono">
+              KABAR & CATATAN ({{ currentSlide + 1 }}/{{ displayStories.length }})
             </span>
           </div>
 
@@ -34,7 +27,7 @@
             <button
               @click="prevSlide"
               type="button"
-              title="Previous Story"
+              title="Cerita Sebelumnya"
               class="w-9 h-9 rounded-full bg-forest-900 border border-forest-700 text-sage-400 hover:text-mint-100 hover:border-sage-400 hover:bg-forest-800 flex items-center justify-center transition-all active:scale-90 shadow-sm"
             >
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,7 +37,7 @@
             <button
               @click="nextSlide"
               type="button"
-              title="Next Story"
+              title="Cerita Selanjutnya"
               class="w-9 h-9 rounded-full bg-forest-900 border border-forest-700 text-sage-400 hover:text-mint-100 hover:border-sage-400 hover:bg-forest-800 flex items-center justify-center transition-all active:scale-90 shadow-sm"
             >
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -109,7 +102,7 @@
                 size="md"
                 @click="openStoryModal(currentStory)"
               >
-                <span>BACA CERITA</span>
+                <span>Baca Selengkapnya</span>
                 <template #icon-right>
                   <svg class="w-4 h-4 text-mint-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

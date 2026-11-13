@@ -3,9 +3,9 @@
     <!-- My Portfolio Grid (3x2) -->
     <SectionContainer
       id="portfolio-grid"
-      badge="Selected Works"
-      title="My <span class='text-sage-400'>Portfolio</span>"
-      description="Explore a curation of web applications, platforms, and interactive interfaces built with passion."
+      badge="Karya Pilihan"
+      title="Portofolio & Proyek Pilihan"
+      description="Kumpulan aplikasi web, platform sistem informasi, dan antarmuka interaktif yang pernah saya bangun."
     >
       <!-- Category Filter Tabs with Micro-interactions -->
       <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
@@ -73,7 +73,7 @@
                 type="button"
                 class="text-xs text-sage-400 font-semibold hover:text-mint-100 inline-flex items-center gap-1 group/btn transition-colors"
               >
-                <span>Details</span>
+                <span>Lihat Detail</span>
                 <svg class="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -101,7 +101,7 @@
     <!-- Detail Modal using AdminModal -->
     <AdminModal
       :show="!!activeModalProject"
-      :title="activeModalProject?.title || 'Project Detail'"
+      :title="activeModalProject?.title || 'Detail Proyek'"
       max-width="2xl"
       @close="activeModalProject = null"
     >
@@ -123,7 +123,7 @@
         </p>
 
         <div>
-          <span class="text-xs uppercase text-sage-400 font-semibold block mb-2 font-mono">Technologies Used:</span>
+          <span class="text-xs uppercase text-sage-400 font-semibold block mb-2 font-mono">Teknologi:</span>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="(tech, i) in activeModalProject.tech_stack"
@@ -147,7 +147,7 @@
               :href="activeModalProject.url_demo"
               target="_blank"
             >
-              <span>Visit Demo</span>
+              <span>Buka Demo</span>
               <template #icon-right>
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -161,7 +161,7 @@
             size="sm"
             @click="activeModalProject = null"
           >
-            <span>Close</span>
+            <span>Tutup</span>
           </BaseButton>
         </div>
       </template>
@@ -183,7 +183,7 @@ const props = defineProps({
   },
 });
 
-const selectedCategory = ref('All');
+const selectedCategory = ref('Semua');
 const activeModalProject = ref(null);
 
 const defaultProjects = [
@@ -207,7 +207,7 @@ const allProjects = computed(() => {
 });
 
 const categories = computed(() => {
-  const cats = new Set(['All']);
+  const cats = new Set(['Semua']);
   allProjects.value.forEach(p => {
     if (p.category) cats.add(p.category);
   });
@@ -215,7 +215,7 @@ const categories = computed(() => {
 });
 
 const filteredProjects = computed(() => {
-  if (selectedCategory.value === 'All') {
+  if (selectedCategory.value === 'Semua') {
     return allProjects.value.slice(0, 6);
   }
   return allProjects.value.filter(p => p.category === selectedCategory.value).slice(0, 6);

@@ -8,8 +8,8 @@ export function usePublicPortfolio() {
   const portfolio = ref({
     profile: {
       name: 'Muhamad Ibnhu',
-      roles: ['Full-Stack Developer', 'UI/UX Enthusiast', 'Backend Specialist', 'Cloud Explorer'],
-      short_bio: 'Passionate Full-Stack Developer crafting scalable web applications, sleek user experiences, and robust RESTful APIs using Laravel and Vue.js.',
+      roles: ['Web Developer — Spesialis Laravel & Vue.js'],
+      short_bio: 'Membantu mengubah ide dan kebutuhan sistem menjadi aplikasi web yang siap pakai. Suka kode yang terstruktur dan tampilan yang bersih tanpa ribet.',
       about_me: 'Saya adalah seorang Full-Stack Developer yang berdedikasi dalam membangun produk digital modern, cepat, dan terukur. Berpengalaman dalam merancang arsitektur backend berbasis Laravel, relational database MySQL, serta antarmuka interaktif dengan Vue 3 dan Tailwind CSS.',
       avatar_url: '/storage/profile/vBfVcc3JaeCdZUCrq0THNsz7xsvdZuvxhR1Sh5bO.jpg',
       hero_image_url: '/storage/profile/vBfVcc3JaeCdZUCrq0THNsz7xsvdZuvxhR1Sh5bO.jpg',

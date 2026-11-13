@@ -149,12 +149,12 @@ const IconContact = () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke:
 ]);
 
 const navItems = [
-  { id: 'hero', label: 'Home', href: '#hero', icon: IconHome },
-  { id: 'about', label: 'About', href: '#about', icon: IconAbout },
-  { id: 'featured', label: 'Stories', href: '#featured', icon: IconFeatured },
-  { id: 'portfolio', label: 'Portfolio', href: '#portfolio', icon: IconSkills },
-  { id: 'education', label: 'Education', href: '#education', icon: IconEducation },
-  { id: 'contact', label: 'Contact', href: '#contact', icon: IconContact },
+  { id: 'hero', label: 'Beranda', href: '#hero', icon: IconHome },
+  { id: 'about', label: 'Tentang', href: '#about', icon: IconAbout },
+  { id: 'featured', label: 'Cerita', href: '#featured', icon: IconFeatured },
+  { id: 'portfolio', label: 'Portofolio', href: '#portfolio', icon: IconSkills },
+  { id: 'education', label: 'Pendidikan', href: '#education', icon: IconEducation },
+  { id: 'contact', label: 'Kontak', href: '#contact', icon: IconContact },
 ];
 
 const activeIndex = computed(() => {

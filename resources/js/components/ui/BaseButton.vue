@@ -79,13 +79,13 @@ const isButton = computed(() => !props.to && !props.href);
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-[#235347] text-[#DAF1DE] border-2 border-[#8EB69B] shadow-[0_0_20px_rgba(142,182,155,0.3)] hover:shadow-[0_0_30px_rgba(142,182,155,0.55)] hover:bg-[#235347]/90 hover:border-[#DAF1DE]';
+      return 'bg-[#235347] text-[#DAF1DE] border border-[#8EB69B] hover:border-[#D4A574] hover:bg-[#235347]/90 shadow-sm transition-all duration-200';
     case 'secondary':
-      return 'bg-[#0B2B26]/80 border border-[#235347] text-[#DAF1DE] hover:border-[#8EB69B] hover:text-[#8EB69B] hover:bg-[#163832]/80 shadow-[0_4px_15px_rgba(5,31,32,0.4)]';
+      return 'bg-[#0B2B26]/80 border border-[#235347] text-[#DAF1DE] hover:border-[#D4A574] hover:text-[#D4A574] hover:bg-[#163832]/80 transition-all duration-200';
     case 'glass':
-      return 'bg-[#163832] border border-[#235347] text-[#8EB69B] hover:border-[#8EB69B] hover:text-[#DAF1DE] hover:shadow-[0_0_15px_rgba(142,182,155,0.25)]';
+      return 'bg-[#163832] border border-[#235347] text-[#8EB69B] hover:border-[#8EB69B] hover:text-[#DAF1DE] transition-all duration-200';
     case 'gradient':
-      return 'bg-gradient-to-r from-[#163832] via-[#235347] to-[#8EB69B] text-[#DAF1DE] border border-[#8EB69B]/40 shadow-[0_0_20px_rgba(142,182,155,0.3)] hover:shadow-[0_0_30px_rgba(142,182,155,0.5)]';
+      return 'bg-gradient-to-r from-[#163832] via-[#235347] to-[#8EB69B] text-[#DAF1DE] border border-[#8EB69B]/40 hover:border-[#D4A574] transition-all duration-200';
     case 'danger':
       return 'bg-[#051F20] text-red-400 border border-red-500/40 hover:bg-red-950/80 hover:text-red-300';
     default:
