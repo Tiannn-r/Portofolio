@@ -71,22 +71,6 @@
         <span>Unduh CV</span>
       </BaseButton>
     </div>
-
-    <!-- Clean Quick Stats Row -->
-    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full max-w-3xl px-4">
-      <div
-        v-for="(stat, idx) in quickStats"
-        :key="idx"
-        class="py-3 px-4 rounded-xl bg-forest-900/70 border border-forest-700/70 text-center transition-colors duration-200 hover:border-forest-700"
-      >
-        <span class="text-xl sm:text-2xl font-bold text-mint-100 font-mono tracking-tight block">
-          {{ stat.value }}
-        </span>
-        <span class="text-[11px] sm:text-xs text-sage-400/90 mt-0.5 font-medium block">
-          {{ stat.label }}
-        </span>
-      </div>
-    </div>
   </section>
 </template>
 
@@ -107,13 +91,6 @@ const roleTitle = computed(() => {
   }
   return 'Web Developer — Spesialis Laravel & Vue.js';
 });
-
-const quickStats = computed(() => [
-  { value: `${props.profile?.years_experience || 3}+`, label: 'Tahun Pengalaman' },
-  { value: `${props.profile?.projects_completed || 24}+`, label: 'Proyek Selesai' },
-  { value: `${props.profile?.happy_clients || 18}+`, label: 'Klien Puas' },
-  { value: `${props.profile?.awards_received || 5}`, label: 'Sertifikasi' },
-]);
 
 const scrollTo = (selector) => {
   const el = document.querySelector(selector);
