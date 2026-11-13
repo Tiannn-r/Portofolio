@@ -163,9 +163,15 @@
             <!-- Header: Service Icon & Index Counter -->
             <div class="flex items-center justify-between mb-5">
               <div class="w-12 h-12 rounded-xl bg-forest-900 border border-forest-700/80 flex items-center justify-center text-sage-400 group-hover:border-sage-400 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(142,182,155,0.4)] transition-all duration-300">
-                <!-- If icon url provided -->
+                <!-- If inline SVG provided -->
+                <div
+                  v-if="service.icon && service.icon.trim().startsWith('<svg')"
+                  class="w-6 h-6 flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6 [&>svg]:object-contain"
+                  v-html="service.icon"
+                ></div>
+                <!-- If icon url / file path provided -->
                 <img
-                  v-if="(service.icon_url || service.icon) && !brokenServiceIcons[service.id || idx]"
+                  v-else-if="(service.icon_url || service.icon) && !brokenServiceIcons[service.id || idx]"
                   :src="service.icon_url || service.icon"
                   :alt="service.title"
                   class="w-6 h-6 object-contain"

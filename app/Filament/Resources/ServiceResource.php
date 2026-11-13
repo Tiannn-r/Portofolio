@@ -28,29 +28,63 @@ class ServiceResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('title')
+                            ->label('Judul Layanan')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g. Web Development, UI/UX Design'),
+                            ->placeholder('e.g. Web Development, UI/UX Design, Desktop Developer'),
 
                         Forms\Components\TextInput::make('order')
+                            ->label('Urutan')
                             ->numeric()
                             ->default(0),
 
                         Forms\Components\Textarea::make('description')
+                            ->label('Deskripsi Layanan')
                             ->required()
                             ->rows(4)
                             ->columnSpanFull()
                             ->placeholder('Describe the scope and delivery value of this service...'),
+                    ]),
 
-                        Forms\Components\FileUpload::make('icon')
-                            ->label('File Ikon / Logo Layanan')
-                            ->image()
+                Forms\Components\Section::make('Ikon Layanan')
+                    ->description('Pilih cara memasukkan ikon. Anda bisa copy link CDN (Iconify / Devicon), upload gambar, atau paste kode SVG.')
+                    ->schema([
+                        Forms\Components\Radio::make('icon_type')
+                            ->label('Metode Input Ikon')
+                            ->options([
+                                'url' => 'Link / URL CDN (Iconify / Devicon / Web)',
+                                'upload' => 'Upload File dari Komputer (PNG, SVG, WebP)',
+                                'svg' => 'Paste Kode SVG Langsung',
+                            ])
+                            ->default('url')
+                            ->live()
+                            ->inline(),
+
+                        Forms\Components\TextInput::make('icon_url')
+                            ->label('URL CDN Logo / Ikon')
+                            ->placeholder('https://api.iconify.design/heroicons:computer-desktop-solid.svg')
+                            ->helperText('Contoh: https://api.iconify.design/heroicons:... atau link CDN lainnya.')
+                            ->visible(fn (Forms\Get $get) => $get('icon_type') === 'url' || empty($get('icon_type')))
+                            ->columnSpanFull(),
+
+                        Forms\Components\FileUpload::make('icon_file')
+                            ->label('File Ikon Layanan')
                             ->disk('public')
                             ->directory('services')
                             ->visibility('public')
                             ->openable()
                             ->downloadable()
-                            ->helperText('Upload gambar/ikon layanan (opsional, jika kosong akan menggunakan ikon default).')
+                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'])
+                            ->helperText('Upload gambar/ikon layanan.')
+                            ->visible(fn (Forms\Get $get) => $get('icon_type') === 'upload')
+                            ->columnSpanFull(),
+
+                        Forms\Components\Textarea::make('icon_svg')
+                            ->label('Kode Tag <svg>')
+                            ->placeholder('<svg xmlns="http://www.w3.org/2000/svg" ...>...</svg>')
+                            ->rows(4)
+                            ->helperText('Paste kode utuh <svg>...</svg> di sini jika menyalin kode langsung.')
+                            ->visible(fn (Forms\Get $get) => $get('icon_type') === 'svg')
                             ->columnSpanFull(),
                     ]),
             ]);
@@ -60,16 +94,23 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ViewColumn::make('icon')
+                    ->label('Ikon')
+                    ->view('filament.columns.icon-preview'),
+
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Judul Layanan')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->limit(60)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('order')
+                    ->label('Urutan')
                     ->numeric()
                     ->sortable(),
 

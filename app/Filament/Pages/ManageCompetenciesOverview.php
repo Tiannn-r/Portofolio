@@ -28,6 +28,11 @@ class ManageCompetenciesOverview extends Page implements HasForms
 
     protected static ?int $navigationSort = 3;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static string $view = 'filament.pages.manage-competencies-overview';
 
     public ?array $data = [];

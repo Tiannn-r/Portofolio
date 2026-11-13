@@ -21,7 +21,7 @@
             <!-- Square Photo with border glow -->
             <div class="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden shrink-0 border border-sage-400/40 shadow-[0_0_20px_rgba(142,182,155,0.25)] ring-1 ring-sage-400/20">
               <img
-                :src="profile?.about_image_url || profile?.about_image || profile?.avatar_url || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'"
+                :src="profile?.about_image_url || profile?.about_image || profile?.avatar_url || '/storage/profile/vQNDsJ2Nb1YtlQ9dV3VcI7PaMFdF0BLZq3HIhLSv.jpg'"
                 :alt="profile?.name || 'About Me Photo'"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -91,12 +91,20 @@
               >
                 <!-- Logo / Icon -->
                 <div class="w-10 h-10 rounded-lg bg-forest-950/80 p-2 flex items-center justify-center border border-forest-700/60 group-hover:border-sage-400/50 transition-colors">
+                  <!-- Inline SVG support -->
+                  <div
+                    v-if="skill.icon && skill.icon.trim().startsWith('<svg')"
+                    class="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
+                    v-html="skill.icon"
+                  ></div>
+                  <!-- Image URL / Uploaded File -->
                   <img
-                    v-if="skill.icon_url || (skill.icon && !skill.icon.startsWith('<svg'))"
+                    v-else-if="(skill.icon_url || skill.icon) && !brokenSkillIcons[skill.id || skill.name]"
                     :src="skill.icon_url || skill.icon"
                     :alt="skill.name"
                     class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                     loading="lazy"
+                    @error="brokenSkillIcons[skill.id || skill.name] = true"
                   />
                   <!-- Fallback Tech Icon -->
                   <svg v-else class="w-5 h-5 text-sage-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -195,6 +203,7 @@ const props = defineProps({
 });
 
 const isModalOpen = ref(false);
+const brokenSkillIcons = ref({});
 
 const defaultTechSkills = [
   { name: 'Laravel 11', percentage: 92, icon_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg' },

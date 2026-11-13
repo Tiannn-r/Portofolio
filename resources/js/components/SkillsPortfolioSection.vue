@@ -1,70 +1,6 @@
 <template>
-  <div id="portfolio" class="relative py-12 z-10 space-y-24">
-    <!-- Part 1: My Skills (Progress Bars) -->
-    <SectionContainer
-      id="skills-overview"
-      badge="Competencies"
-      title="My Skills & <span class='text-sage-400'>Proficiency</span>"
-      description="Core technical proficiencies across backend architecture and modern web systems."
-    >
-      <!-- Glassmorphism Card with Illustration on Left & Progress Bars on Right -->
-      <GlassCard
-        variant="primary"
-        class="relative overflow-hidden"
-      >
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <!-- Left: Engineering Philosophy & Focus (Configurable via Filament CMS) -->
-          <div class="lg:col-span-5 flex flex-col justify-center space-y-4">
-            <h3 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight leading-snug">
-              {{ overviewTitle }}
-            </h3>
-            <p class="text-sm text-sage-400/90 leading-relaxed">
-              {{ overviewDescription }}
-            </p>
-
-            <div class="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div
-                v-for="(hl, idx) in overviewHighlights"
-                :key="idx"
-                class="p-3.5 rounded-xl bg-forest-900/80 border border-forest-700/80 ring-1 ring-sage-400/10 hover:border-sage-400/60 transition-colors"
-              >
-                <span class="text-xs font-bold text-mint-100 block">{{ hl.title }}</span>
-                <span class="text-[11px] text-sage-400/80 block mt-0.5">{{ hl.subtitle }}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Horizontal Progress Bars -->
-          <div class="lg:col-span-7 space-y-6">
-            <div
-              v-for="skill in progressSkills"
-              :key="skill.id || skill.name"
-              class="group"
-            >
-              <!-- Skill Name & Percentage -->
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-sm sm:text-base font-semibold text-mint-100 group-hover:text-sage-400 transition-colors">
-                  {{ skill.name }}
-                </span>
-                <span class="text-sm font-mono font-bold text-sage-400">
-                  {{ skill.percentage }}%
-                </span>
-              </div>
-
-              <!-- Track & Bar with Glow -->
-              <div class="w-full h-3 rounded-full bg-forest-900 border border-forest-700/80 overflow-hidden p-0.5 ring-1 ring-sage-400/10">
-                <div
-                  class="h-full rounded-full bg-gradient-to-r from-forest-700 to-sage-400 shadow-[0_0_12px_rgba(142,182,155,0.5)] transition-all duration-1000 ease-out"
-                  :style="{ width: `${skill.percentage}%` }"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </GlassCard>
-    </SectionContainer>
-
-    <!-- Part 2: My Portfolio Grid (3x2) -->
+  <div id="portfolio" class="relative py-12 z-10">
+    <!-- My Portfolio Grid (3x2) -->
     <SectionContainer
       id="portfolio-grid"
       badge="Selected Works"
@@ -241,16 +177,6 @@ import BaseButton from './ui/BaseButton.vue';
 import AdminModal from './ui/AdminModal.vue';
 
 const props = defineProps({
-  profile: {
-    type: Object,
-    default: () => null,
-  },
-  skills: {
-    type: Object,
-    default: () => ({
-      progress_bars: [],
-    }),
-  },
   projects: {
     type: Array,
     default: () => [],
@@ -260,61 +186,7 @@ const props = defineProps({
 const selectedCategory = ref('All');
 const activeModalProject = ref(null);
 
-const overviewTitle = computed(() => {
-  return props.profile?.skills_overview?.title || 'Engineering Scalable & Resilient Systems';
-});
-
-const overviewDescription = computed(() => {
-  return props.profile?.skills_overview?.description || 'Fokus pada rekayasa perangkat lunak yang andal, pemeliharaan kode bersih, serta antarmuka interaktif yang cepat dan terukur.';
-});
-
-const overviewHighlights = computed(() => {
-  const custom = props.profile?.skills_overview?.highlights;
-  if (Array.isArray(custom) && custom.length > 0) {
-    return custom;
-  }
-  return [
-    { title: 'Modern Backend', subtitle: 'Laravel, MySQL, REST API' },
-    { title: 'Reactive Frontend', subtitle: 'Vue 3, Tailwind CSS' },
-  ];
-});
-
-const defaultProgressSkills = [
-  { name: 'Backend Architecture & API Development', percentage: 92 },
-  { name: 'Frontend UI/UX Implementation', percentage: 88 },
-  { name: 'Relational Database Design & Query Tuning', percentage: 85 },
-  { name: 'Responsive Design & Accessibility', percentage: 95 },
-  { name: 'System Security & Authentication (Sanctum/OAuth)', percentage: 86 },
-];
-
-const progressSkills = computed(() => {
-  if (props.skills?.progress_bars && props.skills.progress_bars.length > 0) {
-    return props.skills.progress_bars;
-  }
-  return defaultProgressSkills;
-});
-
 const defaultProjects = [
-  {
-    title: 'Enterprise Resource Planning (ERP) System',
-    slug: 'erp-system',
-    category: 'Web Application',
-    description: 'Platform ERP modern untuk enterprise dengan manajemen inventaris realtime, pelaporan akuntansi otomatis, manajemen multi-cabang, dan role-based access control yang aman.',
-    thumbnail_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
-    tech_stack: ['Laravel 11', 'Vue 3', 'Tailwind CSS', 'MySQL', 'Chart.js'],
-    url_demo: 'https://erp.demo.portofolio.id',
-    url_repo: 'https://github.com/Tiannn-r/Portofolio',
-  },
-  {
-    title: 'Multi-Vendor Marketplace & Checkout Platform',
-    slug: 'ecommerce-platform',
-    category: 'E-Commerce',
-    description: 'Aplikasi e-commerce lengkap dengan cart realtime, integrasi pembayaran digital, pelacakan kurir otomatis, serta dashboard analitik penjualan bagi merchant.',
-    thumbnail_url: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80',
-    tech_stack: ['Laravel 11', 'Vue 3', 'Pinia', 'Tailwind CSS', 'Midtrans API'],
-    url_demo: 'https://shop.demo.portofolio.id',
-    url_repo: 'https://github.com/Tiannn-r/Portofolio',
-  },
   {
     title: 'Personal Portfolio & Admin CMS Engine',
     slug: 'portfolio-cms',
@@ -325,49 +197,11 @@ const defaultProjects = [
     url_demo: 'https://portofolio.id',
     url_repo: 'https://github.com/Tiannn-r/Portofolio',
   },
-  {
-    title: 'Healthcare Clinic Appointment & Electronic Medical Record',
-    slug: 'clinic-system',
-    category: 'HealthTech',
-    description: 'Aplikasi booking janji temu dokter online dengan notifikasi pengingat via WhatsApp dan rekam medis elektronik terenkripsi.',
-    thumbnail_url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
-    tech_stack: ['Laravel 11', 'Vue.js', 'MySQL', 'Tailwind CSS'],
-    url_demo: 'https://clinic.demo.portofolio.id',
-    url_repo: 'https://github.com/Tiannn-r/Portofolio',
-  },
-  {
-    title: 'SaaS Analytics & Performance Monitoring',
-    slug: 'saas-analytics',
-    category: 'Web Application',
-    description: 'Dashboard metrik performa cloud server, visualisasi throughput data time-series, dan sistem alarm peringatan kegagalan server.',
-    thumbnail_url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-    tech_stack: ['Vue 3', 'Laravel', 'PostgreSQL', 'Redis'],
-    url_demo: 'https://analytics.demo.portofolio.id',
-    url_repo: 'https://github.com/Tiannn-r/Portofolio',
-  },
-  {
-    title: 'Real-Time Team Collaboration Suite',
-    slug: 'collaboration-suite',
-    category: 'Full-Stack Web',
-    description: 'Aplikasi kolaborasi kerja tim dengan kanban board interaktif, live document editing via websockets, dan video conference terintegrasi.',
-    thumbnail_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
-    tech_stack: ['Laravel', 'Vue 3', 'WebSockets', 'Tailwind CSS'],
-    url_demo: 'https://collab.demo.portofolio.id',
-    url_repo: 'https://github.com/Tiannn-r/Portofolio',
-  },
 ];
 
 const allProjects = computed(() => {
   if (props.projects && props.projects.length > 0) {
-    if (props.projects.length >= 6) return props.projects;
-    const combined = [...props.projects];
-    for (const dp of defaultProjects) {
-      if (!combined.some(p => p.title === dp.title)) {
-        combined.push(dp);
-      }
-      if (combined.length >= 6) break;
-    }
-    return combined;
+    return props.projects;
   }
   return defaultProjects;
 });

@@ -69,8 +69,13 @@
           <div class="flex items-center justify-between mb-3">
             <!-- Icon preview -->
             <div class="w-10 h-10 rounded-xl bg-[#163832] border border-[#235347] flex items-center justify-center p-2 shadow-inner group-hover:scale-105 transition-transform">
+              <div
+                v-if="skill.icon && skill.icon.trim().startsWith('<svg')"
+                class="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
+                v-html="skill.icon"
+              ></div>
               <img
-                v-if="skill.icon_url || (skill.icon && !skill.icon.startsWith('<svg'))"
+                v-else-if="skill.icon_url || skill.icon"
                 :src="skill.icon_url || skill.icon"
                 :alt="skill.name"
                 class="w-full h-full object-contain"

@@ -42,10 +42,8 @@
         :services="portfolio.services"
       />
 
-      <!-- Section 4: My Skills (Progress Bar) & My Portfolio Grid -->
+      <!-- Section 4: Selected Works / Portfolio Showcase -->
       <SkillsPortfolioSection
-        :profile="portfolio.profile"
-        :skills="portfolio.skills"
         :projects="portfolio.projects"
       />
 

@@ -17,3 +17,12 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Deployment and temp files
+*.zip
+*.sql
+staging_deploy/
+.env .produksi
+artisan_deploy.php
+extract_deploy.php
+import_sql.php

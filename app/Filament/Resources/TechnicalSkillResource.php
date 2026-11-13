@@ -37,7 +37,7 @@ class TechnicalSkillResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Technical Skill (Logo & Nama)')
+                Forms\Components\Section::make('Informasi Teknologi')
                     ->description('Keahlian teknologi yang ditampilkan berupa logo dan nama di samping kartu About Me.')
                     ->columns(2)
                     ->schema([
@@ -52,23 +52,53 @@ class TechnicalSkillResource extends Resource
                             ->numeric()
                             ->default(0),
 
-                        Forms\Components\FileUpload::make('icon')
-                            ->label('File Logo / Ikon')
-                            ->image()
-                            ->disk('public')
-                            ->directory('skills')
-                            ->visibility('public')
-                            ->openable()
-                            ->downloadable()
-                            ->helperText('Upload file logo teknologi (PNG, SVG, atau WebP).')
-                            ->columnSpanFull()
-                            ->required(),
-
                         Forms\Components\Hidden::make('type')
                             ->default('grid_icon'),
 
                         Forms\Components\Hidden::make('percentage')
                             ->default(100),
+                    ]),
+
+                Forms\Components\Section::make('Logo / Ikon Teknologi')
+                    ->description('Pilih cara memasukkan ikon. Anda bisa copy link CDN langsung dari devicon.dev, upload gambar, atau paste kode SVG.')
+                    ->schema([
+                        Forms\Components\Radio::make('icon_type')
+                            ->label('Metode Input Ikon')
+                            ->options([
+                                'url' => 'Link / URL CDN (Rekomendasi devicon.dev)',
+                                'upload' => 'Upload File dari Komputer (PNG, SVG, WebP)',
+                                'svg' => 'Paste Kode SVG Langsung',
+                            ])
+                            ->default('url')
+                            ->live()
+                            ->inline(),
+
+                        Forms\Components\TextInput::make('icon_url')
+                            ->label('URL CDN Logo / Ikon')
+                            ->placeholder('https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg')
+                            ->helperText('Buka devicon.dev, pilih ikon, copy link CDN dan paste di sini.')
+                            ->visible(fn (Forms\Get $get) => $get('icon_type') === 'url' || empty($get('icon_type')))
+                            ->columnSpanFull(),
+
+                        Forms\Components\FileUpload::make('icon_file')
+                            ->label('File Logo / Ikon')
+                            ->disk('public')
+                            ->directory('skills')
+                            ->visibility('public')
+                            ->openable()
+                            ->downloadable()
+                            ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'])
+                            ->helperText('Upload file logo teknologi (PNG, SVG, atau WebP).')
+                            ->visible(fn (Forms\Get $get) => $get('icon_type') === 'upload')
+                            ->columnSpanFull(),
+
+                        Forms\Components\Textarea::make('icon_svg')
+                            ->label('Kode Tag <svg>')
+                            ->placeholder('<svg xmlns="http://www.w3.org/2000/svg" ...>...</svg>')
+                            ->rows(4)
+                            ->helperText('Paste kode utuh <svg>...</svg> di sini jika menyalin kode langsung.')
+                            ->visible(fn (Forms\Get $get) => $get('icon_type') === 'svg')
+                            ->columnSpanFull(),
                     ]),
             ]);
     }
@@ -77,12 +107,9 @@ class TechnicalSkillResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('icon')
+                Tables\Columns\ViewColumn::make('icon')
                     ->label('Logo')
-                    ->disk('public')
-                    ->defaultImageUrl(fn (Skill $record) => $record->icon_url)
-                    ->square()
-                    ->size(36),
+                    ->view('filament.columns.icon-preview'),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Teknologi')

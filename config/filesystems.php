@@ -38,7 +38,9 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => (file_exists(public_path('storage')) && !is_link(public_path('storage')))
+                ? public_path('storage')
+                : storage_path('app/public'),
             'url' => env('FILESYSTEM_PUBLIC_URL', '/storage'),
             'visibility' => 'public',
             'throw' => false,
