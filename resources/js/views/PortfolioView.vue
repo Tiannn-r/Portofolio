@@ -36,10 +36,9 @@
       <!-- Section 2: About Me & Technical Skills -->
       <AboutSection :profile="portfolio.profile" :skills="portfolio.skills" />
 
-      <!-- Section 3: Stories & Services (Updates & Solutions) -->
+      <!-- Section 3: Stories & Updates -->
       <FeaturedServicesSection
         :stories="portfolio.stories"
-        :services="portfolio.services"
       />
 
       <!-- Section 4: Selected Works / Portfolio Showcase -->

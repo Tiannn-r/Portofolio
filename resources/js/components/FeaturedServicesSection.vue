@@ -6,9 +6,9 @@
     description="Berita terbaru, catatan perjalanan rekayasa perangkat lunak, dan cerita pencapaian profesional."
   >
     <!-- =================================================================================== -->
-    <!-- 1. FULL-WIDTH STORIES & NEWS CAROUSEL (Widescreen, Grand & Prominent)               -->
+    <!-- FULL-WIDTH STORIES & NEWS CAROUSEL (Widescreen, Grand & Prominent)                  -->
     <!-- =================================================================================== -->
-    <div class="w-full mb-16">
+    <div class="w-full">
       <GlassCard
         variant="primary"
         class="w-full relative overflow-hidden p-6 sm:p-8 lg:p-10 shadow-[0_15px_40px_rgba(5,31,32,0.9)] border border-[#235347] ring-1 ring-sage-400/20"
@@ -136,93 +136,6 @@
     </div>
 
     <!-- =================================================================================== -->
-    <!-- 2. SERVICES SECTION (Diletakkan di Bawah Slider, Format Grid 3 Kolom Lebih Josjis)  -->
-    <!-- =================================================================================== -->
-    <div>
-      <!-- Sub-header Title for Services -->
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-        <div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-mint-100 tracking-tight">
-            Services & Solutions
-          </h3>
-        </div>
-        <p class="text-xs sm:text-sm text-sage-400/80 max-w-md">
-          Solusi rekayasa perangkat lunak ujung-ke-ujung dengan standar performa dan skalabilitas modern.
-        </p>
-      </div>
-
-      <!-- 3 Columns Services Grid Layout -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-        <GlassCard
-          v-for="(service, idx) in displayServices"
-          :key="service.id || idx"
-          variant="secondary"
-          class="flex flex-col justify-between group hover:-translate-y-1.5 hover:border-sage-400/80 transition-all duration-300 ring-1 ring-transparent hover:ring-sage-400/30 shadow-[0_4px_20px_rgba(5,31,32,0.6)]"
-        >
-          <div>
-            <!-- Header: Service Icon & Index Counter -->
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-12 h-12 rounded-xl bg-forest-900 border border-forest-700/80 flex items-center justify-center text-sage-400 group-hover:border-sage-400 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(142,182,155,0.4)] transition-all duration-300">
-                <!-- If inline SVG provided -->
-                <div
-                  v-if="service.icon && service.icon.trim().startsWith('<svg')"
-                  class="w-6 h-6 flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6 [&>svg]:object-contain"
-                  v-html="service.icon"
-                ></div>
-                <!-- If icon url / file path provided -->
-                <img
-                  v-else-if="(service.icon_url || service.icon) && !brokenServiceIcons[service.id || idx]"
-                  :src="service.icon_url || service.icon"
-                  :alt="service.title"
-                  class="w-6 h-6 object-contain"
-                  @error="brokenServiceIcons[service.id || idx] = true"
-                />
-                <!-- Preset SVG Icons Based on Index/Title -->
-                <svg v-else-if="idx === 0 || service.title.toLowerCase().includes('web')" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-                <svg v-else-if="idx === 1 || service.title.toLowerCase().includes('design') || service.title.toLowerCase().includes('ui')" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                </svg>
-                <svg v-else class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-
-              <span class="text-xs font-mono font-bold text-sage-400/60 group-hover:text-sage-400 transition-colors">
-                0{{ idx + 1 }}
-              </span>
-            </div>
-
-            <!-- Service Title -->
-            <h4 class="text-lg sm:text-xl font-bold text-mint-100 group-hover:text-sage-400 transition-colors mb-3">
-              {{ service.title }}
-            </h4>
-
-            <!-- Service Description -->
-            <p class="text-xs sm:text-sm text-mint-100/80 leading-relaxed mb-6">
-              {{ service.description }}
-            </p>
-          </div>
-
-          <!-- Highlight Bullets -->
-          <div class="pt-4 border-t border-forest-700/60 mt-auto">
-            <ul class="space-y-2">
-              <li
-                v-for="(feat, fIdx) in getServiceFeatures(idx)"
-                :key="fIdx"
-                class="flex items-center gap-2 text-xs text-sage-400/90 font-medium"
-              >
-                <span class="w-1.5 h-1.5 rounded-full bg-sage-400 shadow-[0_0_6px_#8EB69B]"></span>
-                <span>{{ feat }}</span>
-              </li>
-            </ul>
-          </div>
-        </GlassCard>
-      </div>
-    </div>
-
-    <!-- =================================================================================== -->
     <!-- READ STORY DETAIL MODAL (AdminModal popup)                                          -->
     <!-- =================================================================================== -->
     <AdminModal
@@ -298,15 +211,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  services: {
-    type: Array,
-    default: () => [],
-  },
 });
 
 const currentSlide = ref(0);
 const selectedModalStory = ref(null);
-const brokenServiceIcons = ref({});
 let autoSlideInterval = null;
 
 const defaultStories = [
@@ -352,38 +260,6 @@ const displayStories = computed(() => {
 const currentStory = computed(() => {
   return displayStories.value[currentSlide.value % displayStories.value.length];
 });
-
-const defaultServices = [
-  {
-    title: 'Web Development',
-    description: 'Membangun aplikasi web kustom yang responsif, berkinerja tinggi, dan scalable menggunakan ekosistem modern Laravel 11 dan Vue 3.',
-  },
-  {
-    title: 'UI/UX Design & Implementation',
-    description: 'Menerjemahkan ide produk ke dalam antarmuka visual yang memukau, intuitif, dan responsif dengan Tailwind CSS dan user-centric design.',
-  },
-  {
-    title: 'RESTful API & Integration',
-    description: 'Merancang arsitektur API yang aman, berkecepatan tinggi, terstandarisasi, dan terintegrasi dengan payment gateway maupun layanan pihak ketiga.',
-  },
-];
-
-const displayServices = computed(() => {
-  if (props.services && props.services.length > 0) {
-    return props.services;
-  }
-  return defaultServices;
-});
-
-// Feature highlights for service cards
-const getServiceFeatures = (idx) => {
-  const featureList = [
-    ['Clean Architecture', 'Reactive SPA & SSR', 'Performance Tuning'],
-    ['Design Systems', 'Responsive UI/UX', 'Interactive Prototyping'],
-    ['Secure RESTful API', 'Third-Party Webhooks', 'Database Optimization'],
-  ];
-  return featureList[idx % featureList.length];
-};
 
 const nextSlide = () => {
   currentSlide.value = (currentSlide.value + 1) % displayStories.value.length;
