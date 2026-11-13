@@ -28,7 +28,7 @@
           </div>
 
           <!-- Vertical List of Education Cards -->
-          <div class="space-y-4">
+          <div v-if="educationList.length" class="space-y-4">
             <div
               v-for="(item, idx) in educationList"
               :key="item.id || idx"
@@ -56,6 +56,9 @@
               </p>
             </div>
           </div>
+          <div v-else class="py-10 px-4 text-center text-xs text-sage-400/60 bg-forest-900/40 rounded-xl border border-forest-700/40">
+            Riwayat pendidikan belum ditambahkan.
+          </div>
         </div>
 
         <!-- Right Column: Certifications (Clickable Cards with Pop-up Modal) -->
@@ -81,7 +84,7 @@
           </div>
 
           <!-- Vertical List of Certification Cards -->
-          <div class="space-y-4">
+          <div v-if="certificationList.length" class="space-y-4">
             <div
               v-for="(item, idx) in certificationList"
               :key="item.id || idx"
@@ -120,6 +123,9 @@
                 {{ item.description }}
               </p>
             </div>
+          </div>
+          <div v-else class="py-10 px-4 text-center text-xs text-sage-400/60 bg-forest-900/40 rounded-xl border border-forest-700/40">
+            Sertifikasi belum ditambahkan.
           </div>
         </div>
       </div>
@@ -228,66 +234,12 @@ const props = defineProps({
 
 const selectedCertificate = ref(null);
 
-const defaultEducation = [
-  {
-    title: 'S1 Teknik Informatika',
-    institution: 'Universitas Bina Nusantara',
-    period: '2020 - 2024',
-    description: 'Fokus spesialisasi pada Rekayasa Perangkat Lunak, Arsitektur Sistem Terdistribusi, dan Pengembangan Aplikasi Web Modern. Lulus dengan predikat Cum Laude (IPK 3.85).',
-  },
-  {
-    title: 'Pendidikan Menengah Atas (MIPA)',
-    institution: 'SMA Negeri Unggulan',
-    period: '2017 - 2020',
-    description: 'Aktif dalam olimpiade sains bidang informatika dan dasar logika algoritma pemrograman komputer.',
-  },
-];
-
-const defaultCertifications = [
-  {
-    title: 'Google Certified Cloud Digital Leader',
-    institution: 'Google Cloud',
-    period: '2024',
-    event_name: 'Google Cloud Examination 2024',
-    description: 'Sertifikasi kompetensi global dalam memahami kapabilitas arsitektur komputasi awan, infrastruktur modern, dan model keamanan data.',
-    history: 'Menyelesaikan modul komprehensif arsitektur cloud terdistribusi, evaluasi risiko keamanan infrastruktur, dan lulus ujian proctored internasional.',
-    certificate_image: 'https://images.unsplash.com/photo-1589330694653-dad6d3240a2b?auto=format&fit=crop&w=800&q=80',
-    credential_url: 'https://cloud.google.com/certification',
-  },
-  {
-    title: 'Full-Stack Web Development Professional',
-    institution: 'Dicoding Indonesia',
-    period: '2023',
-    event_name: 'Indonesia Developer Academy 2023',
-    description: 'Sertifikasi keahlian dalam perancangan RESTful API, arsitektur single-page application (SPA), Progressive Web Apps (PWA), dan automated testing.',
-    history: 'Menyelesaikan program intensif 6 bulan dengan submission proyek akhir portal e-commerce realtime yang dinilai langsung oleh code reviewer profesional industri.',
-    certificate_image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=800&q=80',
-    credential_url: 'https://www.dicoding.com/certificates',
-  },
-  {
-    title: 'Laravel Architecture & Enterprise API Specialist',
-    institution: 'Laravel LLC',
-    period: '2025',
-    event_name: 'Laravel Certified Developer Benchmark 2025',
-    description: 'Sertifikasi penguasaan konsep clean architecture, service-repository patterns, queue optimization, dan event-driven design.',
-    history: 'Ujian sertifikasi komprehensif yang menguji pembuatan API berkinerja tinggi, manajemen transaksi database ACID, dan implementasi caching canggih.',
-    certificate_image: 'https://images.unsplash.com/photo-1607969892198-8994a50d4d42?auto=format&fit=crop&w=800&q=80',
-    credential_url: 'https://laravel.com',
-  },
-];
-
 const educationList = computed(() => {
-  if (props.educations && props.educations.length > 0) {
-    return props.educations;
-  }
-  return defaultEducation;
+  return props.educations && props.educations.length > 0 ? props.educations : [];
 });
 
 const certificationList = computed(() => {
-  if (props.certifications && props.certifications.length > 0) {
-    return props.certifications;
-  }
-  return defaultCertifications;
+  return props.certifications && props.certifications.length > 0 ? props.certifications : [];
 });
 
 const openCertificateModal = (item) => {
