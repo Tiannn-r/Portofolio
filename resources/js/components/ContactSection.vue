@@ -34,7 +34,7 @@
               type="text"
               required
               placeholder="contoh: Budi Santoso"
-              class="w-full bg-[#0B2B26]/90 border border-forest-700 text-[#DAF1DE] placeholder-[#8EB69B]/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-3 outline-none text-sm transition-all"
+              class="w-full bg-forest-900/90 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-warm-400 focus:ring-1 focus:ring-warm-400 rounded-xl px-4 py-3 outline-none text-sm transition-all"
             />
           </div>
 
@@ -48,7 +48,7 @@
               type="email"
               required
               placeholder="contoh: nama@email.com"
-              class="w-full bg-[#0B2B26]/90 border border-forest-700 text-[#DAF1DE] placeholder-[#8EB69B]/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-3 outline-none text-sm transition-all"
+              class="w-full bg-forest-900/90 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-warm-400 focus:ring-1 focus:ring-warm-400 rounded-xl px-4 py-3 outline-none text-sm transition-all"
             />
           </div>
         </div>
@@ -64,7 +64,7 @@
             required
             rows="5"
             placeholder="Tuliskan pesan, rencana proyek, atau pertanyaan Anda di sini..."
-            class="w-full bg-[#0B2B26]/90 border border-forest-700 text-[#DAF1DE] placeholder-[#8EB69B]/50 focus:border-sage-400 focus:ring-1 focus:ring-sage-400 rounded-xl px-4 py-3 outline-none text-sm transition-all resize-none"
+            class="w-full bg-forest-900/90 border border-forest-700 text-mint-100 placeholder-sage-400/50 focus:border-warm-400 focus:ring-1 focus:ring-warm-400 rounded-xl px-4 py-3 outline-none text-sm transition-all resize-none"
           ></textarea>
         </div>
 

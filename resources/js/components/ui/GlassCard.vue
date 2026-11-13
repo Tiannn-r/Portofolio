@@ -16,7 +16,7 @@
     ></div>
 
     <!-- Header Slot -->
-    <header v-if="$slots.header" class="relative z-10 mb-4 pb-3 border-b border-[#235347]/70">
+    <header v-if="$slots.header" class="relative z-10 mb-4 pb-3 border-b border-forest-700/60">
       <slot name="header" />
     </header>
 
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Footer Slot -->
-    <footer v-if="$slots.footer" class="relative z-10 mt-6 pt-4 border-t border-[#235347]/60">
+    <footer v-if="$slots.footer" class="relative z-10 mt-6 pt-4 border-t border-forest-700/60">
       <slot name="footer" />
     </footer>
   </div>
@@ -61,20 +61,21 @@ const props = defineProps({
   padding: {
     type: String,
     default: 'normal', // 'none', 'sm', 'normal', 'lg'
+    validator: (v) => ['none', 'sm', 'normal', 'lg'].includes(v),
   },
 });
 
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'secondary':
-      return 'bg-[#0B2B26]/90 backdrop-blur-md border border-[#235347]';
+      return 'bg-forest-900/90 backdrop-blur-md border border-forest-700';
     case 'dark':
-      return 'bg-[#051F20]/95 backdrop-blur-md border border-[#235347]';
+      return 'bg-forest-950/95 backdrop-blur-md border border-forest-700';
     case 'gradient':
-      return 'bg-gradient-to-r from-[#163832] via-[#235347] to-[#8EB69B] text-[#DAF1DE] border border-[#8EB69B]/40';
+      return 'bg-gradient-to-r from-forest-900 via-forest-800 to-forest-700 text-mint-100 border border-sage-400/30';
     case 'primary':
     default:
-      return 'bg-[#163832]/60 backdrop-blur-xl border border-[#8EB69B]/25';
+      return 'bg-forest-900/85 backdrop-blur-xl border border-forest-700';
   }
 });
 

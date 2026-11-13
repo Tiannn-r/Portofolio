@@ -23,15 +23,15 @@
         >
           <div
             v-if="isVisible"
-            class="relative w-full bg-[#0B2B26] border border-[#8EB69B]/40 rounded-2xl p-6 sm:p-7 shadow-[0_0_40px_rgba(142,182,155,0.25)] max-h-[90vh] overflow-y-auto ring-1 ring-[#8EB69B]/20"
+            class="relative w-full bg-forest-900 border border-forest-700 rounded-2xl p-6 sm:p-7 shadow-2xl max-h-[90vh] overflow-y-auto"
             :class="maxWidthClass"
           >
             <!-- Header Slot -->
-            <div class="flex items-center justify-between pb-3.5 mb-5 border-b border-[#235347]">
+            <div class="flex items-center justify-between pb-3.5 mb-5 border-b border-forest-700/80">
               <div>
                 <slot name="header">
-                  <h3 class="text-lg sm:text-xl font-bold text-[#DAF1DE]" v-html="title"></h3>
-                  <p v-if="subtitle" class="text-xs text-[#8EB69B] mt-0.5" v-html="subtitle"></p>
+                  <h3 class="text-lg sm:text-xl font-bold text-mint-100" v-html="title"></h3>
+                  <p v-if="subtitle" class="text-xs text-sage-400 mt-0.5" v-html="subtitle"></p>
                 </slot>
               </div>
 
@@ -39,7 +39,7 @@
               <button
                 type="button"
                 @click="close"
-                class="w-8 h-8 rounded-full bg-[#163832] text-[#8EB69B] hover:text-[#DAF1DE] hover:bg-[#235347] flex items-center justify-center transition-colors border border-[#235347]"
+                class="w-8 h-8 rounded-full bg-forest-800 text-sage-400 hover:text-mint-100 hover:bg-forest-700 flex items-center justify-center transition-colors border border-forest-700"
               >
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -48,14 +48,14 @@
             </div>
 
             <!-- Body Slot -->
-            <div class="text-[#DAF1DE]/90">
+            <div class="text-mint-100/90">
               <slot />
             </div>
 
             <!-- Footer Slot -->
             <div
               v-if="$slots.footer"
-              class="mt-6 pt-4 border-t border-[#235347] flex items-center justify-end gap-3"
+              class="mt-6 pt-4 border-t border-forest-700/80 flex items-center justify-end gap-3"
             >
               <slot name="footer" />
             </div>

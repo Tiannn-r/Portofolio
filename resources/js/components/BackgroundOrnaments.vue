@@ -1,7 +1,7 @@
 <template>
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
     <!-- Deep Gradient Base -->
-    <div class="absolute inset-0 bg-gradient-to-b from-forest-950 via-[#072422] to-forest-950"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-forest-950 via-forest-900 to-forest-950"></div>
 
     <!-- Soft Ambient Warm & Sage Lighting (Subtle & Restrained) -->
     <div class="absolute -top-40 -left-40 w-[36rem] h-[36rem] rounded-full bg-forest-700/15 blur-[140px]"></div>

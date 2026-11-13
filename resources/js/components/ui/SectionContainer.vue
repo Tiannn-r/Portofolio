@@ -13,7 +13,7 @@
       </div>
 
       <!-- Title Slot -->
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#DAF1DE] tracking-tight">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-mint-100 tracking-tight">
         <slot name="title">
           <span v-html="title"></span>
         </slot>
