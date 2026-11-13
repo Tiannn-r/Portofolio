@@ -2,7 +2,7 @@
     RewriteEngine On
 
     # Jangan arahkan jika membuka script deploy/importer langsung
-    RewriteCond %{REQUEST_URI} ^/(artisan_deploy|extract_deploy|import_sql)\.php [NC]
+    RewriteCond %{REQUEST_URI} ^/(artisan_deploy|extract_deploy|import_sql|clear_cache)\.php [NC]
     RewriteRule ^ - [L]
 
     # Arahkan semua request lainnya ke folder public/
