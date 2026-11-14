@@ -5,26 +5,28 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   body {
     @apply bg-forest-950 text-mint-100 font-sans antialiased overflow-x-hidden selection:bg-sage-400 selection:text-forest-950;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 }
 
-/* Custom Smooth Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Hide scrollbar completely across all browsers while maintaining smooth scrolling */
+*::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent;
 }
-::-webkit-scrollbar-track {
-  background: #071615;
-}
-::-webkit-scrollbar-thumb {
-  background: #1D3D38;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #8EB69B;
+
+* {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* 3D Geometric Ornaments Background Animation */
