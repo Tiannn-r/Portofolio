@@ -202,55 +202,75 @@ const {
   submit,
 } = useContactSubmission();
 
-const cleanPhone = (phone) => String(phone || '').replace(/[^0-9]/g, '');
+const cleanPhone = (phone) => {
+  let num = String(phone || '').replace(/[^0-9]/g, '');
+  if (num.startsWith('0')) {
+    num = '62' + num.slice(1);
+  }
+  return num;
+};
 
 const formalChannels = computed(() => {
   const channels = [];
+  const addedTypes = new Set();
 
-  // 1. If backend has social_channels array (from new CMS format)
+  // 1. Ambil saluran formal dari custom social_channels (jika ada yang dibuat di CMS)
   if (Array.isArray(props.profile?.social_channels) && props.profile.social_channels.length > 0) {
-    const list = props.profile.social_channels.filter(c => c.category === 'formal');
-    if (list.length > 0) return list;
+    props.profile.social_channels
+      .filter(c => c.category === 'formal')
+      .forEach(c => {
+        channels.push(c);
+        const p = (c.platform || c.name || '').toLowerCase();
+        addedTypes.add(p);
+      });
   }
 
-  // 2. Fallback: Extract from profile fields (LinkedIn, Gmail, WhatsApp)
-  const links = props.profile?.social_links;
+  // 2. LinkedIn (jika belum ada di channels)
+  const hasLinkedIn = Array.from(addedTypes).some(p => p.includes('linkedin'));
+  if (!hasLinkedIn) {
+    const links = props.profile?.social_links;
+    let linkedinUrl = null;
+    if (Array.isArray(links)) {
+      linkedinUrl = links.find(l => (l.name || l.platform || '').toLowerCase().includes('linkedin'))?.url;
+    } else if (links && typeof links === 'object') {
+      linkedinUrl = links.linkedin;
+    }
 
-  // LinkedIn
-  let linkedinUrl = null;
-  if (Array.isArray(links)) {
-    linkedinUrl = links.find(l => (l.name || l.platform || '').toLowerCase().includes('linkedin'))?.url;
-  } else if (links && typeof links === 'object') {
-    linkedinUrl = links.linkedin;
+    if (linkedinUrl) {
+      channels.unshift({
+        name: 'LinkedIn',
+        platform: 'linkedin',
+        url: linkedinUrl,
+        subtext: 'Terhubung Profesional',
+      });
+      addedTypes.add('linkedin');
+    }
   }
 
-  if (linkedinUrl) {
-    channels.push({
-      name: 'LinkedIn',
-      platform: 'linkedin',
-      url: linkedinUrl,
-      subtext: 'Terhubung Profesional',
-    });
-  }
-
-  // Gmail / Email
-  if (props.profile?.email) {
+  // 3. Email / Gmail (WAJIB ADA jika belum ditambahkan)
+  const hasEmail = Array.from(addedTypes).some(p => p.includes('email') || p.includes('gmail'));
+  const userEmail = props.profile?.email || 'ibnhu.work@gmail.com';
+  if (!hasEmail && userEmail) {
     channels.push({
       name: 'Email Langsung',
       platform: 'email',
-      url: 'mailto:' + props.profile.email,
-      subtext: props.profile.email,
+      url: 'mailto:' + userEmail,
+      subtext: userEmail,
     });
+    addedTypes.add('email');
   }
 
-  // WhatsApp
-  if (props.profile?.phone) {
+  // 4. WhatsApp (WAJIB ADA jika nomor telepon ada)
+  const hasWhatsapp = Array.from(addedTypes).some(p => p.includes('whatsapp') || p.includes('wa'));
+  const userPhone = props.profile?.phone;
+  if (!hasWhatsapp && userPhone) {
     channels.push({
       name: 'WhatsApp',
       platform: 'whatsapp',
-      url: 'https://wa.me/' + cleanPhone(props.profile.phone),
+      url: 'https://wa.me/' + cleanPhone(userPhone),
       subtext: 'Chat & Diskusi Cepat',
     });
+    addedTypes.add('whatsapp');
   }
 
   return channels;
