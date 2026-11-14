@@ -6,7 +6,6 @@ use App\Models\Profile;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -60,27 +59,63 @@ class ManageAboutMe extends Page implements HasForms
 
         $formData = $profile->toArray();
 
-        // Convert legacy KeyValue social_links to Repeater format if needed
-        if (!empty($profile->social_links) && is_array($profile->social_links)) {
-            $isAssociative = array_keys($profile->social_links) !== range(0, count($profile->social_links) - 1);
-            if ($isAssociative) {
-                $repeaterItems = [];
-                foreach ($profile->social_links as $key => $val) {
-                    $keyLower = strtolower($key);
-                    $isFormal = in_array($keyLower, ['linkedin', 'whatsapp', 'email', 'gmail', 'telegram']);
-                    $repeaterItems[] = [
-                        'name' => ucfirst($key),
-                        'category' => $isFormal ? 'formal' : 'social',
-                        'url' => is_string($val) ? $val : ($val['url'] ?? ''),
-                        'subtext' => $isFormal ? ($keyLower === 'linkedin' ? 'Terhubung Profesional' : ($keyLower === 'whatsapp' ? 'Chat Cepat' : 'Kirim Pesan Langsung')) : '',
-                        'logo_source' => 'preset',
-                        'logo_url' => '',
-                        'logo_file' => null,
-                    ];
+        // Ensure email and phone have reliable fallback values
+        $formData['email'] = $profile->email ?: 'ibnhu.work@gmail.com';
+        $formData['phone'] = $profile->phone ?: '+62 812-3456-7890';
+
+        // Load social_links cleanly into dedicated settings fields
+        $social = $profile->social_links ?? [];
+
+        if (is_array($social)) {
+            // Check if it's a numeric list from legacy Repeater
+            if (!empty($social) && array_keys($social) === range(0, count($social) - 1)) {
+                $customs = [];
+                foreach ($social as $item) {
+                    $plat = strtolower($item['name'] ?? $item['platform'] ?? '');
+                    if ($plat === 'linkedin') {
+                        $formData['linkedin_url'] = $item['url'] ?? '';
+                        $formData['linkedin_subtext'] = $item['subtext'] ?? 'Terhubung Profesional';
+                    } elseif ($plat === 'github') {
+                        $formData['github_url'] = $item['url'] ?? '';
+                    } elseif ($plat === 'tiktok') {
+                        $formData['tiktok_url'] = $item['url'] ?? '';
+                    } elseif ($plat === 'youtube') {
+                        $formData['youtube_url'] = $item['url'] ?? '';
+                    } elseif ($plat === 'instagram') {
+                        $formData['instagram_url'] = $item['url'] ?? '';
+                    } elseif ($plat === 'twitter' || $plat === 'x') {
+                        $formData['twitter_url'] = $item['url'] ?? '';
+                    } elseif ($plat === 'whatsapp') {
+                        $formData['whatsapp_subtext'] = $item['subtext'] ?? 'Chat & Diskusi Cepat';
+                    } elseif ($plat === 'email' || $plat === 'gmail') {
+                        $formData['email_subtext'] = $item['subtext'] ?? 'Kirim Pesan Langsung';
+                    } else {
+                        $customs[] = $item;
+                    }
                 }
-                $formData['social_links'] = $repeaterItems;
+                $formData['custom_channels'] = $customs;
+            } else {
+                // Key-value or associative format
+                $formData['linkedin_url'] = $social['linkedin_url'] ?? ($social['linkedin'] ?? '');
+                $formData['linkedin_subtext'] = $social['linkedin_subtext'] ?? 'Terhubung Profesional';
+
+                $formData['email_subtext'] = $social['email_subtext'] ?? 'Kirim Pesan Langsung';
+                $formData['whatsapp_subtext'] = $social['whatsapp_subtext'] ?? 'Chat & Diskusi Cepat';
+
+                $formData['github_url'] = $social['github_url'] ?? ($social['github'] ?? '');
+                $formData['tiktok_url'] = $social['tiktok_url'] ?? ($social['tiktok'] ?? '');
+                $formData['youtube_url'] = $social['youtube_url'] ?? ($social['youtube'] ?? '');
+                $formData['instagram_url'] = $social['instagram_url'] ?? ($social['instagram'] ?? '');
+                $formData['twitter_url'] = $social['twitter_url'] ?? ($social['twitter'] ?? ($social['x'] ?? ''));
+
+                $formData['custom_channels'] = $social['custom_channels'] ?? [];
             }
         }
+
+        // Apply defaults if still empty
+        $formData['linkedin_subtext'] = !empty($formData['linkedin_subtext']) ? $formData['linkedin_subtext'] : 'Terhubung Profesional';
+        $formData['email_subtext'] = !empty($formData['email_subtext']) ? $formData['email_subtext'] : 'Kirim Pesan Langsung';
+        $formData['whatsapp_subtext'] = !empty($formData['whatsapp_subtext']) ? $formData['whatsapp_subtext'] : 'Chat & Diskusi Cepat';
 
         $this->form->fill($formData);
     }
@@ -89,8 +124,8 @@ class ManageAboutMe extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Personal Identity & Availability')
-                    ->description('Kelola identitas utama, ketersediaan freelance, kontak, dan lokasi.')
+                Section::make('Identitas Utama & Ketersediaan')
+                    ->description('Kelola identitas utama, ketersediaan freelance, dan lokasi domisili.')
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
@@ -104,25 +139,15 @@ class ManageAboutMe extends Page implements HasForms
                             ->inline(false)
                             ->default(true),
 
-                        TextInput::make('email')
-                            ->label('Alamat Email')
-                            ->email()
-                            ->maxLength(255),
-
-                        TextInput::make('phone')
-                            ->label('Nomor WhatsApp / Telepon')
-                            ->tel()
-                            ->maxLength(255),
-
                         TextInput::make('location')
-                            ->label('Lokasi')
+                            ->label('Lokasi Domisili')
                             ->placeholder('Jakarta, Indonesia')
                             ->maxLength(255)
                             ->columnSpanFull(),
                     ]),
 
                 Section::make('Foto Profil & File Dokumen CV')
-                    ->description('Upload foto khusus landing page hero, foto khusus about me, dan file dokumen CV resmi (PDF/Word).')
+                    ->description('Upload foto khusus landing page hero, foto khusus about me, dan file berkas dokumen CV resmi (PDF/Word).')
                     ->columns(2)
                     ->schema([
                         FileUpload::make('hero_image')
@@ -157,7 +182,7 @@ class ManageAboutMe extends Page implements HasForms
                                 'application/msword',
                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                             ])
-                            ->helperText('Upload file berkas CV Anda. Tombol "Download CV" di web akan langsung mendownload file ini.')
+                            ->helperText('Upload berkas CV Anda. Tombol "Unduh CV" di web akan langsung mengunduh file ini.')
                             ->columnSpanFull(),
                     ]),
 
@@ -181,30 +206,98 @@ class ManageAboutMe extends Page implements HasForms
                             ->required(),
                     ]),
 
-                Section::make('Saluran Komunikasi & Media Sosial')
-                    ->description('Kelola saluran kontak formal (LinkedIn, WhatsApp, Email, dll) dan media sosial (GitHub, TikTok, YouTube, Instagram, dll). Anda dapat memilih ikon bawaan otomatis, memasukkan link URL logo, atau mengunggah file logo sendiri.')
+                Section::make('Saluran Kontak Formal (Di Bawah Form Kontak)')
+                    ->description('3 Saluran kontak resmi yang tampil rapi dalam kartu persegi panjang berjejer ke kanan di bawah form kirim pesan.')
+                    ->columns(2)
                     ->schema([
-                        Repeater::make('social_links')
-                            ->label('Daftar Kontak & Media Sosial')
-                            ->itemLabel(fn (array $state): ?string => ($state['name'] ?? 'Platform Baru') . ' [' . (($state['category'] ?? 'social') === 'formal' ? 'Kontak Formal' : 'Media Sosial') . ']')
+                        // Email Group
+                        TextInput::make('email')
+                            ->label('Alamat Email (Gmail)')
+                            ->email()
+                            ->placeholder('ibnhu.work@gmail.com')
+                            ->required()
+                            ->helperText('Email tujuan saat pengunjung mengklik kartu Email'),
+
+                        TextInput::make('email_subtext')
+                            ->label('Keterangan / Subtitle Email')
+                            ->placeholder('Kirim Pesan Langsung')
+                            ->helperText('Teks kecil di bawah judul kartu Email'),
+
+                        // WhatsApp Group
+                        TextInput::make('phone')
+                            ->label('Nomor WhatsApp')
+                            ->tel()
+                            ->placeholder('+62 812-3456-7890')
+                            ->required()
+                            ->helperText('Nomor WA tujuan (mendukung format 08xxx atau +62xxx)'),
+
+                        TextInput::make('whatsapp_subtext')
+                            ->label('Keterangan / Subtitle WhatsApp')
+                            ->placeholder('Chat & Diskusi Cepat')
+                            ->helperText('Teks kecil di bawah judul kartu WhatsApp'),
+
+                        // LinkedIn Group
+                        TextInput::make('linkedin_url')
+                            ->label('URL Profil LinkedIn')
+                            ->placeholder('https://linkedin.com/in/muhamad-ibnhu')
+                            ->helperText('Tautan ke halaman profil LinkedIn Anda'),
+
+                        TextInput::make('linkedin_subtext')
+                            ->label('Keterangan / Subtitle LinkedIn')
+                            ->placeholder('Terhubung Profesional')
+                            ->helperText('Teks kecil di bawah judul kartu LinkedIn'),
+                    ]),
+
+                Section::make('Media Sosial Developer (Khusus di Footer)')
+                    ->description('Tautan media sosial dan repositori publik yang tampil rapi dengan ikon modern di bagian Footer website.')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('github_url')
+                            ->label('URL Profil GitHub')
+                            ->placeholder('https://github.com/Tiannn-r'),
+
+                        TextInput::make('tiktok_url')
+                            ->label('URL Profil TikTok')
+                            ->placeholder('https://tiktok.com/@zydlucifer'),
+
+                        TextInput::make('instagram_url')
+                            ->label('URL Profil Instagram')
+                            ->placeholder('https://instagram.com/nukaien'),
+
+                        TextInput::make('twitter_url')
+                            ->label('URL Profil Twitter / X')
+                            ->placeholder('https://x.com/tiannn'),
+
+                        TextInput::make('youtube_url')
+                            ->label('URL Channel YouTube')
+                            ->placeholder('https://youtube.com/@channel')
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Saluran Tambahan / Kustom (Bebas Tambah Kontak atau Medsos Baru)')
+                    ->description('Tambahkan kontak baru atau media sosial lain (seperti Discord, Telegram, Behance, Dribbble) dengan opsi import logo (bisa via Link URL atau Upload file gambar).')
+                    ->schema([
+                        Repeater::make('custom_channels')
+                            ->label('Daftar Saluran Kustom Tambahan')
+                            ->itemLabel(fn (array $state): ?string => ($state['name'] ?? 'Saluran Baru') . ' [' . (($state['category'] ?? 'social') === 'formal' ? 'Kontak Formal' : 'Media Sosial') . ']')
                             ->schema([
                                 Grid::make(3)->schema([
                                     TextInput::make('name')
-                                        ->label('Nama Platform')
-                                        ->placeholder('Contoh: LinkedIn, GitHub, WhatsApp, TikTok, YouTube, Discord')
+                                        ->label('Nama Platform / Saluran')
+                                        ->placeholder('Contoh: Telegram, Discord, Behance')
                                         ->required(),
 
                                     Select::make('category')
-                                        ->label('Kategori Penempatan')
+                                        ->label('Penempatan')
                                         ->options([
                                             'formal' => 'Kontak Formal (Di Bawah Form Kontak)',
-                                            'social' => 'Media Sosial (Di Footer)',
+                                            'social' => 'Media Sosial (Di Bagian Footer)',
                                         ])
                                         ->default('social')
                                         ->required(),
 
                                     TextInput::make('url')
-                                        ->label('URL Tautan Profil / Chat')
+                                        ->label('URL Tautan')
                                         ->placeholder('https://...')
                                         ->required(),
                                 ]),
@@ -212,28 +305,28 @@ class ManageAboutMe extends Page implements HasForms
                                 Grid::make(3)->schema([
                                     TextInput::make('subtext')
                                         ->label('Keterangan Singkat (Untuk Kontak Formal)')
-                                        ->placeholder('Contoh: Terhubung Profesional, Chat Cepat, dll.')
+                                        ->placeholder('Contoh: Komunitas Developer, Chat Cepat')
                                         ->columnSpan(1),
 
                                     Select::make('logo_source')
-                                        ->label('Sumber Logo / Ikon')
+                                        ->label('Pilihan Logo / Ikon')
                                         ->options([
-                                            'preset' => 'Ikon Bawaan (Otomatis sesuai nama)',
-                                            'url' => 'Link URL Gambar / SVG',
-                                            'upload' => 'Unggah File Gambar / Logo',
+                                            'preset' => 'Ikon Bawaan (Otomatis dari Nama)',
+                                            'url' => 'Input Link URL Gambar / SVG Logo',
+                                            'upload' => 'Upload File Gambar / Logo Sendiri',
                                         ])
                                         ->default('preset')
                                         ->reactive()
                                         ->columnSpan(1),
 
                                     TextInput::make('logo_url')
-                                        ->label('URL Gambar / Ikon')
+                                        ->label('Link URL Gambar / SVG Logo')
                                         ->placeholder('https://domain.com/icon.svg')
                                         ->visible(fn ($get) => $get('logo_source') === 'url')
                                         ->columnSpan(1),
 
                                     FileUpload::make('logo_file')
-                                        ->label('Unggah File Gambar / Logo')
+                                        ->label('Upload File Gambar / Logo')
                                         ->image()
                                         ->disk('public')
                                         ->directory('social_icons')
@@ -246,7 +339,7 @@ class ManageAboutMe extends Page implements HasForms
                             ->reorderable()
                             ->collapsible()
                             ->collapsed(false)
-                            ->addActionLabel('+ Tambah Saluran / Media Sosial Baru')
+                            ->addActionLabel('+ Tambah Saluran / Medsos Baru')
                             ->columnSpanFull(),
                     ]),
 
@@ -283,14 +376,59 @@ class ManageAboutMe extends Page implements HasForms
         $state = $this->form->getState();
 
         $profile = Profile::first();
-        if ($profile) {
-            $profile->update($state);
-        } else {
-            Profile::create($state);
+        if (!$profile) {
+            $profile = new Profile();
         }
 
+        // Pack social_links cleanly for frontend and future compatibility
+        $socialLinks = [
+            // Formal Contact Details
+            'linkedin' => $state['linkedin_url'] ?? '',
+            'linkedin_url' => $state['linkedin_url'] ?? '',
+            'linkedin_subtext' => $state['linkedin_subtext'] ?? 'Terhubung Profesional',
+            'email_subtext' => $state['email_subtext'] ?? 'Kirim Pesan Langsung',
+            'whatsapp_subtext' => $state['whatsapp_subtext'] ?? 'Chat & Diskusi Cepat',
+
+            // Footer Socials
+            'github' => $state['github_url'] ?? '',
+            'github_url' => $state['github_url'] ?? '',
+            'tiktok' => $state['tiktok_url'] ?? '',
+            'tiktok_url' => $state['tiktok_url'] ?? '',
+            'instagram' => $state['instagram_url'] ?? '',
+            'instagram_url' => $state['instagram_url'] ?? '',
+            'twitter' => $state['twitter_url'] ?? '',
+            'twitter_url' => $state['twitter_url'] ?? '',
+            'youtube' => $state['youtube_url'] ?? '',
+            'youtube_url' => $state['youtube_url'] ?? '',
+
+            // Custom Channels Repeater
+            'custom_channels' => $state['custom_channels'] ?? [],
+        ];
+
+        $updateData = [
+            'name' => $state['name'],
+            'is_available' => (bool) ($state['is_available'] ?? true),
+            'location' => $state['location'] ?? null,
+            'email' => $state['email'] ?? null,
+            'phone' => $state['phone'] ?? null,
+            'hero_image' => $state['hero_image'] ?? null,
+            'about_image' => $state['about_image'] ?? null,
+            'cv_file' => $state['cv_file'] ?? null,
+            'roles' => $state['roles'] ?? [],
+            'short_bio' => $state['short_bio'] ?? '',
+            'about_me' => $state['about_me'] ?? '',
+            'social_links' => $socialLinks,
+            'years_experience' => (int) ($state['years_experience'] ?? 0),
+            'projects_completed' => (int) ($state['projects_completed'] ?? 0),
+            'happy_clients' => (int) ($state['happy_clients'] ?? 0),
+            'awards_received' => (int) ($state['awards_received'] ?? 0),
+        ];
+
+        $profile->fill($updateData);
+        $profile->save();
+
         Notification::make()
-            ->title('Data About Me & Profil Berhasil Disimpan!')
+            ->title('Data About Me & Pengaturan Kontak Berhasil Disimpan!')
             ->success()
             ->send();
     }

@@ -95,42 +95,121 @@ class Profile extends Model
     public function getSocialChannelsAttribute(): array
     {
         $links = $this->social_links ?? [];
-        if (!is_array($links)) {
-            return [];
-        }
-
         $channels = [];
-        $isAssociative = !empty($links) && array_keys($links) !== range(0, count($links) - 1);
 
-        if ($isAssociative) {
-            foreach ($links as $name => $url) {
-                if (empty($url)) continue;
-                $nameLower = strtolower($name);
-                $isFormal = in_array($nameLower, ['linkedin', 'whatsapp', 'email', 'gmail', 'telegram']);
-                $channels[] = [
-                    'name' => ucfirst($name),
-                    'platform' => $nameLower,
-                    'category' => $isFormal ? 'formal' : 'social',
-                    'url' => $url,
-                    'subtext' => $isFormal ? ($nameLower === 'linkedin' ? 'Terhubung Profesional' : ($nameLower === 'whatsapp' ? 'Chat Cepat' : 'Kirim Pesan Langsung')) : '',
-                    'logo_source' => 'preset',
-                    'logo_url' => null,
-                    'logo_file_url' => null,
-                ];
-            }
-        } else {
+        // If $links is already a numeric array from a previous Repeater format
+        if (is_array($links) && !empty($links) && array_keys($links) === range(0, count($links) - 1)) {
             foreach ($links as $item) {
                 if (empty($item['url'])) continue;
-                $platform = strtolower($item['name'] ?? $item['platform'] ?? '');
                 $logoFileUrl = !empty($item['logo_file']) ? asset('storage/' . ltrim($item['logo_file'], '/')) : null;
                 $channels[] = [
-                    'name' => $item['name'] ?? ucfirst($platform),
-                    'platform' => $platform,
+                    'name' => $item['name'] ?? 'Platform',
+                    'platform' => strtolower($item['name'] ?? $item['platform'] ?? 'custom'),
                     'category' => $item['category'] ?? 'social',
                     'url' => $item['url'],
                     'subtext' => $item['subtext'] ?? '',
                     'logo_source' => $item['logo_source'] ?? 'preset',
                     'logo_url' => $item['logo_url'] ?? null,
+                    'logo_file_url' => $logoFileUrl,
+                ];
+            }
+            return $channels;
+        }
+
+        // 1. Formal Channels:
+        // LinkedIn
+        $linkedinUrl = null;
+        if (is_array($links)) {
+            $linkedinUrl = $links['linkedin_url'] ?? ($links['linkedin'] ?? ($links['formal']['linkedin']['url'] ?? null));
+        }
+        if (!empty($linkedinUrl)) {
+            $channels[] = [
+                'name' => 'LinkedIn',
+                'platform' => 'linkedin',
+                'category' => 'formal',
+                'url' => $linkedinUrl,
+                'subtext' => (is_array($links) ? ($links['linkedin_subtext'] ?? ($links['formal']['linkedin']['subtext'] ?? null)) : null) ?: 'Terhubung Profesional',
+                'logo_source' => 'preset',
+                'logo_url' => null,
+                'logo_file_url' => null,
+            ];
+        }
+
+        // Email Langsung
+        $emailAddr = !empty($this->email) ? $this->email : 'ibnhu.work@gmail.com';
+        if (!empty($emailAddr)) {
+            $emailSubtext = is_array($links) ? ($links['email_subtext'] ?? ($links['formal']['email']['subtext'] ?? null)) : null;
+            $channels[] = [
+                'name' => 'Email Langsung',
+                'platform' => 'email',
+                'category' => 'formal',
+                'url' => 'mailto:' . $emailAddr,
+                'subtext' => $emailSubtext ?: $emailAddr,
+                'logo_source' => 'preset',
+                'logo_url' => null,
+                'logo_file_url' => null,
+            ];
+        }
+
+        // WhatsApp
+        $phoneNum = !empty($this->phone) ? $this->phone : '+62 812-3456-7890';
+        if (!empty($phoneNum)) {
+            $cleanPhone = preg_replace('/[^0-9]/', '', $phoneNum);
+            if (str_starts_with($cleanPhone, '0')) {
+                $cleanPhone = '62' . substr($cleanPhone, 1);
+            }
+            $waSubtext = is_array($links) ? ($links['whatsapp_subtext'] ?? ($links['formal']['whatsapp']['subtext'] ?? null)) : null;
+            $channels[] = [
+                'name' => 'WhatsApp',
+                'platform' => 'whatsapp',
+                'category' => 'formal',
+                'url' => 'https://wa.me/' . $cleanPhone,
+                'subtext' => $waSubtext ?: 'Chat & Diskusi Cepat',
+                'logo_source' => 'preset',
+                'logo_url' => null,
+                'logo_file_url' => null,
+            ];
+        }
+
+        // 2. Media Sosial di Footer:
+        $socialDefs = [
+            'github' => 'GitHub',
+            'tiktok' => 'TikTok',
+            'youtube' => 'YouTube',
+            'instagram' => 'Instagram',
+            'twitter' => 'Twitter / X',
+        ];
+
+        foreach ($socialDefs as $key => $label) {
+            $url = is_array($links) ? ($links[$key . '_url'] ?? ($links[$key] ?? ($key === 'twitter' ? ($links['x'] ?? null) : null))) : null;
+            if (!empty($url)) {
+                $channels[] = [
+                    'name' => $label,
+                    'platform' => $key,
+                    'category' => 'social',
+                    'url' => $url,
+                    'subtext' => '',
+                    'logo_source' => 'preset',
+                    'logo_url' => null,
+                    'logo_file_url' => null,
+                ];
+            }
+        }
+
+        // 3. Saluran Kustom / Tambahan
+        $customs = is_array($links) ? ($links['custom_channels'] ?? []) : [];
+        if (is_array($customs)) {
+            foreach ($customs as $c) {
+                if (empty($c['url'])) continue;
+                $logoFileUrl = !empty($c['logo_file']) ? asset('storage/' . ltrim($c['logo_file'], '/')) : null;
+                $channels[] = [
+                    'name' => $c['name'] ?? 'Platform',
+                    'platform' => strtolower($c['name'] ?? 'custom'),
+                    'category' => $c['category'] ?? 'social',
+                    'url' => $c['url'],
+                    'subtext' => $c['subtext'] ?? '',
+                    'logo_source' => $c['logo_source'] ?? 'preset',
+                    'logo_url' => $c['logo_url'] ?? null,
                     'logo_file_url' => $logoFileUrl,
                 ];
             }

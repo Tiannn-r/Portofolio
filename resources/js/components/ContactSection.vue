@@ -233,7 +233,7 @@ const formalChannels = computed(() => {
     if (Array.isArray(links)) {
       linkedinUrl = links.find(l => (l.name || l.platform || '').toLowerCase().includes('linkedin'))?.url;
     } else if (links && typeof links === 'object') {
-      linkedinUrl = links.linkedin;
+      linkedinUrl = links.linkedin_url || links.linkedin;
     }
 
     if (linkedinUrl) {
@@ -262,7 +262,7 @@ const formalChannels = computed(() => {
 
   // 4. WhatsApp (WAJIB ADA jika nomor telepon ada)
   const hasWhatsapp = Array.from(addedTypes).some(p => p.includes('whatsapp') || p.includes('wa'));
-  const userPhone = props.profile?.phone;
+  const userPhone = props.profile?.phone || '+62 812-3456-7890';
   if (!hasWhatsapp && userPhone) {
     channels.push({
       name: 'WhatsApp',
