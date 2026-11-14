@@ -14,8 +14,8 @@
           :key="cat"
           @click="selectedCategory = cat"
           type="button"
-          class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-colors duration-150"
-          :class="selectedCategory === cat ? 'bg-forest-800 text-warm-400 border border-warm-400/80 shadow-sm' : 'bg-forest-900/80 text-sage-400/70 border border-forest-700 hover:text-mint-100 hover:bg-forest-800'"
+          class="px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-150"
+          :class="selectedCategory === cat ? 'bg-warm-400 text-forest-950 font-bold border border-warm-400 shadow-md' : 'bg-forest-900/80 text-sage-400/80 border border-forest-700 hover:text-mint-100 hover:bg-forest-800'"
         >
           {{ cat }}
         </button>
@@ -38,7 +38,7 @@
             />
             <div class="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-transparent to-transparent"></div>
             <!-- Category Tag -->
-            <span class="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase bg-forest-950/90 text-warm-400 border border-forest-700 rounded-md backdrop-blur-md">
+            <span class="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase bg-forest-950/90 text-sage-400 border border-forest-700 rounded-md backdrop-blur-md">
               {{ project.category }}
             </span>
           </div>
@@ -46,7 +46,7 @@
           <!-- Project Body -->
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="text-lg font-bold text-mint-100 group-hover:text-warm-400 transition-colors mb-2 line-clamp-1 tracking-tight">
+              <h3 class="text-lg font-bold text-mint-100 group-hover:text-sage-400 transition-colors mb-2 line-clamp-1 tracking-tight">
                 {{ project.title }}
               </h3>
               <p class="text-xs text-mint-100/75 leading-relaxed line-clamp-2 mb-4">

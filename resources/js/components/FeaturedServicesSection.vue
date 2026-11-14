@@ -16,7 +16,7 @@
         <!-- Top Header Bar with Slide Counter & Arrows -->
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-forest-700/60 relative z-10">
           <div class="flex items-center gap-3">
-            <span class="w-2.5 h-2.5 rounded-full bg-warm-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-sage-400"></span>
             <span class="text-xs sm:text-sm tracking-wider text-sage-400 font-bold font-mono">
               KABAR & CATATAN ({{ currentSlide + 1 }}/{{ displayStories.length }})
             </span>
@@ -104,7 +104,7 @@
               >
                 <span>Baca Selengkapnya</span>
                 <template #icon-right>
-                  <svg class="w-4 h-4 text-mint-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg class="w-4 h-4 text-forest-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </template>

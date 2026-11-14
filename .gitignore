@@ -26,3 +26,5 @@ staging_deploy/
 artisan_deploy.php
 extract_deploy.php
 import_sql.php
+__pycache__/
+*.pyc

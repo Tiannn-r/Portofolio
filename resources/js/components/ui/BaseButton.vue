@@ -79,17 +79,17 @@ const isButton = computed(() => !props.to && !props.href);
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-forest-800 text-mint-100 border border-warm-400/80 hover:bg-warm-400 hover:text-forest-950 hover:border-warm-400 shadow-sm transition-all duration-200';
+      return 'bg-warm-400 text-forest-950 font-semibold border border-warm-400 hover:bg-warm-500 hover:border-warm-500 shadow-md transition-all duration-200';
     case 'secondary':
-      return 'bg-forest-900/90 border border-forest-700 text-mint-100/90 hover:border-sage-400 hover:text-mint-100 hover:bg-forest-800/80 transition-all duration-200';
+      return 'bg-forest-900/90 border border-forest-700 text-mint-100 hover:border-sage-400 hover:text-mint-100 hover:bg-forest-800/80 transition-all duration-200';
     case 'glass':
-      return 'bg-forest-800 border border-forest-700 text-sage-400 hover:border-sage-400 hover:text-mint-100 transition-all duration-200';
+      return 'bg-forest-800/80 border border-forest-700 text-sage-400 hover:border-sage-400 hover:text-mint-100 transition-all duration-200';
     case 'gradient':
-      return 'bg-forest-800 text-mint-100 border border-warm-400/80 hover:bg-warm-400 hover:text-forest-950 transition-all duration-200';
+      return 'bg-warm-400 text-forest-950 font-semibold border border-warm-400 hover:bg-warm-500 hover:border-warm-500 shadow-md transition-all duration-200';
     case 'danger':
       return 'bg-forest-950 text-red-400 border border-red-500/40 hover:bg-red-950/80 hover:text-red-300';
     default:
-      return 'bg-forest-800 text-mint-100 border border-warm-400/80 hover:bg-warm-400 hover:text-forest-950';
+      return 'bg-warm-400 text-forest-950 font-semibold border border-warm-400 hover:bg-warm-500 hover:border-warm-500';
   }
 });
 
