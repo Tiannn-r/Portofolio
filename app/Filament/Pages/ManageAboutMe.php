@@ -5,8 +5,11 @@ namespace App\Filament\Pages;
 use App\Models\Profile;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -55,7 +58,31 @@ class ManageAboutMe extends Page implements HasForms
             ]
         );
 
-        $this->form->fill($profile->toArray());
+        $formData = $profile->toArray();
+
+        // Convert legacy KeyValue social_links to Repeater format if needed
+        if (!empty($profile->social_links) && is_array($profile->social_links)) {
+            $isAssociative = array_keys($profile->social_links) !== range(0, count($profile->social_links) - 1);
+            if ($isAssociative) {
+                $repeaterItems = [];
+                foreach ($profile->social_links as $key => $val) {
+                    $keyLower = strtolower($key);
+                    $isFormal = in_array($keyLower, ['linkedin', 'whatsapp', 'email', 'gmail', 'telegram']);
+                    $repeaterItems[] = [
+                        'name' => ucfirst($key),
+                        'category' => $isFormal ? 'formal' : 'social',
+                        'url' => is_string($val) ? $val : ($val['url'] ?? ''),
+                        'subtext' => $isFormal ? ($keyLower === 'linkedin' ? 'Terhubung Profesional' : ($keyLower === 'whatsapp' ? 'Chat Cepat' : 'Kirim Pesan Langsung')) : '',
+                        'logo_source' => 'preset',
+                        'logo_url' => '',
+                        'logo_file' => null,
+                    ];
+                }
+                $formData['social_links'] = $repeaterItems;
+            }
+        }
+
+        $this->form->fill($formData);
     }
 
     public function form(Form $form): Form
@@ -154,13 +181,72 @@ class ManageAboutMe extends Page implements HasForms
                             ->required(),
                     ]),
 
-                Section::make('Tautan Media Sosial')
-                    ->description('Profil GitHub, LinkedIn, Twitter, Instagram, dll.')
+                Section::make('Saluran Komunikasi & Media Sosial')
+                    ->description('Kelola saluran kontak formal (LinkedIn, WhatsApp, Email, dll) dan media sosial (GitHub, TikTok, YouTube, Instagram, dll). Anda dapat memilih ikon bawaan otomatis, memasukkan link URL logo, atau mengunggah file logo sendiri.')
                     ->schema([
-                        KeyValue::make('social_links')
-                            ->label('Social Media Platforms')
-                            ->keyLabel('Nama Platform (github, linkedin, instagram, twitter)')
-                            ->valueLabel('URL Lengkap Profil')
+                        Repeater::make('social_links')
+                            ->label('Daftar Kontak & Media Sosial')
+                            ->itemLabel(fn (array $state): ?string => ($state['name'] ?? 'Platform Baru') . ' [' . (($state['category'] ?? 'social') === 'formal' ? 'Kontak Formal' : 'Media Sosial') . ']')
+                            ->schema([
+                                Grid::make(3)->schema([
+                                    TextInput::make('name')
+                                        ->label('Nama Platform')
+                                        ->placeholder('Contoh: LinkedIn, GitHub, WhatsApp, TikTok, YouTube, Discord')
+                                        ->required(),
+
+                                    Select::make('category')
+                                        ->label('Kategori Penempatan')
+                                        ->options([
+                                            'formal' => 'Kontak Formal (Di Bawah Form Kontak)',
+                                            'social' => 'Media Sosial (Di Footer)',
+                                        ])
+                                        ->default('social')
+                                        ->required(),
+
+                                    TextInput::make('url')
+                                        ->label('URL Tautan Profil / Chat')
+                                        ->placeholder('https://...')
+                                        ->required(),
+                                ]),
+
+                                Grid::make(3)->schema([
+                                    TextInput::make('subtext')
+                                        ->label('Keterangan Singkat (Untuk Kontak Formal)')
+                                        ->placeholder('Contoh: Terhubung Profesional, Chat Cepat, dll.')
+                                        ->columnSpan(1),
+
+                                    Select::make('logo_source')
+                                        ->label('Sumber Logo / Ikon')
+                                        ->options([
+                                            'preset' => 'Ikon Bawaan (Otomatis sesuai nama)',
+                                            'url' => 'Link URL Gambar / SVG',
+                                            'upload' => 'Unggah File Gambar / Logo',
+                                        ])
+                                        ->default('preset')
+                                        ->reactive()
+                                        ->columnSpan(1),
+
+                                    TextInput::make('logo_url')
+                                        ->label('URL Gambar / Ikon')
+                                        ->placeholder('https://domain.com/icon.svg')
+                                        ->visible(fn ($get) => $get('logo_source') === 'url')
+                                        ->columnSpan(1),
+
+                                    FileUpload::make('logo_file')
+                                        ->label('Unggah File Gambar / Logo')
+                                        ->image()
+                                        ->disk('public')
+                                        ->directory('social_icons')
+                                        ->visibility('public')
+                                        ->visible(fn ($get) => $get('logo_source') === 'upload')
+                                        ->columnSpan(1),
+                                ]),
+                            ])
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->collapsed(false)
+                            ->addActionLabel('+ Tambah Saluran / Media Sosial Baru')
                             ->columnSpanFull(),
                     ]),
 
