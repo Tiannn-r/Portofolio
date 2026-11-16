@@ -21,7 +21,7 @@
     </header>
 
     <!-- Main Content Slot -->
-    <div class="relative z-10 flex-1">
+    <div class="relative z-10 flex-1" :class="contentClass">
       <slot />
     </div>
 
@@ -62,6 +62,10 @@ const props = defineProps({
     type: String,
     default: 'normal', // 'none', 'sm', 'normal', 'lg'
     validator: (v) => ['none', 'sm', 'normal', 'lg'].includes(v),
+  },
+  contentClass: {
+    type: String,
+    default: '',
   },
 });
 

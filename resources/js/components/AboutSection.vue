@@ -11,9 +11,10 @@
       <div class="lg:col-span-7 flex flex-col">
         <GlassCard
           variant="primary"
-          class="h-full flex flex-col justify-between group p-6 sm:p-7"
+          class="h-full group p-6 sm:p-8 flex flex-col"
+          content-class="h-full flex flex-col justify-center"
         >
-          <div class="flex flex-col sm:flex-row gap-5 items-center sm:items-start relative z-10">
+          <div class="my-auto flex flex-col sm:flex-row gap-6 items-center relative z-10">
             <!-- Square Photo with clean border -->
             <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shrink-0 border border-forest-700 group-hover:border-sage-400/60 transition-colors duration-200">
               <img
