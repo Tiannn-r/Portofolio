@@ -43,7 +43,17 @@ class ProjectResource extends Resource
 
                         Forms\Components\TextInput::make('category')
                             ->required()
-                            ->placeholder('e.g. Web Application, E-Commerce, Full-Stack Web')
+                            ->label('Kategori Platform / Tipe Proyek')
+                            ->placeholder('Pilih atau ketik kategori (misal: Web Application, Android App, Desktop App)')
+                            ->datalist([
+                                'Web Application',
+                                'Mobile App (Android)',
+                                'Desktop Application',
+                                'Full-Stack System',
+                                'RESTful API & Backend',
+                                'UI/UX Design & Prototype',
+                            ])
+                            ->helperText('Kategori ini akan otomatis menjadi tab filter di halaman portofolio.')
                             ->maxLength(255),
 
                         Forms\Components\Toggle::make('is_featured')
@@ -78,14 +88,18 @@ class ProjectResource extends Resource
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('url_demo')
-                            ->label('Live Demo URL')
+                            ->label('Demo / Download / Release URL')
                             ->url()
-                            ->placeholder('https://demo.example.com'),
+                            ->placeholder('https://... (Website, Play Store, Link APK, Installer .exe, dsb)')
+                            ->helperText('Bisa berupa link website live, Google Play Store, link download APK/Installer (GitHub Release/Drive), atau video preview.')
+                            ->nullable(),
 
                         Forms\Components\TextInput::make('url_repo')
-                            ->label('Repository URL')
+                            ->label('Repository URL (GitHub / GitLab)')
                             ->url()
-                            ->placeholder('https://github.com/...'),
+                            ->placeholder('https://github.com/...')
+                            ->helperText('Link ke source code proyek.')
+                            ->nullable(),
 
                         Forms\Components\Hidden::make('order')
                             ->default(0),
