@@ -11,17 +11,26 @@
       <div class="lg:col-span-7 flex flex-col">
         <GlassCard
           variant="primary"
-          class="h-full group p-6 sm:p-8 flex flex-col"
-          content-class="h-full flex flex-col justify-center"
+          class="h-full group p-6 sm:p-7 flex flex-col justify-between"
+          content-class="h-full flex flex-col justify-between"
         >
-          <div class="my-auto flex flex-col sm:flex-row gap-6 items-center relative z-10">
-            <!-- Square Photo with clean border -->
-            <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden shrink-0 border border-forest-700 group-hover:border-sage-400/60 transition-colors duration-200">
+          <!-- Top Row: Photo + Narrative -->
+          <div class="flex flex-col sm:flex-row gap-5 sm:gap-6 items-center sm:items-start relative z-10">
+            <!-- Modern Portrait Photo Frame -->
+            <div class="relative w-36 sm:w-44 aspect-[4/5] rounded-2xl overflow-hidden shrink-0 border border-forest-700/80 group-hover:border-sage-400/70 transition-all duration-300 shadow-md bg-forest-950">
               <img
                 :src="profile?.about_image_url || profile?.about_image || profile?.avatar_url || '/storage/profile/vQNDsJ2Nb1YtlQ9dV3VcI7PaMFdF0BLZq3HIhLSv.jpg'"
                 :alt="profile?.name || 'Foto Tentang Saya'"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
+              <!-- Subtle gradient overlay on bottom of photo -->
+              <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-forest-950/90 via-forest-950/40 to-transparent pointer-events-none"></div>
+
+              <!-- Floating Role Badge -->
+              <div class="absolute bottom-2 inset-x-2 px-2 py-1 rounded-lg bg-forest-950/85 backdrop-blur-md border border-forest-700/70 text-[10px] font-medium text-mint-100 flex items-center justify-center gap-1.5 shadow-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="truncate">{{ primaryRole }}</span>
+              </div>
             </div>
 
             <!-- Content -->
@@ -29,16 +38,64 @@
               <h3 class="text-xl sm:text-2xl font-bold text-mint-100 mb-2.5 tracking-tight">
                 Tentang Saya
               </h3>
-              <p class="text-xs sm:text-sm text-mint-100/85 leading-relaxed mb-4 whitespace-pre-line">
+              <p class="text-xs sm:text-sm text-mint-100/85 leading-relaxed whitespace-pre-line">
                 {{ profile?.about_me || 'Saya adalah seorang Full-Stack Developer yang berdedikasi dalam membangun produk digital modern, cepat, dan terukur. Berpengalaman dalam merancang arsitektur backend berbasis Laravel, relational database MySQL, serta antarmuka interaktif dengan Vue 3 dan Tailwind CSS.' }}
               </p>
+            </div>
+          </div>
 
-              <!-- Meta List -->
-              <div class="flex items-center gap-4 text-xs text-sage-400 pt-3 border-t border-forest-700/60 justify-center sm:justify-start">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-sage-400"></span>
-                  <span class="text-mint-100 font-medium">Lokasi:</span> {{ profile?.location || 'Jakarta, Indonesia' }}
-                </div>
+          <!-- Bottom Row: 4 Key Highlights Micro-Cards -->
+          <div class="grid grid-cols-2 gap-2.5 pt-4 mt-5 border-t border-forest-700/60 relative z-10">
+            <!-- Highlight 1: Domisili -->
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-forest-950/60 border border-forest-700/60 hover:border-sage-400/40 transition-colors">
+              <div class="w-7 h-7 rounded-lg bg-forest-800/80 border border-forest-700/60 flex items-center justify-center text-sage-400 shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <span class="block text-[10px] text-sage-400/80 font-medium">Domisili</span>
+                <span class="block text-xs font-semibold text-mint-100 truncate">{{ profile?.location || 'Bandung, Indonesia' }}</span>
+              </div>
+            </div>
+
+            <!-- Highlight 2: Spesialisasi -->
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-forest-950/60 border border-forest-700/60 hover:border-sage-400/40 transition-colors">
+              <div class="w-7 h-7 rounded-lg bg-forest-800/80 border border-forest-700/60 flex items-center justify-center text-sage-400 shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <span class="block text-[10px] text-sage-400/80 font-medium">Spesialisasi</span>
+                <span class="block text-xs font-semibold text-mint-100 truncate">Web & UI/UX</span>
+              </div>
+            </div>
+
+            <!-- Highlight 3: Core Stack -->
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-forest-950/60 border border-forest-700/60 hover:border-sage-400/40 transition-colors">
+              <div class="w-7 h-7 rounded-lg bg-forest-800/80 border border-forest-700/60 flex items-center justify-center text-sage-400 shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <span class="block text-[10px] text-sage-400/80 font-medium">Core Stack</span>
+                <span class="block text-xs font-semibold text-mint-100 truncate">Laravel & Vue 3</span>
+              </div>
+            </div>
+
+            <!-- Highlight 4: Standar Kode -->
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-forest-950/60 border border-forest-700/60 hover:border-sage-400/40 transition-colors">
+              <div class="w-7 h-7 rounded-lg bg-forest-800/80 border border-forest-700/60 flex items-center justify-center text-sage-400 shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <span class="block text-[10px] text-sage-400/80 font-medium">Standar Kode</span>
+                <span class="block text-xs font-semibold text-mint-100 truncate">Clean & Scalable</span>
               </div>
             </div>
           </div>
@@ -121,6 +178,13 @@ const props = defineProps({
 });
 
 const brokenSkillIcons = ref({});
+
+const primaryRole = computed(() => {
+  if (Array.isArray(props.profile?.roles) && props.profile.roles.length > 0) {
+    return props.profile.roles[0];
+  }
+  return 'Full-Stack Developer';
+});
 
 const defaultTechSkills = [
   { name: 'Laravel 11', percentage: 92, icon_url: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg' },
