@@ -135,12 +135,12 @@ class Profile extends Model
             ];
         }
 
-        // Email Langsung
+        // Email
         $emailAddr = !empty($this->email) ? $this->email : 'ibnhu.work@gmail.com';
         if (!empty($emailAddr)) {
             $emailSubtext = is_array($links) ? ($links['email_subtext'] ?? ($links['formal']['email']['subtext'] ?? null)) : null;
             $channels[] = [
-                'name' => 'Email Langsung',
+                'name' => 'Email',
                 'platform' => 'email',
                 'category' => 'formal',
                 'url' => 'mailto:' . $emailAddr,

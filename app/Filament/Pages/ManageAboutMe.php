@@ -207,10 +207,9 @@ class ManageAboutMe extends Page implements HasForms
                     ]),
 
                 Section::make('Saluran Kontak Formal (Di Bawah Form Kontak)')
-                    ->description('3 Saluran kontak resmi yang tampil rapi dalam kartu persegi panjang berjejer ke kanan di bawah form kirim pesan.')
-                    ->columns(2)
+                    ->description('3 Saluran kontak resmi yang tampil rapi dalam kartu persegi panjang berjejer ke kanan di bawah form kirim pesan (Email, WhatsApp, LinkedIn).')
+                    ->columns(3)
                     ->schema([
-                        // Email Group
                         TextInput::make('email')
                             ->label('Alamat Email (Gmail)')
                             ->email()
@@ -218,12 +217,6 @@ class ManageAboutMe extends Page implements HasForms
                             ->required()
                             ->helperText('Email tujuan saat pengunjung mengklik kartu Email'),
 
-                        TextInput::make('email_subtext')
-                            ->label('Keterangan / Subtitle Email')
-                            ->placeholder('Kirim Pesan Langsung')
-                            ->helperText('Teks kecil di bawah judul kartu Email'),
-
-                        // WhatsApp Group
                         TextInput::make('phone')
                             ->label('Nomor WhatsApp')
                             ->tel()
@@ -231,21 +224,10 @@ class ManageAboutMe extends Page implements HasForms
                             ->required()
                             ->helperText('Nomor WA tujuan (mendukung format 08xxx atau +62xxx)'),
 
-                        TextInput::make('whatsapp_subtext')
-                            ->label('Keterangan / Subtitle WhatsApp')
-                            ->placeholder('Chat & Diskusi Cepat')
-                            ->helperText('Teks kecil di bawah judul kartu WhatsApp'),
-
-                        // LinkedIn Group
                         TextInput::make('linkedin_url')
                             ->label('URL Profil LinkedIn')
                             ->placeholder('https://linkedin.com/in/muhamad-ibnhu')
                             ->helperText('Tautan ke halaman profil LinkedIn Anda'),
-
-                        TextInput::make('linkedin_subtext')
-                            ->label('Keterangan / Subtitle LinkedIn')
-                            ->placeholder('Terhubung Profesional')
-                            ->helperText('Teks kecil di bawah judul kartu LinkedIn'),
                     ]),
 
                 Section::make('Media Sosial Developer (Khusus di Footer)')
