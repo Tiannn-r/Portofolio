@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,14 +38,24 @@ class Profile extends Model
             'social_links' => 'array',
             'skills_overview' => 'array',
             'is_available' => 'boolean',
-            'happy_clients' => 'integer',
-            'projects_completed' => 'integer',
-            'years_experience' => 'integer',
-            'awards_received' => 'integer',
         ];
     }
 
     protected $appends = ['avatar_url', 'hero_image_url', 'about_image_url', 'cv_url', 'social_channels'];
+
+    public function getProjectsCompletedAttribute(): int
+    {
+        return Project::count();
+    }
+
+    public function getYearsExperienceAttribute($value)
+    {
+        $links = $this->social_links;
+        if (is_array($links) && isset($links['years_experience']) && $links['years_experience'] !== '') {
+            return $links['years_experience'];
+        }
+        return $value ? (string) $value : '2.5';
+    }
 
     public function getAvatarUrlAttribute(): ?string
     {

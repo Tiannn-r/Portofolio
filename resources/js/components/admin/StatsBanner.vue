@@ -22,35 +22,9 @@
       </button>
     </div>
 
-    <!-- 4 Metrics Columns Display Mode with Micro-interactions -->
-    <div v-if="!isEditing" class="grid grid-cols-2 md:grid-cols-4 gap-5 text-center">
-      <!-- Metric 1: Happy Clients -->
-      <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
-        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <span class="text-2xl sm:text-3xl font-extrabold text-[#DAF1DE] font-mono tracking-tight">
-          {{ profile?.happy_clients || 18 }}+
-        </span>
-        <span class="text-xs text-[#DAF1DE]/90 font-medium mt-1">Happy Clients</span>
-      </div>
-
-      <!-- Metric 2: Projects Completed -->
-      <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
-        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
-          </svg>
-        </div>
-        <span class="text-2xl sm:text-3xl font-extrabold text-[#DAF1DE] font-mono tracking-tight">
-          {{ profile?.projects_completed || 24 }}+
-        </span>
-        <span class="text-xs text-[#DAF1DE]/90 font-medium mt-1">Projects Completed</span>
-      </div>
-
-      <!-- Metric 3: Years Experience -->
+    <!-- 2 Real Metrics Display Mode (Years Experience & Projects Completed) -->
+    <div v-if="!isEditing" class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-center">
+      <!-- Metric 1: Years Experience -->
       <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
         <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,67 +32,34 @@
           </svg>
         </div>
         <span class="text-2xl sm:text-3xl font-extrabold text-[#DAF1DE] font-mono tracking-tight">
-          {{ profile?.years_experience || 3 }}+
+          {{ profile?.years_experience || '2.5' }}+
         </span>
-        <span class="text-xs text-[#DAF1DE]/90 font-medium mt-1">Years Experience</span>
+        <span class="text-xs text-[#DAF1DE]/90 font-medium mt-1">Years Experience (Tahun Pengalaman)</span>
       </div>
 
-      <!-- Metric 4: Awards Received -->
+      <!-- Metric 2: Projects Completed (Auto-Count) -->
       <div class="p-4 rounded-xl bg-[#051F20]/30 backdrop-blur-sm border border-white/10 flex flex-col items-center transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#051F20]/45">
         <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#DAF1DE] mb-2 shadow-inner">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
           </svg>
         </div>
         <span class="text-2xl sm:text-3xl font-extrabold text-[#DAF1DE] font-mono tracking-tight">
-          {{ profile?.awards_received || 5 }}
+          {{ profile?.projects_completed ?? 3 }}+
         </span>
-        <span class="text-xs text-[#DAF1DE]/90 font-medium mt-1">Awards & Certs</span>
+        <span class="text-xs text-[#DAF1DE]/90 font-medium mt-1">Projects Completed (Otomatis dari Database)</span>
       </div>
     </div>
 
     <!-- Edit Mode Form -->
-    <form v-else @submit.prevent="saveStats" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div>
-        <label class="block text-xs font-bold text-[#DAF1DE] mb-1">Happy Clients</label>
-        <input
-          v-model.number="form.happy_clients"
-          type="number"
-          min="0"
-          required
-          class="w-full bg-[#051F20]/80 border border-white/20 text-[#DAF1DE] rounded-xl px-3 py-2 text-sm font-mono outline-none focus:border-[#DAF1DE]"
-        />
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[#DAF1DE] mb-1">Projects Completed</label>
-        <input
-          v-model.number="form.projects_completed"
-          type="number"
-          min="0"
-          required
-          class="w-full bg-[#051F20]/80 border border-white/20 text-[#DAF1DE] rounded-xl px-3 py-2 text-sm font-mono outline-none focus:border-[#DAF1DE]"
-        />
-      </div>
-
+    <form v-else @submit.prevent="saveStats" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div>
         <label class="block text-xs font-bold text-[#DAF1DE] mb-1">Years Experience</label>
-        <input
-          v-model.number="form.years_experience"
-          type="number"
-          min="0"
-          required
-          class="w-full bg-[#051F20]/80 border border-white/20 text-[#DAF1DE] rounded-xl px-3 py-2 text-sm font-mono outline-none focus:border-[#DAF1DE]"
-        />
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[#DAF1DE] mb-1">Awards Received</label>
         <div class="flex items-center gap-2">
           <input
-            v-model.number="form.awards_received"
-            type="number"
-            min="0"
+            v-model="form.years_experience"
+            type="text"
+            placeholder="Contoh: 2.5 atau 3"
             required
             class="w-full bg-[#051F20]/80 border border-white/20 text-[#DAF1DE] rounded-xl px-3 py-2 text-sm font-mono outline-none focus:border-[#DAF1DE]"
           />
@@ -132,6 +73,16 @@
             <span>Simpan</span>
           </BaseButton>
         </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[#DAF1DE] mb-1">Projects Completed (Auto-Count)</label>
+        <input
+          :value="`${profile?.projects_completed ?? 3} Proyek (Dihitung Otomatis)`"
+          type="text"
+          disabled
+          class="w-full bg-[#051F20]/40 border border-white/10 text-[#DAF1DE]/60 rounded-xl px-3 py-2 text-sm font-mono cursor-not-allowed"
+        />
       </div>
     </form>
   </div>
@@ -154,10 +105,7 @@ const isEditing = ref(false);
 const saving = ref(false);
 
 const form = ref({
-  happy_clients: 18,
-  projects_completed: 24,
-  years_experience: 3,
-  awards_received: 5,
+  years_experience: '2.5',
 });
 
 watch(
@@ -165,10 +113,7 @@ watch(
   (newVal) => {
     if (newVal) {
       form.value = {
-        happy_clients: newVal.happy_clients ?? 18,
-        projects_completed: newVal.projects_completed ?? 24,
-        years_experience: newVal.years_experience ?? 3,
-        awards_received: newVal.awards_received ?? 5,
+        years_experience: newVal.years_experience ?? '2.5',
       };
     }
   },

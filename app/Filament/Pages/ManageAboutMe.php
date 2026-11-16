@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Profile;
+use App\Models\Project;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -116,6 +117,8 @@ class ManageAboutMe extends Page implements HasForms
         $formData['linkedin_subtext'] = !empty($formData['linkedin_subtext']) ? $formData['linkedin_subtext'] : 'Terhubung Profesional';
         $formData['email_subtext'] = !empty($formData['email_subtext']) ? $formData['email_subtext'] : 'Kirim Pesan Langsung';
         $formData['whatsapp_subtext'] = !empty($formData['whatsapp_subtext']) ? $formData['whatsapp_subtext'] : 'Chat & Diskusi Cepat';
+        $formData['years_experience'] = $social['years_experience'] ?? $profile->years_experience ?? '2.5';
+        $formData['projects_count'] = \App\Models\Project::count();
 
         $this->form->fill($formData);
     }
@@ -326,28 +329,21 @@ class ManageAboutMe extends Page implements HasForms
                     ]),
 
                 Section::make('Metrik & Angka Pencapaian')
-                    ->description('Angka statistik yang tampil pada baris Hero dan Dashboard.')
-                    ->columns(4)
+                    ->description('Angka statistik nyata yang tampil pada bagian Hero landing page.')
+                    ->columns(2)
                     ->schema([
                         TextInput::make('years_experience')
-                            ->label('Years Experience')
-                            ->numeric()
-                            ->required(),
+                            ->label('Years Experience (Tahun Pengalaman)')
+                            ->placeholder('Contoh: 2.5 atau 3')
+                            ->required()
+                            ->helperText('Bisa berupa angka desimal seperti 2.5 atau angka bulat.'),
 
-                        TextInput::make('projects_completed')
-                            ->label('Projects Done')
-                            ->numeric()
-                            ->required(),
-
-                        TextInput::make('happy_clients')
-                            ->label('Happy Clients')
-                            ->numeric()
-                            ->required(),
-
-                        TextInput::make('awards_received')
-                            ->label('Awards / Certs')
-                            ->numeric()
-                            ->required(),
+                        TextInput::make('projects_count')
+                            ->label('Projects Done (Otomatis)')
+                            ->default(fn () => \App\Models\Project::count())
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->helperText('Dihitung otomatis dari total portfolio project yang ada di database.'),
                     ]),
             ])
             ->statePath('data');
@@ -387,6 +383,9 @@ class ManageAboutMe extends Page implements HasForms
             'custom_channels' => $state['custom_channels'] ?? [],
         ];
 
+        $yearsExp = (string) ($state['years_experience'] ?? '2.5');
+        $socialLinks['years_experience'] = $yearsExp;
+
         $updateData = [
             'name' => $state['name'],
             'is_available' => (bool) ($state['is_available'] ?? true),
@@ -400,10 +399,10 @@ class ManageAboutMe extends Page implements HasForms
             'short_bio' => $state['short_bio'] ?? '',
             'about_me' => $state['about_me'] ?? '',
             'social_links' => $socialLinks,
-            'years_experience' => (int) ($state['years_experience'] ?? 0),
-            'projects_completed' => (int) ($state['projects_completed'] ?? 0),
-            'happy_clients' => (int) ($state['happy_clients'] ?? 0),
-            'awards_received' => (int) ($state['awards_received'] ?? 0),
+            'years_experience' => (int) round((float) $yearsExp),
+            'projects_completed' => \App\Models\Project::count(),
+            'happy_clients' => 0,
+            'awards_received' => 0,
         ];
 
         $profile->fill($updateData);

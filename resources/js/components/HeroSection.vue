@@ -71,6 +71,31 @@
         <span>Unduh CV</span>
       </BaseButton>
     </div>
+
+    <!-- Clean Verified Metrics Row (Years Experience & Auto-counted Projects) -->
+    <div class="mt-10 sm:mt-12 grid grid-cols-2 gap-3 sm:gap-6 w-full max-w-xs sm:max-w-sm px-4">
+      <div
+        class="py-3 px-4 rounded-xl bg-forest-900/80 border border-forest-700/80 text-center transition-all duration-200 hover:border-warm-400/60 shadow-sm"
+      >
+        <span class="text-2xl sm:text-3xl font-bold text-mint-100 font-mono tracking-tight block">
+          {{ profile?.years_experience || '2.5' }}+
+        </span>
+        <span class="text-[11px] sm:text-xs text-sage-400 font-medium mt-1 block">
+          Tahun Pengalaman
+        </span>
+      </div>
+
+      <div
+        class="py-3 px-4 rounded-xl bg-forest-900/80 border border-forest-700/80 text-center transition-all duration-200 hover:border-warm-400/60 shadow-sm"
+      >
+        <span class="text-2xl sm:text-3xl font-bold text-mint-100 font-mono tracking-tight block">
+          {{ profile?.projects_completed ?? 3 }}+
+        </span>
+        <span class="text-[11px] sm:text-xs text-sage-400 font-medium mt-1 block">
+          Proyek Selesai
+        </span>
+      </div>
+    </div>
   </section>
 </template>
 
