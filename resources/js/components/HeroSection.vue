@@ -1,16 +1,5 @@
 <template>
   <section id="hero" class="relative min-h-[85vh] flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 z-10">
-    <!-- Availability Badge (Restrained & Calm) -->
-    <div
-      v-if="profile?.is_available"
-      class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest-900/90 border border-forest-700 backdrop-blur-md mb-8 transition-colors duration-200 hover:border-warm-400/60"
-    >
-      <span class="w-2 h-2 rounded-full bg-warm-400"></span>
-      <span class="text-xs font-medium text-mint-100 tracking-normal">
-        Terbuka untuk Kerja Sama Proyek
-      </span>
-    </div>
-
     <!-- Center Profile Image -->
     <div class="relative mb-6 group">
       <div class="relative w-36 h-36 md:w-40 md:h-40 rounded-full p-1 bg-forest-900 border border-forest-700 hover:border-warm-400/80 transition-colors duration-300 overflow-hidden shadow-lg">

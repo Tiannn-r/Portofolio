@@ -33,14 +33,10 @@
               </p>
 
               <!-- Meta List -->
-              <div class="flex flex-wrap items-center gap-4 text-xs text-sage-400 pt-3 border-t border-forest-700/60 justify-center sm:justify-start">
+              <div class="flex items-center gap-4 text-xs text-sage-400 pt-3 border-t border-forest-700/60 justify-center sm:justify-start">
                 <div class="flex items-center gap-1.5">
                   <span class="w-1.5 h-1.5 rounded-full bg-sage-400"></span>
                   <span class="text-mint-100 font-medium">Lokasi:</span> {{ profile?.location || 'Jakarta, Indonesia' }}
-                </div>
-                <div class="flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-warm-400"></span>
-                  <span class="text-mint-100 font-medium">Status:</span> Terbuka untuk Kerja Sama
                 </div>
               </div>
             </div>

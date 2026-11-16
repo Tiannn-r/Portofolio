@@ -127,8 +127,8 @@ class ManageAboutMe extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Identitas Utama & Ketersediaan')
-                    ->description('Kelola identitas utama, ketersediaan freelance, dan lokasi domisili.')
+                Section::make('Identitas Utama & Lokasi')
+                    ->description('Kelola nama lengkap dan lokasi domisili Anda.')
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
@@ -136,17 +136,10 @@ class ManageAboutMe extends Page implements HasForms
                             ->required()
                             ->maxLength(255),
 
-                        Toggle::make('is_available')
-                            ->label('Status Tersedia Freelance')
-                            ->helperText('Menampilkan badge hijau aktif di Hero section')
-                            ->inline(false)
-                            ->default(true),
-
                         TextInput::make('location')
                             ->label('Lokasi Domisili')
                             ->placeholder('Jakarta, Indonesia')
-                            ->maxLength(255)
-                            ->columnSpanFull(),
+                            ->maxLength(255),
                     ]),
 
                 Section::make('Foto Profil & File Dokumen CV')
