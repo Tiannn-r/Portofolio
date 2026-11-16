@@ -57,11 +57,10 @@ class EducationResource extends Resource
                             ->label('Tahun / Periode Studi')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('e.g. 2020 - 2024'),
+                            ->placeholder('e.g. 2020 - 2024')
+                            ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('order')
-                            ->label('Urutan Tampilan')
-                            ->numeric()
+                        Forms\Components\Hidden::make('order')
                             ->default(0),
 
                         Forms\Components\Textarea::make('description')
@@ -79,6 +78,17 @@ class EducationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderable('order')
+            ->reorderRecordsTriggerAction(
+                fn (Tables\Actions\Action $action, bool $isReordering) => $action
+                    ->button()
+                    ->label($isReordering ? 'Selesai Mengurutkan' : 'Urutkan (Tarik / Drag)')
+                    ->icon($isReordering ? 'heroicon-m-check' : 'heroicon-m-arrows-up-down')
+                    ->color($isReordering ? 'success' : 'primary')
+            )
+            ->defaultSort('order', 'asc')
+            ->paginated([10, 25, 50, 'all'])
+            ->defaultPaginationPageOption(50)
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Jenjang & Jurusan')
@@ -97,7 +107,8 @@ class EducationResource extends Resource
                 Tables\Columns\TextColumn::make('order')
                     ->label('Urutan')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
