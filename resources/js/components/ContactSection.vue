@@ -237,11 +237,12 @@ const formalChannels = computed(() => {
     }
 
     if (linkedinUrl) {
+      const linkedinSub = props.profile?.social_links?.linkedin_subtext;
       channels.unshift({
         name: 'LinkedIn',
         platform: 'linkedin',
         url: linkedinUrl,
-        subtext: 'Terhubung Profesional',
+        subtext: linkedinSub || 'Terhubung Profesional',
       });
       addedTypes.add('linkedin');
     }
@@ -251,11 +252,12 @@ const formalChannels = computed(() => {
   const hasEmail = Array.from(addedTypes).some(p => p.includes('email') || p.includes('gmail'));
   const userEmail = props.profile?.email || 'ibnhu.work@gmail.com';
   if (!hasEmail && userEmail) {
+    const emailSub = props.profile?.social_links?.email_subtext;
     channels.push({
       name: 'Email Langsung',
       platform: 'email',
       url: 'mailto:' + userEmail,
-      subtext: userEmail,
+      subtext: emailSub || 'Kirim Pesan Langsung',
     });
     addedTypes.add('email');
   }
@@ -264,11 +266,12 @@ const formalChannels = computed(() => {
   const hasWhatsapp = Array.from(addedTypes).some(p => p.includes('whatsapp') || p.includes('wa'));
   const userPhone = props.profile?.phone || '+62 812-3456-7890';
   if (!hasWhatsapp && userPhone) {
+    const waSub = props.profile?.social_links?.whatsapp_subtext;
     channels.push({
       name: 'WhatsApp',
       platform: 'whatsapp',
       url: 'https://wa.me/' + cleanPhone(userPhone),
-      subtext: 'Chat & Diskusi Cepat',
+      subtext: waSub || 'Chat & Diskusi Cepat',
     });
     addedTypes.add('whatsapp');
   }

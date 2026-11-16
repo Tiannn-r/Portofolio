@@ -144,7 +144,7 @@ class Profile extends Model
                 'platform' => 'email',
                 'category' => 'formal',
                 'url' => 'mailto:' . $emailAddr,
-                'subtext' => $emailSubtext ?: $emailAddr,
+                'subtext' => !empty($emailSubtext) ? $emailSubtext : 'Kirim Pesan Langsung',
                 'logo_source' => 'preset',
                 'logo_url' => null,
                 'logo_file_url' => null,
