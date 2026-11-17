@@ -27,6 +27,11 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->homeUrl('/')
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+                fn () => view('filament.auth.back-to-home')
+            )
             ->brandName('Portofolio CMS')
             ->brandLogo(asset('logo.png'))
             ->brandLogoHeight('2.2rem')
