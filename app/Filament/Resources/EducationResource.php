@@ -17,13 +17,13 @@ class EducationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Academic & Credentials';
+    protected static ?string $navigationGroup = 'Pendidikan & Sertifikasi';
 
-    protected static ?string $navigationLabel = 'Formal Education';
+    protected static ?string $navigationLabel = 'Riwayat Pendidikan';
 
-    protected static ?string $modelLabel = 'Formal Education';
+    protected static ?string $modelLabel = 'Pendidikan';
 
-    protected static ?string $pluralModelLabel = 'Formal Education';
+    protected static ?string $pluralModelLabel = 'Riwayat Pendidikan';
 
     protected static ?int $navigationSort = 1;
 

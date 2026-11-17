@@ -17,13 +17,13 @@ class TechnicalSkillResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
-    protected static ?string $navigationGroup = 'Skills & Competencies';
+    protected static ?string $navigationGroup = 'Keahlian & Kompetensi';
 
-    protected static ?string $navigationLabel = 'Technical Skills (Grid)';
+    protected static ?string $navigationLabel = 'Keahlian Teknis (Grid)';
 
-    protected static ?string $modelLabel = 'Technical Skill';
+    protected static ?string $modelLabel = 'Keahlian Teknis';
 
-    protected static ?string $pluralModelLabel = 'Technical Skills (Grid)';
+    protected static ?string $pluralModelLabel = 'Keahlian Teknis (Grid)';
 
     protected static ?int $navigationSort = 1;
 

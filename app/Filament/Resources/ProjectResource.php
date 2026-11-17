@@ -15,11 +15,15 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
+    protected static ?string $modelLabel = 'Proyek';
+
+    protected static ?string $pluralModelLabel = 'Portofolio Proyek';
+
     protected static ?string $navigationIcon = 'heroicon-o-folder-open';
 
-    protected static ?string $navigationGroup = 'Content & Showcase';
+    protected static ?string $navigationGroup = 'Portofolio & Karya';
 
-    protected static ?string $navigationLabel = 'Portfolio Projects';
+    protected static ?string $navigationLabel = 'Portofolio Proyek';
 
     protected static ?int $navigationSort = 2;
 
@@ -27,16 +31,20 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Project Overview')
+                Forms\Components\Section::make('Informasi Utama Proyek')
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('title')
+                            ->label('Judul Proyek')
+                            ->placeholder('Contoh: Aplikasi Kasir POS Android, Sistem Inventaris...')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn ($set, ?string $state) => $set('slug', Str::slug($state ?? ''))),
 
                         Forms\Components\TextInput::make('slug')
+                            ->label('Slug URL')
+                            ->helperText('Dibuat otomatis dari judul proyek untuk URL.')
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
@@ -44,61 +52,63 @@ class ProjectResource extends Resource
                         Forms\Components\TextInput::make('category')
                             ->required()
                             ->label('Kategori Platform / Tipe Proyek')
-                            ->placeholder('Pilih atau ketik kategori (misal: Web Application, Android App, Desktop App)')
+                            ->placeholder('Pilih atau ketik kategori (misal: Aplikasi Web, Aplikasi Android, Aplikasi Desktop)')
                             ->datalist([
-                                'Web Application',
-                                'Mobile App (Android)',
-                                'Desktop Application',
-                                'Full-Stack System',
+                                'Aplikasi Web',
+                                'Aplikasi Mobile (Android)',
+                                'Aplikasi Desktop',
+                                'Sistem Full-Stack',
                                 'RESTful API & Backend',
-                                'UI/UX Design & Prototype',
+                                'Desain UI/UX & Prototipe',
                             ])
                             ->helperText('Kategori ini akan otomatis menjadi tab filter di halaman portofolio.')
                             ->maxLength(255),
 
                         Forms\Components\Toggle::make('is_featured')
-                            ->label('Mark as Featured Case Study')
-                            ->helperText('Featured projects are highlighted at the top of the showcase.')
+                            ->label('Tandai sebagai Proyek Unggulan')
+                            ->helperText('Proyek unggulan akan disorot di bagian paling atas tampilan portofolio.')
                             ->default(false),
 
                         Forms\Components\Textarea::make('description')
+                            ->label('Deskripsi Lengkap Proyek')
+                            ->placeholder('Jelaskan latar belakang pembuatan aplikasi, fitur-fitur utama, dan solusi yang dibangun...')
                             ->required()
                             ->rows(4)
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('Media & Architecture')
+                Forms\Components\Section::make('Media & Arsitektur Teknologi')
                     ->columns(2)
                     ->schema([
                         Forms\Components\FileUpload::make('thumbnail')
-                            ->label('File Thumbnail / Foto Proyek')
+                            ->label('Foto Sampul / Tangkapan Layar (Thumbnail)')
                             ->image()
                             ->disk('public')
                             ->directory('projects')
                             ->visibility('public')
                             ->openable()
                             ->downloadable()
-                            ->helperText('Upload screenshot atau gambar sampul proyek (PNG/JPG/WebP).')
+                            ->helperText('Unggah tangkapan layar antarmuka atau gambar sampul proyek (PNG, JPG, atau WebP).')
                             ->columnSpanFull(),
 
                         Forms\Components\TagsInput::make('tech_stack')
-                            ->label('Technologies & Stack')
-                            ->placeholder('Add technology (e.g. Laravel 11, Vue 3, Tailwind CSS)...')
+                            ->label('Teknologi & Tech Stack')
+                            ->placeholder('Ketik teknologi lalu Enter (misal: Kotlin, Laravel 11, Vue 3, Tailwind CSS)...')
                             ->required()
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('url_demo')
-                            ->label('Demo / Download / Release URL')
+                            ->label('Tautan Demo / Unduh / Rilis (Live Demo)')
                             ->url()
                             ->placeholder('https://... (Website, Play Store, Link APK, Installer .exe, dsb)')
-                            ->helperText('Bisa berupa link website live, Google Play Store, link download APK/Installer (GitHub Release/Drive), atau video preview.')
+                            ->helperText('Bisa berupa link website aktif, Google Play Store, link download APK/Installer (GitHub Release/Drive), atau video preview.')
                             ->nullable(),
 
                         Forms\Components\TextInput::make('url_repo')
-                            ->label('Repository URL (GitHub / GitLab)')
+                            ->label('Tautan Repository (GitHub / GitLab)')
                             ->url()
                             ->placeholder('https://github.com/...')
-                            ->helperText('Link ke source code proyek.')
+                            ->helperText('Tautan ke source code repository proyek.')
                             ->nullable(),
 
                         Forms\Components\Hidden::make('order')
@@ -123,30 +133,34 @@ class ProjectResource extends Resource
             ->defaultPaginationPageOption(50)
             ->columns([
                 Tables\Columns\ImageColumn::make('thumbnail_url')
-                    ->label('Thumbnail')
+                    ->label('Sampul')
                     ->circular()
                     ->defaultImageUrl('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=200&q=80'),
 
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Judul Proyek')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
                 Tables\Columns\BadgeColumn::make('category')
+                    ->label('Kategori')
                     ->color('primary')
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_featured')
-                    ->label('Featured')
+                    ->label('Unggulan')
                     ->boolean()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('order')
+                    ->label('Urutan')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Dibuat')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -154,7 +168,7 @@ class ProjectResource extends Resource
             ->defaultSort('order', 'asc')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_featured')
-                    ->label('Featured Status'),
+                    ->label('Status Unggulan'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -17,13 +17,13 @@ class StoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = 'Stories & News';
+    protected static ?string $navigationGroup = 'Artikel & Cerita';
 
-    protected static ?string $navigationLabel = 'Stories & News';
+    protected static ?string $navigationLabel = 'Artikel & Cerita';
 
-    protected static ?string $modelLabel = 'Story / News';
+    protected static ?string $modelLabel = 'Artikel';
 
-    protected static ?string $pluralModelLabel = 'Stories & News';
+    protected static ?string $pluralModelLabel = 'Artikel & Cerita';
 
     protected static ?int $navigationSort = 1;
 

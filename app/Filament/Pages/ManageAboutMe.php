@@ -26,11 +26,11 @@ class ManageAboutMe extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationLabel = 'About Me & Profile';
+    protected static ?string $navigationLabel = 'Tentang Saya & Profil';
 
-    protected static ?string $title = 'Edit About Me & Profile';
+    protected static ?string $title = 'Kelola Profil & Tentang Saya';
 
-    protected static ?string $navigationGroup = 'Portfolio Profile';
+    protected static ?string $navigationGroup = 'Profil & Identitas';
 
     protected static ?int $navigationSort = 1;
 

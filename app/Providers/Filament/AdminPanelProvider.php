@@ -50,12 +50,12 @@ class AdminPanelProvider extends PanelProvider
             ->defaultThemeMode(\Filament\Enums\ThemeMode::Dark)
             ->sidebarCollapsibleOnDesktop()
             ->navigationGroups([
-                'Portfolio Profile',
-                'Skills & Competencies',
-                'Stories & News',
-                'Content & Showcase',
-                'Academic & Credentials',
-                'Inquiries',
+                'Profil & Identitas',
+                'Keahlian & Kompetensi',
+                'Portofolio & Karya',
+                'Artikel & Cerita',
+                'Pendidikan & Sertifikasi',
+                'Pesan Masuk',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

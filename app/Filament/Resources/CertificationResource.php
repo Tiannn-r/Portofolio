@@ -17,13 +17,13 @@ class CertificationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-check-badge';
 
-    protected static ?string $navigationGroup = 'Academic & Credentials';
+    protected static ?string $navigationGroup = 'Pendidikan & Sertifikasi';
 
-    protected static ?string $navigationLabel = 'Certifications & Credentials';
+    protected static ?string $navigationLabel = 'Sertifikasi & Lisensi';
 
-    protected static ?string $modelLabel = 'Certification';
+    protected static ?string $modelLabel = 'Sertifikasi';
 
-    protected static ?string $pluralModelLabel = 'Certifications';
+    protected static ?string $pluralModelLabel = 'Sertifikasi & Lisensi';
 
     protected static ?int $navigationSort = 2;
 
